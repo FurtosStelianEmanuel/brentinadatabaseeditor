@@ -10,17 +10,17 @@ import java.nio.file.Paths;
 import javax.swing.JFileChooser;
 import main.Main;
 import models.database.DatabaseModel;
-import services.interfaces.FormEventListener;
 import services.interfaces.FormListenerInterface;
-import services.interfaces.MainFormInterface;
 import views.MainForm;
 import views.ProdusEdit;
+import services.interfaces.EventConfirmationListener;
+import services.interfaces.MainFormServiceInterface;
 
 /**
  *
  * @author Manel
  */
-public class MainFormService implements MainFormInterface, FormListenerInterface {
+public class MainFormService implements MainFormServiceInterface {
 
     DatabaseService databaseService;
     MainFormApplicator mainFormApplicator;
@@ -79,7 +79,7 @@ public class MainFormService implements MainFormInterface, FormListenerInterface
         ProdusEdit produsEditForm = new ProdusEdit(produsEditService);
         ProdusEditApplicator applicator = new ProdusEditApplicator(produsEditForm);
         applicator.autoCompleteData(model.continut.get(index));
-        produsEditForm.setListener(new FormEventListener() {
+        produsEditForm.setListener(new EventConfirmationListener() {
             @Override
             public void onConfirm(Object produsObject) {
                 System.out.println("Confirmare mare");
@@ -97,10 +97,5 @@ public class MainFormService implements MainFormInterface, FormListenerInterface
             }
         });
         produsEditForm.setVisible(true);
-    }
-
-    @Override
-    public void setListener(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

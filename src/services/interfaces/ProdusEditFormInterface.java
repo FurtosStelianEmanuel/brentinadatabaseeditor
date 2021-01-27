@@ -26,4 +26,6 @@ public interface ProdusEditFormInterface {
     void categoriiPressed(ActionEvent e);
     
     void similarePressed(ActionEvent e);
+    
+    void culoriPressed(ActionEvent e);
 }

@@ -11,7 +11,7 @@ import models.produs.Produs;
  *
  * @author Manel
  */
-public interface FormEventListener {
+public interface EventConfirmationListener {
 
     void onConfirm(Object p);
 

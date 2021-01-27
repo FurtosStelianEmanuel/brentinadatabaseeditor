@@ -6,7 +6,7 @@
 package views.edit;
 
 import models.produs.TranslateProdus;
-import services.interfaces.FormEventListener;
+import services.interfaces.EventConfirmationListener;
 
 /**
  *
@@ -14,7 +14,7 @@ import services.interfaces.FormEventListener;
  */
 public class EditTranslateProdusDescrieriForm extends javax.swing.JFrame {
 
-    FormEventListener listener;
+    EventConfirmationListener listener;
 
     /**
      * Creates new form TranslateProdusDescrieriForm
@@ -24,7 +24,7 @@ public class EditTranslateProdusDescrieriForm extends javax.swing.JFrame {
         initComponents();
     }
 
-    public void setListener(FormEventListener listener) {
+    public void setListener(EventConfirmationListener listener) {
         this.listener = listener;
     }
 

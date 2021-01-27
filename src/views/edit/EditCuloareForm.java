@@ -5,13 +5,16 @@
  */
 package views.edit;
 
+import java.awt.Graphics;
 import java.nio.file.Paths;
+import services.interfaces.EventConfirmationListener;
+import services.interfaces.FormListenerInterface;
 
 /**
  *
  * @author Manel
  */
-public class EditCuloareForm extends javax.swing.JFrame {
+public class EditCuloareForm extends javax.swing.JFrame implements FormListenerInterface {
 
     /**
      * Creates new form EditCuloriForm
@@ -19,16 +22,15 @@ public class EditCuloareForm extends javax.swing.JFrame {
     public EditCuloareForm() {
         initComponents();
         jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
-       jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
-       jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
-       jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
-       jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
-       jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
-       jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
-       jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
-       jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
-       jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
-       
+        jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
+        jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
+        jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
+        jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
+        jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
+        jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
+        jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
+        jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
+        jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
 
     }
 
@@ -47,13 +49,22 @@ public class EditCuloareForm extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jSpinner1 = new javax.swing.JSpinner();
         jSeparator1 = new javax.swing.JSeparator();
-        jButton1 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton(){
+            @Override
+            public void paintComponent(Graphics g){
+                super.paintComponent(g);
+                g.setColor(getBackground());
+                g.fillRect(0,0,15,15);
+            }
+        };
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel3 = new javax.swing.JPanel();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
-        jPanel1.setLayout(new java.awt.GridLayout());
+        jPanel1.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel1.setText("Unghiuri : ");
         jPanel1.add(jLabel1);
@@ -70,6 +81,20 @@ public class EditCuloareForm extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jPanel3);
         jScrollPane2.getHorizontalScrollBar().setUnitIncrement(16);
 
+        jButton2.setText("Cancel");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Save");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -82,7 +107,9 @@ public class EditCuloareForm extends javax.swing.JFrame {
                     .addComponent(placeholderTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(placeholderTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2))
+                    .addComponent(jScrollPane2)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -99,7 +126,11 @@ public class EditCuloareForm extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton3)
                 .addContainerGap())
         );
 
@@ -111,44 +142,20 @@ public class EditCuloareForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EditCuloareForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EditCuloareForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EditCuloareForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EditCuloareForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        listener.onCancel();
+        listener.onFinish(null);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new EditCuloareForm().setVisible(true);
-            }
-        });
-    }
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        listener.onConfirm(null);
+        listener.onFinish(null);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton jButton1;
+    public javax.swing.JButton jButton2;
+    public javax.swing.JButton jButton3;
     public javax.swing.JLabel jLabel1;
     public javax.swing.JPanel jPanel1;
     public javax.swing.JPanel jPanel3;
@@ -160,4 +167,11 @@ public class EditCuloareForm extends javax.swing.JFrame {
     public views.PlaceholderTextField placeholderTextField3;
     public views.PlaceholderTextField placeholderTextField4;
     // End of variables declaration//GEN-END:variables
+
+    EventConfirmationListener listener;
+
+    @Override
+    public void setListener(EventConfirmationListener e) {
+        this.listener = e;
+    }
 }

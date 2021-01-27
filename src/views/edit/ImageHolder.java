@@ -5,17 +5,20 @@
  */
 package views.edit;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Stroke;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.nio.file.Path;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import services.interfaces.EventConfirmationListener;
 
 /**
  *
@@ -28,9 +31,11 @@ public class ImageHolder extends JButton implements MouseMotionListener {
     final int garbageIconWidth = 25;
     final Point garbageLocation;
     boolean isHoveringGarbage = false;
+    EventConfirmationListener eventConfirmationListener;
 
     final protected Cursor defaultCursor = new Cursor(Cursor.DEFAULT_CURSOR);
     final protected Cursor handCursor = new Cursor(Cursor.HAND_CURSOR);
+    final Stroke garbageStroke = new BasicStroke(2);
 
     public ImageHolder(Path path) {
         ImageIcon originalIcon = new ImageIcon(path.toString());
@@ -48,6 +53,10 @@ public class ImageHolder extends JButton implements MouseMotionListener {
         addMouseMotionListener(this);
     }
 
+    public void setEventConfirmationListener(EventConfirmationListener confirmationListener){
+        this.eventConfirmationListener=confirmationListener;
+    }
+    
     /**
      *
      * @param g
@@ -57,7 +66,7 @@ public class ImageHolder extends JButton implements MouseMotionListener {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(Color.red);
-        g2.fillRect(
+        g2.fillOval(
                 (int) garbageLocation.getX(),
                 (int) garbageLocation.getY(),
                 garbageIconWidth,

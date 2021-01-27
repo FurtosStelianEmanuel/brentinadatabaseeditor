@@ -23,6 +23,18 @@ public class TranslateCuloare {
         de = "";
     }
 
+    public String getEnglish() {
+        return en;
+    }
+
+    public String getHungarian() {
+        return hu;
+    }
+
+    public String getGerman() {
+        return de;
+    }
+
     public static TranslateCuloare emptyInstance() {
         return new TranslateCuloare();
     }

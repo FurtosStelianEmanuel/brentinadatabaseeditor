@@ -17,11 +17,39 @@ import org.json.simple.JSONObject;
  */
 public class Culoare {
 
+    public static List<Culoare> DeepCopy(List<Culoare> culori) {
+        List<Culoare> toReturn = new ArrayList<>();
+        culori.forEach((Culoare c) -> {
+            toReturn.add(new Culoare(c));
+        });
+        return toReturn;
+    }
+
     Color rgb;
     String nume;
     TranslateCuloare translate;
     long unghiuri;
     List<String> alteCulori;
+
+    public String getNume() {
+        return nume;
+    }
+
+    public Color getRGB() {
+        return rgb;
+    }
+
+    public TranslateCuloare getTranslation() {
+        return translate;
+    }
+
+    public long getUnghiuri() {
+        return unghiuri;
+    }
+
+    public List<String> getAlteCulori() {
+        return alteCulori;
+    }
 
     private Culoare() {
         rgb = new Color(0, 0, 0);

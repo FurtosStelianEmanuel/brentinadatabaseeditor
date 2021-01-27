@@ -11,15 +11,18 @@ import javax.swing.JFrame;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import models.produs.TranslateProdus;
+import services.EditCuloriApplicator;
+import services.EditCuloriService;
 import services.EditSimpleStringListsApplicator;
 import services.EditSimpleStringListsService;
 import services.EditTranslateProdusDescrieriApplicator;
 import services.ProdusEditService;
-import services.interfaces.FormEventListener;
 import services.interfaces.FormListenerInterface;
 import services.interfaces.ProdusEditFormInterface;
 import views.edit.EditTranslateProdusDescrieriForm;
 import views.edit.EditSimpleStringListsForm;
+import services.interfaces.EventConfirmationListener;
+import views.edit.EditCuloriForm;
 
 /**
  *
@@ -27,7 +30,7 @@ import views.edit.EditSimpleStringListsForm;
  */
 public class ProdusEdit extends javax.swing.JFrame implements ProdusEditFormInterface, FormListenerInterface {
 
-    FormEventListener listener;
+    EventConfirmationListener listener;
     ProdusEditService service;
 
     /**
@@ -90,8 +93,8 @@ public class ProdusEdit extends javax.swing.JFrame implements ProdusEditFormInte
     }
 
     @Override
-    public void setListener(Object listener) {
-        this.listener = (FormEventListener) listener;
+    public void setListener(EventConfirmationListener listener) {
+        this.listener = listener;
     }
 
     /**
@@ -184,6 +187,11 @@ public class ProdusEdit extends javax.swing.JFrame implements ProdusEditFormInte
         jPanel2.add(jButton6);
 
         jButton4.setText("Culori");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
         jPanel2.add(jButton4);
 
         jButton8.setText("Coduri");
@@ -273,6 +281,10 @@ public class ProdusEdit extends javax.swing.JFrame implements ProdusEditFormInte
         similarePressed(evt);
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        culoriPressed(evt);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton jButton1;
     public javax.swing.JButton jButton2;
@@ -324,7 +336,7 @@ public class ProdusEdit extends javax.swing.JFrame implements ProdusEditFormInte
         descrieriApplicator.autoCompleteData(service.getProdusCopy().translate);
         setEnabled(false);
         translateProdusForm.setVisible(true);
-        translateProdusForm.setListener(new FormEventListener() {
+        translateProdusForm.setListener(new EventConfirmationListener() {
             @Override
             public void onConfirm(Object translateObject) {
                 TranslateProdus translate = (TranslateProdus) translateObject;
@@ -353,7 +365,7 @@ public class ProdusEdit extends javax.swing.JFrame implements ProdusEditFormInte
         dimensiuniApplicator.autoCompleteData(service.getProdusCopy().dimensiuni);
         dimensiuniForm.setVisible(true);
         setEnabled(false);
-        dimensiuniForm.setListener(new FormEventListener() {
+        dimensiuniForm.setListener(new EventConfirmationListener() {
             @Override
             public void onConfirm(Object p) {
                 List<String> dimensiuni = (List<String>) p;
@@ -381,7 +393,7 @@ public class ProdusEdit extends javax.swing.JFrame implements ProdusEditFormInte
         categoriiApplicator.autoCompleteData(service.getProdusCopy().categorii);
         categoriiForm.setVisible(true);
         setEnabled(false);
-        categoriiForm.setListener(new FormEventListener() {
+        categoriiForm.setListener(new EventConfirmationListener() {
             @Override
             public void onConfirm(Object p) {
                 List<String> categorii = (List<String>) p;
@@ -409,7 +421,7 @@ public class ProdusEdit extends javax.swing.JFrame implements ProdusEditFormInte
         similareApplicator.autoCompleteData(service.getProdusCopy().similare);
         similareForm.setVisible(true);
         setEnabled(false);
-        similareForm.setListener(new FormEventListener() {
+        similareForm.setListener(new EventConfirmationListener() {
             @Override
             public void onConfirm(Object p) {
                 List<String> similare = (List<String>) p;
@@ -423,6 +435,33 @@ public class ProdusEdit extends javax.swing.JFrame implements ProdusEditFormInte
             @Override
             public void onFinish(Object o) {
                 toFront(similareForm);
+            }
+        });
+    }
+
+    @Override
+    public void culoriPressed(ActionEvent e) {
+        EditCuloriService culoriService = new EditCuloriService(service.getProdusCopy().culori);
+        EditCuloriForm culoriForm = new EditCuloriForm(culoriService);
+        EditCuloriApplicator culoriApplicator = new EditCuloriApplicator(culoriForm);
+        culoriService.setApplicator(culoriApplicator);
+        culoriApplicator.autoCompleteData(service.getProdusCopy().culori);
+        culoriForm.setVisible(true);
+        setEnabled(false);
+        culoriForm.setListener(new EventConfirmationListener() {
+            @Override
+            public void onConfirm(Object p) {
+                
+            }
+
+            @Override
+            public void onCancel() {
+                
+            }
+
+            @Override
+            public void onFinish(Object o) {
+                toFront(culoriForm);
             }
         });
     }

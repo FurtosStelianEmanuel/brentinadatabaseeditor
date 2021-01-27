@@ -11,8 +11,8 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import services.EditSimpleStringListsService;
-import services.interfaces.FormEventListener;
 import services.interfaces.FormListenerInterface;
+import services.interfaces.EventConfirmationListener;
 
 /**
  *
@@ -21,7 +21,7 @@ import services.interfaces.FormListenerInterface;
 public class EditSimpleStringListsForm extends javax.swing.JFrame implements FormListenerInterface {
 
     EditSimpleStringListsService service;
-    FormEventListener listener;
+    EventConfirmationListener listener;
 
     /**
      * Creates new form EditDimensiuniForm
@@ -36,8 +36,8 @@ public class EditSimpleStringListsForm extends javax.swing.JFrame implements For
     }
 
     @Override
-    public void setListener(Object listener) {
-        this.listener = (FormEventListener) listener;
+    public void setListener(EventConfirmationListener listener) {
+        this.listener = listener;
     }
 
     /**
@@ -133,7 +133,7 @@ public class EditSimpleStringListsForm extends javax.swing.JFrame implements For
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(0, 11, Short.MAX_VALUE))
+                        .addGap(0, 14, Short.MAX_VALUE))
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1)
                     .addComponent(placeholderTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))

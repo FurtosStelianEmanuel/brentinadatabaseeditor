@@ -5,10 +5,17 @@
  */
 package services.interfaces;
 
+import java.io.IOException;
+
 /**
  *
  * @author Manel
  */
-public interface FormListenerInterface {
-    void setListener(EventConfirmationListener e);
+public interface MainFormServiceInterface {
+
+    void save() throws ClassNotFoundException, IOException;
+
+    void load() throws ClassNotFoundException, IOException;
+    
+    void editProdus(int index);
 }

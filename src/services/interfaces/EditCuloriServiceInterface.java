@@ -5,17 +5,12 @@
  */
 package services.interfaces;
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 /**
  *
  * @author Manel
  */
-public interface MainFormInterface {
-
-    void save() throws ClassNotFoundException, IOException;
-
-    void load() throws ClassNotFoundException, IOException;
-    
-    void editProdus(int index);
+public interface EditCuloriServiceInterface {
 }
