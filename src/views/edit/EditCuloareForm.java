@@ -5,8 +5,12 @@
  */
 package views.edit;
 
+import java.awt.Component;
 import java.awt.Graphics;
-import java.nio.file.Paths;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import services.EditCuloareService;
 import services.interfaces.EventConfirmationListener;
 import services.interfaces.FormListenerInterface;
 
@@ -16,11 +20,17 @@ import services.interfaces.FormListenerInterface;
  */
 public class EditCuloareForm extends javax.swing.JFrame implements FormListenerInterface {
 
+    EditCuloareService service;
+
     /**
      * Creates new form EditCuloriForm
+     *
+     * @param service
      */
-    public EditCuloareForm() {
+    public EditCuloareForm(EditCuloareService service) {
         initComponents();
+        this.service = service;
+        /*jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
         jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
         jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
         jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
@@ -29,9 +39,11 @@ public class EditCuloareForm extends javax.swing.JFrame implements FormListenerI
         jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
         jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
         jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
-        jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
-        jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
+        jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));*/
+    }
 
+    public EditCuloareService getService() {
+        return service;
     }
 
     /**
@@ -41,15 +53,15 @@ public class EditCuloareForm extends javax.swing.JFrame implements FormListenerI
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        placeholderTextField1 = new views.PlaceholderTextField();
-        placeholderTextField2 = new views.PlaceholderTextField();
-        placeholderTextField3 = new views.PlaceholderTextField();
-        placeholderTextField4 = new views.PlaceholderTextField();
+        numeCuloare = new views.PlaceholderTextField();
+        englezaCuloare = new views.PlaceholderTextField();
+        maghiaraCuloare = new views.PlaceholderTextField();
+        germanaCuloare = new views.PlaceholderTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jSpinner1 = new javax.swing.JSpinner();
         jSeparator1 = new javax.swing.JSeparator();
-        jButton1 = new javax.swing.JButton(){
+        culoarePaletar = new javax.swing.JButton(){
             @Override
             public void paintComponent(Graphics g){
                 super.paintComponent(g);
@@ -70,13 +82,18 @@ public class EditCuloareForm extends javax.swing.JFrame implements FormListenerI
         jPanel1.add(jLabel1);
 
         jSpinner1.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        jSpinner1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSpinner1StateChanged(evt);
+            }
+        });
         jPanel1.add(jSpinner1);
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jPanel1.add(jSeparator1);
 
-        jButton1.setText("Culoare paletar");
-        jPanel1.add(jButton1);
+        culoarePaletar.setText("Culoare paletar");
+        jPanel1.add(culoarePaletar);
 
         jScrollPane2.setViewportView(jPanel3);
         jScrollPane2.getHorizontalScrollBar().setUnitIncrement(16);
@@ -102,10 +119,10 @@ public class EditCuloareForm extends javax.swing.JFrame implements FormListenerI
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(placeholderTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(placeholderTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(placeholderTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(placeholderTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(numeCuloare, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(englezaCuloare, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(maghiaraCuloare, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(germanaCuloare, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE)
                     .addComponent(jScrollPane2)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -116,13 +133,13 @@ public class EditCuloareForm extends javax.swing.JFrame implements FormListenerI
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(placeholderTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(numeCuloare, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(placeholderTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(englezaCuloare, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(placeholderTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(maghiaraCuloare, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(placeholderTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(germanaCuloare, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -134,10 +151,10 @@ public class EditCuloareForm extends javax.swing.JFrame implements FormListenerI
                 .addContainerGap())
         );
 
-        placeholderTextField1.setPlaceholder("Nume culoare");
-        placeholderTextField2.setPlaceholder("Traducerea in engleza");
-        placeholderTextField3.setPlaceholder("Traducerea in maghiara");
-        placeholderTextField4.setPlaceholder("Traducerea in germana");
+        numeCuloare.setPlaceholder("Nume culoare");
+        englezaCuloare.setPlaceholder("Traducerea in engleza");
+        maghiaraCuloare.setPlaceholder("Traducerea in maghiara");
+        germanaCuloare.setPlaceholder("Traducerea in germana");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -148,12 +165,28 @@ public class EditCuloareForm extends javax.swing.JFrame implements FormListenerI
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        listener.onConfirm(null);
-        listener.onFinish(null);
+        try {
+            service.moveAllImagesToRightFolder(jPanel3.getComponents());
+            service.mapNewImagesToDatabase(jPanel3.getComponents());
+            service.mapAllOtherFieldsToObject();
+            service.mapAllImagesWithBaseColorName();
+            listener.onConfirm(service.getCuloareCopy());
+            listener.onFinish(service.getCuloareCopy());
+        } catch (IOException ex) {
+            Logger.getLogger(EditCuloareForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jSpinner1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner1StateChanged
+        if (service.getApplicator().isAutocompleteDone()) {
+            service.unghiuriChanged((int) jSpinner1.getValue());
+        }
+    }//GEN-LAST:event_jSpinner1StateChanged
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JButton jButton1;
+    public javax.swing.JButton culoarePaletar;
+    public views.PlaceholderTextField englezaCuloare;
+    public views.PlaceholderTextField germanaCuloare;
     public javax.swing.JButton jButton2;
     public javax.swing.JButton jButton3;
     public javax.swing.JLabel jLabel1;
@@ -162,10 +195,8 @@ public class EditCuloareForm extends javax.swing.JFrame implements FormListenerI
     public javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JSeparator jSeparator1;
     public javax.swing.JSpinner jSpinner1;
-    public views.PlaceholderTextField placeholderTextField1;
-    public views.PlaceholderTextField placeholderTextField2;
-    public views.PlaceholderTextField placeholderTextField3;
-    public views.PlaceholderTextField placeholderTextField4;
+    public views.PlaceholderTextField maghiaraCuloare;
+    public views.PlaceholderTextField numeCuloare;
     // End of variables declaration//GEN-END:variables
 
     EventConfirmationListener listener;

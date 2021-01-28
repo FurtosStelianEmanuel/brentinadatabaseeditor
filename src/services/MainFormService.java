@@ -61,6 +61,7 @@ public class MainFormService implements MainFormServiceInterface {
         if (choice == JFileChooser.APPROVE_OPTION) {
             if (chooser.getSelectedFile() != null) {
                 model = databaseService.loadDatabase(chooser.getSelectedFile());
+                Main.PathToDatabase=Paths.get(chooser.getSelectedFile().getParent());
                 mainFormApplicator.updateTable(model);
             }
         }

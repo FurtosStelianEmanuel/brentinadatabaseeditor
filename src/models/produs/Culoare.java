@@ -31,6 +31,26 @@ public class Culoare {
     long unghiuri;
     List<String> alteCulori;
 
+    public void setRgb(Color rgb) {
+        this.rgb = rgb;
+    }
+
+    public void setNume(String nume) {
+        this.nume = nume;
+    }
+
+    public void setTranslate(TranslateCuloare translate) {
+        this.translate = translate;
+    }
+
+    public void setUnghiuri(long unghiuri) {
+        this.unghiuri = unghiuri;
+    }
+
+    public void setAlteCulori(List<String> alteCulori) {
+        this.alteCulori = alteCulori;
+    }
+
     public String getNume() {
         return nume;
     }
@@ -105,7 +125,7 @@ public class Culoare {
         return toReturn;
     }
 
-    Culoare(Culoare culoare) {
+    public Culoare(Culoare culoare) {
         rgb = new Color(culoare.rgb.getRed(), culoare.rgb.getGreen(), culoare.rgb.getBlue());
         nume = culoare.nume;
         unghiuri = culoare.unghiuri;

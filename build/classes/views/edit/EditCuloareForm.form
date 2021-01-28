@@ -26,10 +26,10 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="placeholderTextField1" alignment="0" max="32767" attributes="0"/>
-                  <Component id="placeholderTextField2" alignment="0" max="32767" attributes="0"/>
-                  <Component id="placeholderTextField3" alignment="0" max="32767" attributes="0"/>
-                  <Component id="placeholderTextField4" alignment="0" max="32767" attributes="0"/>
+                  <Component id="numeCuloare" alignment="0" max="32767" attributes="0"/>
+                  <Component id="englezaCuloare" alignment="0" max="32767" attributes="0"/>
+                  <Component id="maghiaraCuloare" alignment="0" max="32767" attributes="0"/>
+                  <Component id="germanaCuloare" alignment="0" max="32767" attributes="0"/>
                   <Component id="jPanel1" alignment="0" pref="483" max="32767" attributes="0"/>
                   <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
                   <Component id="jButton2" alignment="0" max="32767" attributes="0"/>
@@ -43,13 +43,13 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="placeholderTextField1" min="-2" max="-2" attributes="0"/>
+              <Component id="numeCuloare" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="placeholderTextField2" min="-2" max="-2" attributes="0"/>
+              <Component id="englezaCuloare" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="placeholderTextField3" min="-2" max="-2" attributes="0"/>
+              <Component id="maghiaraCuloare" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="placeholderTextField4" min="-2" max="-2" attributes="0"/>
+              <Component id="germanaCuloare" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -64,24 +64,24 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="views.PlaceholderTextField" name="placeholderTextField1">
+    <Component class="views.PlaceholderTextField" name="numeCuloare">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="placeholderTextField1.setPlaceholder(&quot;Nume culoare&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="numeCuloare.setPlaceholder(&quot;Nume culoare&quot;);"/>
       </AuxValues>
     </Component>
-    <Component class="views.PlaceholderTextField" name="placeholderTextField2">
+    <Component class="views.PlaceholderTextField" name="englezaCuloare">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="placeholderTextField2.setPlaceholder(&quot;Traducerea in engleza&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="englezaCuloare.setPlaceholder(&quot;Traducerea in engleza&quot;);"/>
       </AuxValues>
     </Component>
-    <Component class="views.PlaceholderTextField" name="placeholderTextField3">
+    <Component class="views.PlaceholderTextField" name="maghiaraCuloare">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="placeholderTextField3.setPlaceholder(&quot;Traducerea in maghiara&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="maghiaraCuloare.setPlaceholder(&quot;Traducerea in maghiara&quot;);"/>
       </AuxValues>
     </Component>
-    <Component class="views.PlaceholderTextField" name="placeholderTextField4">
+    <Component class="views.PlaceholderTextField" name="germanaCuloare">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="placeholderTextField4.setPlaceholder(&quot;Traducerea in germana&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="germanaCuloare.setPlaceholder(&quot;Traducerea in germana&quot;);"/>
       </AuxValues>
     </Component>
     <Container class="javax.swing.JPanel" name="jPanel1">
@@ -102,13 +102,16 @@
               <SpinnerModel initial="1" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jSpinner1StateChanged"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JSeparator" name="jSeparator1">
           <Properties>
             <Property name="orientation" type="int" value="1"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="culoarePaletar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Culoare paletar"/>
           </Properties>

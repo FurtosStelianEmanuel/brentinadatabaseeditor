@@ -7,6 +7,7 @@ package services;
 
 import java.util.List;
 import models.produs.Culoare;
+import models.produs.Produs;
 
 /**
  *
@@ -17,6 +18,7 @@ public class EditCuloriService {
     List<Culoare> copy;
     List<Culoare> original;
     EditCuloriApplicator applicator;
+    Produs produsCopy;
 
     public List<Culoare> getCopy() {
         return copy;
@@ -26,9 +28,14 @@ public class EditCuloriService {
         return original;
     }
 
-    public EditCuloriService(List<Culoare> culori) {
+    public EditCuloriService(List<Culoare> culori, Produs produs) {
         this.copy = Culoare.DeepCopy(culori);
         this.original = culori;
+        this.produsCopy = new Produs(produs);
+    }
+
+    public Produs getProdusCopy() {
+        return produsCopy;
     }
 
     public void setApplicator(EditCuloriApplicator applicator) {

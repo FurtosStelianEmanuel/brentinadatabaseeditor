@@ -441,7 +441,7 @@ public class ProdusEdit extends javax.swing.JFrame implements ProdusEditFormInte
 
     @Override
     public void culoriPressed(ActionEvent e) {
-        EditCuloriService culoriService = new EditCuloriService(service.getProdusCopy().culori);
+        EditCuloriService culoriService = new EditCuloriService(service.getProdusCopy().culori, service.getProdusCopy());
         EditCuloriForm culoriForm = new EditCuloriForm(culoriService);
         EditCuloriApplicator culoriApplicator = new EditCuloriApplicator(culoriForm);
         culoriService.setApplicator(culoriApplicator);
@@ -451,12 +451,12 @@ public class ProdusEdit extends javax.swing.JFrame implements ProdusEditFormInte
         culoriForm.setListener(new EventConfirmationListener() {
             @Override
             public void onConfirm(Object p) {
-                
+
             }
 
             @Override
             public void onCancel() {
-                
+
             }
 
             @Override

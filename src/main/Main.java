@@ -26,6 +26,8 @@ public class Main {
     MainForm mainForm;
 
     public static Path Path = Paths.get(SystemManager.get_path("brentinaeditor.jar"));
+    public static Path PathToImageBank=Paths.get("views","preview","imagini");
+    public static Path PathToDatabase;
 
     Main() {
         databaseService = new DatabaseService();

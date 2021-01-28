@@ -47,6 +47,14 @@ public class TranslateCuloare {
         return toReturn;
     }
 
+    public static TranslateCuloare fromStrings(String en, String hu, String de) {
+        TranslateCuloare tCuloare = new TranslateCuloare();
+        tCuloare.en = en;
+        tCuloare.hu = hu;
+        tCuloare.de = de;
+        return tCuloare;
+    }
+
     TranslateCuloare(TranslateCuloare translate) {
         en = translate.en;
         hu = translate.hu;
