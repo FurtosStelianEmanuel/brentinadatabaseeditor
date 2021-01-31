@@ -5,11 +5,13 @@
  */
 package views.edit;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JColorChooser;
 import services.EditCuloareService;
 import services.interfaces.EventConfirmationListener;
 import services.interfaces.FormListenerInterface;
@@ -93,6 +95,11 @@ public class EditCuloareForm extends javax.swing.JFrame implements FormListenerI
         jPanel1.add(jSeparator1);
 
         culoarePaletar.setText("Culoare paletar");
+        culoarePaletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                culoarePaletarActionPerformed(evt);
+            }
+        });
         jPanel1.add(culoarePaletar);
 
         jScrollPane2.setViewportView(jPanel3);
@@ -166,10 +173,10 @@ public class EditCuloareForm extends javax.swing.JFrame implements FormListenerI
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         try {
+            service.mapAllOtherFieldsToObject();
             service.moveAllImagesToRightFolder(jPanel3.getComponents());
             service.mapNewImagesToDatabase(jPanel3.getComponents());
-            service.mapAllOtherFieldsToObject();
-            service.mapAllImagesWithBaseColorName();
+            //service.mapAllImagesWithBaseColorName();
             listener.onConfirm(service.getCuloareCopy());
             listener.onFinish(service.getCuloareCopy());
         } catch (IOException ex) {
@@ -182,6 +189,14 @@ public class EditCuloareForm extends javax.swing.JFrame implements FormListenerI
             service.unghiuriChanged((int) jSpinner1.getValue());
         }
     }//GEN-LAST:event_jSpinner1StateChanged
+
+    private void culoarePaletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_culoarePaletarActionPerformed
+        Color showDialogColor = JColorChooser.showDialog(null, "Alegeti o culoare pentru paletar", Color.yellow);
+        if (showDialogColor!=null){
+            service.paletarColorChanged(showDialogColor);
+            culoarePaletar.setBackground(showDialogColor);
+        }
+    }//GEN-LAST:event_culoarePaletarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton culoarePaletar;

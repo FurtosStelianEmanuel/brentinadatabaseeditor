@@ -47,10 +47,8 @@ public class EditCuloriForm extends javax.swing.JFrame implements FormListenerIn
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -77,22 +75,6 @@ public class EditCuloriForm extends javax.swing.JFrame implements FormListenerIn
             }
         });
 
-        jButton4.setText("Mai sus in lista");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton4);
-
-        jButton5.setText("Mai jos in lista");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton5);
-
         jButton6.setText("Delete");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,11 +83,16 @@ public class EditCuloriForm extends javax.swing.JFrame implements FormListenerIn
         });
         jPanel1.add(jButton6);
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Puteti folosi si sagetile ca sa mutati in sus sau in jos culoarea selectata");
+        jButton1.setText("Adauga o noua culoare");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1);
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Sau tasta delete pentru a sterge o culoare");
+        jLabel2.setText("Tasta delete pentru a sterge o culoare");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -117,10 +104,9 @@ public class EditCuloriForm extends javax.swing.JFrame implements FormListenerIn
                     .addComponent(jScrollPane1)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE))
                 .addContainerGap())
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -130,10 +116,8 @@ public class EditCuloriForm extends javax.swing.JFrame implements FormListenerIn
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(28, 28, 28)
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3)
@@ -149,8 +133,8 @@ public class EditCuloriForm extends javax.swing.JFrame implements FormListenerIn
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        confirmationListener.onConfirm(null);
-        confirmationListener.onFinish(null);
+        confirmationListener.onConfirm(service.getCopy());
+        confirmationListener.onFinish(service.getCopy());
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
@@ -159,24 +143,18 @@ public class EditCuloriForm extends javax.swing.JFrame implements FormListenerIn
         }
     }//GEN-LAST:event_jList1MouseClicked
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-
-    }//GEN-LAST:event_jButton5ActionPerformed
-
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        newCuloare();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton jButton1;
     public javax.swing.JButton jButton2;
     public javax.swing.JButton jButton3;
-    public javax.swing.JButton jButton4;
-    public javax.swing.JButton jButton5;
     public javax.swing.JButton jButton6;
-    public javax.swing.JLabel jLabel1;
     public javax.swing.JLabel jLabel2;
     public javax.swing.JList<String> jList1;
     public javax.swing.JPanel jPanel1;
@@ -186,6 +164,37 @@ public class EditCuloriForm extends javax.swing.JFrame implements FormListenerIn
     @Override
     public void setListener(EventConfirmationListener o) {
         this.confirmationListener = o;
+    }
+
+    public void newCuloare() {
+        Culoare newCuloare = Culoare.emptyInstance();
+        newCuloare.setUnghiuri(1);
+        EditCuloareService culoareService = new EditCuloareService(newCuloare, service.getProdusCopy());
+        EditCuloareForm culoareForm = new EditCuloareForm(culoareService);
+        EditCuloareApplicator applicator = new EditCuloareApplicator(culoareForm);
+        applicator.autoCompleteData(null);
+        culoareService.setApplicator(applicator);
+        setEnabled(false);
+        culoareForm.setVisible(true);
+        culoareForm.setListener(new EventConfirmationListener() {
+            @Override
+            public void onConfirm(Object p) {
+                Culoare culoare = (Culoare) p;
+                service.getCopy().add(culoare);
+                service.reapplyVisuals();
+            }
+
+            @Override
+            public void onCancel() {
+            }
+
+            @Override
+            public void onFinish(Object o) {
+                culoareForm.dispose();
+                setEnabled(true);
+                toFront();
+            }
+        });
     }
 
     public void culoareSelected(int index) {
@@ -201,6 +210,7 @@ public class EditCuloriForm extends javax.swing.JFrame implements FormListenerIn
             public void onConfirm(Object p) {
                 Culoare culoare = (Culoare) p;
                 service.getCopy().set(index, culoare);
+                service.reapplyVisuals();
             }
 
             @Override

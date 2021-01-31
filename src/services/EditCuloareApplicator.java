@@ -56,39 +56,46 @@ public class EditCuloareApplicator implements InitialCompleteInterface {
     }
 
     public void setAvailableImages(Culoare c) {
-        if (c.getUnghiuri() > 1) {
-            for (int i = 1; i <= c.getUnghiuri(); i++) {
+        if (c != null) {
+            if (c.getUnghiuri() > 1) {
+                for (int i = 1; i <= c.getUnghiuri(); i++) {
+                    File f = Paths.get(
+                            Main.PathToDatabase.toString(),
+                            "views",
+                            "preview",
+                            "imagini",
+                            form.getService().produsCopy.nume,
+                            String.format("%s_%d.jpg", c.getNume(), i)
+                    ).toFile();
+                    if (!f.exists()) {
+                        System.out.println("Nu am gasit imagine pentru culoarea " + String.format("%s_%d.jpg", c.getNume(), i));
+                    } else {
+                        ImageHolder holder = new ImageHolder(f.toPath());
+                        holder.addActionListener(ADD_IMAGE_ACTIONLISTENER);
+                        form.jPanel3.add(holder);
+                    }
+                }
+            } else if (c.getUnghiuri() == 1) {
                 File f = Paths.get(
                         Main.PathToDatabase.toString(),
                         "views",
                         "preview",
                         "imagini",
                         form.getService().produsCopy.nume,
-                        String.format("%s_%d.jpg", c.getNume(), i)
+                        String.format("%s.jpg", c.getNume())
                 ).toFile();
                 if (!f.exists()) {
-                    System.out.println("Nu am gasit imagine pentru culoarea " + String.format("%s_%d.jpg", c.getNume(), i));
+                    System.out.println("Nu am gasit imagine pentru culoarea " + String.format("%s.jpg", c.getNume()));
                 } else {
                     ImageHolder holder = new ImageHolder(f.toPath());
                     holder.addActionListener(ADD_IMAGE_ACTIONLISTENER);
                     form.jPanel3.add(holder);
                 }
             }
-        } else if (c.getUnghiuri() == 1) {
-            File f = Paths.get(
-                    Main.PathToDatabase.toString(),
-                    "views",
-                    "preview",
-                    "imagini",
-                    form.getService().produsCopy.nume,
-                    String.format("%s.jpg", c.getNume())
-            ).toFile();
-            if (!f.exists()) {
-                System.out.println("Nu am gasit imagine pentru culoarea " + String.format("%s.jpg", c.getNume()));
-            } else {
-                ImageHolder holder = new ImageHolder(f.toPath());
-                form.jPanel3.add(holder);
-            }
+        } else {
+            ImageHolder holder = new ImageHolder("Adauga o imagine");
+            holder.addActionListener(ADD_IMAGE_ACTIONLISTENER);
+            form.jPanel3.add(holder);
         }
     }
 
@@ -100,16 +107,22 @@ public class EditCuloareApplicator implements InitialCompleteInterface {
 
     @Override
     public void autoCompleteData(Object formDataObject) {
-        isAutocompleteDone = false;
-        Culoare culoare = (Culoare) formDataObject;
-        form.numeCuloare.setText(culoare.getNume());
-        form.englezaCuloare.setText(culoare.getTranslation().getEnglish());
-        form.maghiaraCuloare.setText(culoare.getTranslation().getHungarian());
-        form.germanaCuloare.setText(culoare.getTranslation().getGerman());
-        form.jSpinner1.setValue(culoare.getUnghiuri());
-        form.culoarePaletar.setBackground(culoare.getRGB());
-        setAvailableImages(culoare);
-        isAutocompleteDone = true;
+        if (formDataObject != null) {
+            isAutocompleteDone = false;
+            Culoare culoare = (Culoare) formDataObject;
+            form.numeCuloare.setText(culoare.getNume());
+            form.englezaCuloare.setText(culoare.getTranslation().getEnglish());
+            form.maghiaraCuloare.setText(culoare.getTranslation().getHungarian());
+            form.germanaCuloare.setText(culoare.getTranslation().getGerman());
+            form.jSpinner1.setValue(culoare.getUnghiuri());
+            form.culoarePaletar.setBackground(culoare.getRGB());
+            setAvailableImages(culoare);
+            isAutocompleteDone = true;
+        } else {
+            isAutocompleteDone = false;
+            setAvailableImages(null);
+            isAutocompleteDone = true;
+        }
     }
 
     void repaint() {

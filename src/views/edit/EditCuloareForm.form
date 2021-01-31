@@ -115,6 +115,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Culoare paletar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="culoarePaletarActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JButton(){&#xa;    @Override&#xa;    public void paintComponent(Graphics g){&#xa;        super.paintComponent(g);&#xa;        g.setColor(getBackground());&#xa;        g.fillRect(0,0,15,15);&#xa;    }&#xa;}"/>
           </AuxValues>

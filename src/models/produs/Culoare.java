@@ -25,6 +25,10 @@ public class Culoare {
         return toReturn;
     }
 
+    public static Culoare emptyInstance() {
+        return new Culoare();
+    }
+
     Color rgb;
     String nume;
     TranslateCuloare translate;

@@ -51,7 +51,7 @@ public class MainFormService implements MainFormServiceInterface {
 
     @Override
     public void save() throws ClassNotFoundException, IOException {
-        databaseService.saveDatabase(model, Paths.get("C:","users","manel","desktop","output.json").toFile());
+        databaseService.saveDatabase(model, Paths.get("C:", "users", "manel", "desktop", "output.json").toFile());
     }
 
     @Override
@@ -61,7 +61,7 @@ public class MainFormService implements MainFormServiceInterface {
         if (choice == JFileChooser.APPROVE_OPTION) {
             if (chooser.getSelectedFile() != null) {
                 model = databaseService.loadDatabase(chooser.getSelectedFile());
-                Main.PathToDatabase=Paths.get(chooser.getSelectedFile().getParent());
+                Main.PathToDatabase = Paths.get(chooser.getSelectedFile().getParent());
                 mainFormApplicator.updateTable(model);
             }
         }

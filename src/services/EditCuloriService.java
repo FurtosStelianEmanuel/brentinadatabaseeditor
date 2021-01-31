@@ -41,4 +41,9 @@ public class EditCuloriService {
     public void setApplicator(EditCuloriApplicator applicator) {
         this.applicator = applicator;
     }
+
+    public void reapplyVisuals() {
+        applicator.clear();
+        applicator.autoCompleteData(copy);
+    }
 }

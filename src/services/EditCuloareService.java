@@ -5,6 +5,7 @@
  */
 package services;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.io.File;
 import java.io.IOException;
@@ -76,22 +77,35 @@ public class EditCuloareService {
         if (copy.getUnghiuri() > 1) {
             for (int i = 0; i < imageHolders.size(); i++) {
                 ImageHolder imageHolder = imageHolders.get(i);
-                if (!imageHolder.getPathToImage().getParent().equals(productImageBank)) {
-                    Path outputPath = Paths.get(
-                            productImageBank.toString(),
-                            String.format("%s_%d.jpg",
-                                    copy.getNume(), i + 1)
-                    );
-                    Files.copy(
-                            imageHolder.getPathToImage(),
-                            outputPath,
-                            StandardCopyOption.REPLACE_EXISTING
-                    );
-                    ImageHolder.writeCompressedImage(outputPath.toFile(), 0.7, 0.7);
-                }
+                //if (!imageHolder.getPathToImage().getParent().equals(productImageBank)) {
+                Path outputPath = Paths.get(
+                        productImageBank.toString(),
+                        String.format("%s_%d.jpg",
+                                applicator.form.numeCuloare.getText(), i + 1)
+                );
+                Files.copy(
+                        imageHolder.getPathToImage(),
+                        outputPath,
+                        StandardCopyOption.REPLACE_EXISTING
+                );
+                ImageHolder.writeCompressedImage(outputPath.toFile(), 0.7, 0.7);
+                //}
             }
-        } else {
-            throw new UnsupportedOperationException("implementeaza ma si pe mine");
+        } else if (copy.getUnghiuri() == 1) {
+            ImageHolder imageHolder = imageHolders.get(0);
+            //if (!imageHolder.getPathToImage().getParent().equals(productImageBank)) {
+            Path outputPath = Paths.get(
+                    productImageBank.toString(),
+                    String.format("%s.jpg",
+                            applicator.form.numeCuloare.getText())
+            );
+            Files.copy(
+                    imageHolder.getPathToImage(),
+                    outputPath,
+                    StandardCopyOption.REPLACE_EXISTING
+            );
+            ImageHolder.writeCompressedImage(outputPath.toFile(), 0.7, 0.7);
+            //}
         }
     }
 
@@ -150,8 +164,28 @@ public class EditCuloareService {
                     System.out.println("fisier inexistent " + f.toString());
                 }
             }
-        } else {
-            throw new UnsupportedOperationException("implementeaza ma si pe mine");
+        } else if (imageHolders.size() == 1) {
+            ImageHolder imageHolder = imageHolders.get(0);
+            File f = imageHolder.getPathToImage().toFile();
+            if (f.exists()) {
+                String newName = f.getName().replace(original.getNume(), copy.getNume());
+                if (!f.renameTo(Paths.get(f.getParent(), newName).toFile())) {
+                    System.out.println("Nu am putut da rename " + f.toString());
+                }
+                File minImage = Paths.get(f.getPath().replace(".jpg", "-min.jpg")).toFile();
+                String newMinImageName = minImage.getName().replace(original.getNume(), copy.getNume());
+                if (minImage.exists()) {
+                    if (!minImage.renameTo(Paths.get(minImage.getParent(), newMinImageName).toFile())) {
+                        System.out.println("Nu am putut da rename la min file" + minImage.toString());
+                    }
+                }
+            } else {
+                System.out.println("fisier inexistent " + f.toString());
+            }
         }
+    }
+
+    public void paletarColorChanged(Color showDialogColor) {
+        copy.setRgb(showDialogColor);
     }
 }

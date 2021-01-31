@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import models.produs.Culoare;
 import models.produs.TranslateProdus;
 import services.EditCuloriApplicator;
 import services.EditCuloriService;
@@ -451,7 +452,8 @@ public class ProdusEdit extends javax.swing.JFrame implements ProdusEditFormInte
         culoriForm.setListener(new EventConfirmationListener() {
             @Override
             public void onConfirm(Object p) {
-
+                List<Culoare>culori=(List<Culoare>)p;
+                service.culoriChanged(culori, "");
             }
 
             @Override

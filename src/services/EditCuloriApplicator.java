@@ -33,6 +33,11 @@ public class EditCuloriApplicator extends InitialComplete implements EditCuloriA
             model.addElement(culoare.getNume());
         });
     }
+
+    void clear() {
+        DefaultListModel model = (DefaultListModel) form.jList1.getModel();
+        model.clear();
+    }
 }
 
 interface EditCuloriApplicatorInterface {

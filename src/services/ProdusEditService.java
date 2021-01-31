@@ -71,7 +71,7 @@ public class ProdusEditService implements ProdusEditInterface {
 
     @Override
     public void culoriChanged(List<Culoare> culori, String imagineDefault) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        copyProdus.culori=culori;
     }
 
     @Override
