@@ -453,7 +453,7 @@ public class ProdusEdit extends javax.swing.JFrame implements ProdusEditFormInte
             @Override
             public void onConfirm(Object p) {
                 List<Culoare>culori=(List<Culoare>)p;
-                service.culoriChanged(culori, "");
+                service.culoriChanged(culori);
             }
 
             @Override

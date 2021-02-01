@@ -9,8 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.nio.file.Paths;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import main.Main;
 import models.produs.Culoare;
@@ -118,15 +118,35 @@ public class EditCuloareApplicator implements InitialCompleteInterface {
             form.jSpinner1.setValue(culoare.getUnghiuri());
             form.culoarePaletar.setBackground(culoare.getRGB());
             setAvailableImages(culoare);
+            form.jPanel2.setVisible(culoare.getNume().equals("multi"));
+            if (form.jPanel2.isVisible()) {
+                if (culoare.getAlteCulori() != null) {
+                    form.jSpinner1.setEnabled(false);
+                    form.numeCuloare.setEnabled(false);
+                    DefaultComboBoxModel model = (DefaultComboBoxModel) form.alteCulori.getModel();
+                    for (String altaCuloare : culoare.getAlteCulori()) {
+                        model.addElement(altaCuloare);
+                    }
+                }
+            }
             isAutocompleteDone = true;
         } else {
             isAutocompleteDone = false;
             setAvailableImages(null);
+            form.jPanel2.setVisible(false);
             isAutocompleteDone = true;
         }
     }
 
     void repaint() {
         form.repaint();
+    }
+
+    void alteCuloriChanged(List<String> alteCulori) {
+        DefaultComboBoxModel model = (DefaultComboBoxModel) form.alteCulori.getModel();
+        model.removeAllElements();
+        alteCulori.forEach(culoare -> {
+            model.addElement(culoare);
+        });
     }
 }

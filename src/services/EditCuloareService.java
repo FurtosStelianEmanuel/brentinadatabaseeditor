@@ -15,6 +15,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import main.Main;
 import models.produs.Culoare;
 import models.produs.Produs;
@@ -122,6 +123,15 @@ public class EditCuloareService {
         copy.setUnghiuri(imageHolders.size());
     }
 
+    private List<String> getAlteCulori() {
+        DefaultComboBoxModel model = (DefaultComboBoxModel) applicator.form.alteCulori.getModel();
+        List<String> toReturn = new ArrayList<>();
+        for (int i = 0; i < model.getSize(); i++) {
+            toReturn.add((String) model.getElementAt(i));
+        }
+        return toReturn;
+    }
+
     public void mapAllOtherFieldsToObject() {
         copy.setNume(applicator.form.numeCuloare.getText());
         TranslateCuloare tCuloare = TranslateCuloare.fromStrings(
@@ -131,7 +141,7 @@ public class EditCuloareService {
         );
         copy.setTranslate(tCuloare);
         copy.setRgb(applicator.form.culoarePaletar.getBackground());
-        copy.setAlteCulori(copy.getAlteCulori());//AICI MAI TREBUIE LUCRAT !!!!, INCA de pe ui nu poti sa adaugi alte culori
+        copy.setAlteCulori(getAlteCulori());
     }
 
     public void mapAllImagesWithBaseColorName() {
@@ -187,5 +197,16 @@ public class EditCuloareService {
 
     public void paletarColorChanged(Color showDialogColor) {
         copy.setRgb(showDialogColor);
+    }
+
+    public void alteCuloriChanged(String newCuloare) throws Exception {
+        if (!copy.getAlteCulori().contains(newCuloare)) {
+            List<String> alteCulori = copy.getAlteCulori();
+            alteCulori.add(newCuloare);
+            copy.setAlteCulori(alteCulori);
+            applicator.alteCuloriChanged(alteCulori);
+        } else {
+            throw new Exception("Aceasta culoare este deja adaugata");
+        }
     }
 }

@@ -11,7 +11,13 @@ import java.awt.Graphics;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JColorChooser;
+import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
 import services.EditCuloareService;
 import services.interfaces.EventConfirmationListener;
 import services.interfaces.FormListenerInterface;
@@ -32,16 +38,31 @@ public class EditCuloareForm extends javax.swing.JFrame implements FormListenerI
     public EditCuloareForm(EditCuloareService service) {
         initComponents();
         this.service = service;
-        /*jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
-        jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
-        jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
-        jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
-        jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
-        jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
-        jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
-        jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
-        jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));
-        jPanel3.add(new ImageHolder(Paths.get("c:", "users", "manel", "desktop", "argint_2.jpg")));*/
+        numeCuloare.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent de) {
+                Document d = de.getDocument();
+                try {
+                    String text = d.getText(0, d.getLength());
+                    if (text.contains("multi")){
+                        numeCuloare.setEnabled(false);
+                        jSpinner1.setValue(1);
+                        jSpinner1.setEnabled(false);
+                        jPanel2.setVisible(true);
+                    }
+                } catch (BadLocationException ex) {
+                    Logger.getLogger(EditCuloareForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent de) {
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent de) {
+            }
+        });
     }
 
     public EditCuloareService getService() {
@@ -75,6 +96,10 @@ public class EditCuloareForm extends javax.swing.JFrame implements FormListenerI
         jPanel3 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        alteCulori = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
@@ -119,6 +144,26 @@ public class EditCuloareForm extends javax.swing.JFrame implements FormListenerI
             }
         });
 
+        jPanel2.setLayout(new java.awt.GridLayout());
+
+        jPanel2.add(alteCulori);
+
+        jButton1.setText("Sterge");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton1);
+
+        jButton4.setText("Adauga");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton4);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -133,7 +178,8 @@ public class EditCuloareForm extends javax.swing.JFrame implements FormListenerI
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE)
                     .addComponent(jScrollPane2)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -149,8 +195,10 @@ public class EditCuloareForm extends javax.swing.JFrame implements FormListenerI
                 .addComponent(germanaCuloare, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -192,20 +240,40 @@ public class EditCuloareForm extends javax.swing.JFrame implements FormListenerI
 
     private void culoarePaletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_culoarePaletarActionPerformed
         Color showDialogColor = JColorChooser.showDialog(null, "Alegeti o culoare pentru paletar", Color.yellow);
-        if (showDialogColor!=null){
+        if (showDialogColor != null) {
             service.paletarColorChanged(showDialogColor);
             culoarePaletar.setBackground(showDialogColor);
         }
     }//GEN-LAST:event_culoarePaletarActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        DefaultComboBoxModel model = (DefaultComboBoxModel) alteCulori.getModel();
+        if (alteCulori.getSelectedIndex() != -1) {
+            model.removeElementAt(alteCulori.getSelectedIndex());
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        String newCuloare = JOptionPane.showInputDialog(null, "Alta culoare:");
+        try {
+            service.alteCuloriChanged(newCuloare);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JComboBox<String> alteCulori;
     public javax.swing.JButton culoarePaletar;
     public views.PlaceholderTextField englezaCuloare;
     public views.PlaceholderTextField germanaCuloare;
+    public javax.swing.JButton jButton1;
     public javax.swing.JButton jButton2;
     public javax.swing.JButton jButton3;
+    public javax.swing.JButton jButton4;
     public javax.swing.JLabel jLabel1;
     public javax.swing.JPanel jPanel1;
+    public javax.swing.JPanel jPanel2;
     public javax.swing.JPanel jPanel3;
     public javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JSeparator jSeparator1;

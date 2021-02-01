@@ -70,7 +70,7 @@ public class ProdusEditService implements ProdusEditInterface {
     }
 
     @Override
-    public void culoriChanged(List<Culoare> culori, String imagineDefault) {
+    public void culoriChanged(List<Culoare> culori) {
         copyProdus.culori=culori;
     }
 

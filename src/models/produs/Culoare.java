@@ -122,7 +122,7 @@ public class Culoare {
             culoareObject.put("translate", translate);
             culoareObject.put("unghiuri", culoare.unghiuri);
             if (culoare.alteCulori != null) {
-                if (culoare.alteCulori.size() > 0) {
+                if (culoare.alteCulori.size() > 0 && culoare.nume.equals("multi")) {
                     culoareObject.put("alteCulori", culoare.alteCulori);
                 }
             }
@@ -136,5 +136,9 @@ public class Culoare {
         nume = culoare.nume;
         unghiuri = culoare.unghiuri;
         translate = new TranslateCuloare(culoare.translate);
+        alteCulori = new ArrayList<>();
+        culoare.alteCulori.forEach(altaCuloare->{
+            alteCulori.add(altaCuloare);
+        });
     }
 }

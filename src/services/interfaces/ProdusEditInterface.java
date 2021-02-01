@@ -28,7 +28,7 @@ public interface ProdusEditInterface {
 
     void coduriSiPreturiChanged(List<DimensiuneCulori> coduriSiPreturi);
 
-    void culoriChanged(List<Culoare> culori, String imagineDefault);
+    void culoriChanged(List<Culoare> culori);
 
     void similareChanged(List<String> similare);
 

@@ -5,17 +5,13 @@
  */
 package models.produs;
 
-import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import models.database.DatabaseModel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
-import services.DatabaseService;
 
 /**
  *
