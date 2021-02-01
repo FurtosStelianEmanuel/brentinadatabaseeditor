@@ -85,7 +85,8 @@ public class EditCuloareApplicator implements InitialCompleteInterface {
                         String.format("%s.jpg", c.getNume())
                 ).toFile();
                 if (!f.exists()) {
-                    System.out.println("Nu am gasit imagine pentru culoarea " + String.format("%s.jpg", c.getNume()));
+                    System.out.println("Nu am gasit imagine pentru culoarea)" + String.format("%s.jpg", c.getNume()));
+                    //cand iti da asta, verifica daca jsonu e pus in folderu bun
                 } else {
                     ImageHolder holder = new ImageHolder(f.toPath());
                     holder.addActionListener(ADD_IMAGE_ACTIONLISTENER);

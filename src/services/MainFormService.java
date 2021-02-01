@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import javax.swing.JFileChooser;
 import main.Main;
 import models.database.DatabaseModel;
+import models.produs.Produs;
 import services.interfaces.FormListenerInterface;
 import views.MainForm;
 import views.ProdusEdit;
@@ -83,7 +84,8 @@ public class MainFormService implements MainFormServiceInterface {
         produsEditForm.setListener(new EventConfirmationListener() {
             @Override
             public void onConfirm(Object produsObject) {
-                System.out.println("Confirmare mare");
+                Produs produs = (Produs) produsObject;
+                model.continut.set(index, produs);
             }
 
             @Override

@@ -144,6 +144,9 @@ public class EditCuloriForm extends javax.swing.JFrame implements FormListenerIn
     }//GEN-LAST:event_jList1MouseClicked
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        if (jList1.getSelectedIndex() != -1) {
+            culoareDeleted(jList1.getSelectedIndex());
+        }
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -224,5 +227,10 @@ public class EditCuloriForm extends javax.swing.JFrame implements FormListenerIn
                 toFront();
             }
         });
+    }
+
+    private void culoareDeleted(int selectedIndex) {
+        service.getCopy().remove(selectedIndex);
+        service.reapplyVisuals();
     }
 }

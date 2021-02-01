@@ -121,8 +121,10 @@ public class Culoare {
             translate.put("de", culoare.translate.de);
             culoareObject.put("translate", translate);
             culoareObject.put("unghiuri", culoare.unghiuri);
-            if (culoare.alteCulori.size() > 0) {
-                culoareObject.put("alteCulori", culoare.alteCulori);
+            if (culoare.alteCulori != null) {
+                if (culoare.alteCulori.size() > 0) {
+                    culoareObject.put("alteCulori", culoare.alteCulori);
+                }
             }
             toReturn.add(culoareObject);
         }

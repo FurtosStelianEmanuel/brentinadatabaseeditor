@@ -5,19 +5,14 @@
         <group>
             <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/services/EditCuloareApplicator.java</file>
             <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/views/ProdusEdit.java</file>
+            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/services/ProdusEditApplicator.java</file>
+            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/views/edit/EditCuloriForm.java</file>
             <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/views/edit/EditCuloareForm.java</file>
             <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/services/EditCuloareService.java</file>
-            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/models/produs/Culoare.java</file>
             <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/services/ProdusEditService.java</file>
+            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/models/produs/Culoare.java</file>
             <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/services/EditCuloriService.java</file>
-            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/views/edit/ImageHolder.java</file>
             <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/services/MainFormService.java</file>
-            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/models/produs/TranslateCuloare.java</file>
-            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/main/Main.java</file>
-            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/views/edit/EditCuloriForm.java</file>
-            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/models/produs/Produs.java</file>
-            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/services/EditCuloriApplicator.java</file>
-            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/models/database/DatabaseModel.java</file>
         </group>
     </open-files>
 </project-private>
