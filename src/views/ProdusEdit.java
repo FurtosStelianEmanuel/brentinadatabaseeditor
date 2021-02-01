@@ -12,6 +12,8 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import models.produs.Culoare;
 import models.produs.TranslateProdus;
+import services.EditCoduriApplicator;
+import services.EditCoduriService;
 import services.EditCuloriApplicator;
 import services.EditCuloriService;
 import services.EditSimpleStringListsApplicator;
@@ -23,6 +25,7 @@ import services.interfaces.ProdusEditFormInterface;
 import views.edit.EditTranslateProdusDescrieriForm;
 import views.edit.EditSimpleStringListsForm;
 import services.interfaces.EventConfirmationListener;
+import views.edit.EditCoduriForm;
 import views.edit.EditCuloriForm;
 
 /**
@@ -196,6 +199,11 @@ public class ProdusEdit extends javax.swing.JFrame implements ProdusEditFormInte
         jPanel2.add(jButton4);
 
         jButton8.setText("Coduri");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
         jPanel2.add(jButton8);
 
         jPanel3.setLayout(new java.awt.GridLayout(1, 0));
@@ -285,6 +293,10 @@ public class ProdusEdit extends javax.swing.JFrame implements ProdusEditFormInte
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         culoriPressed(evt);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        coduriPressed(evt);
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton jButton1;
@@ -452,7 +464,7 @@ public class ProdusEdit extends javax.swing.JFrame implements ProdusEditFormInte
         culoriForm.setListener(new EventConfirmationListener() {
             @Override
             public void onConfirm(Object p) {
-                List<Culoare>culori=(List<Culoare>)p;
+                List<Culoare> culori = (List<Culoare>) p;
                 service.culoriChanged(culori);
             }
 
@@ -464,6 +476,31 @@ public class ProdusEdit extends javax.swing.JFrame implements ProdusEditFormInte
             @Override
             public void onFinish(Object o) {
                 toFront(culoriForm);
+            }
+        });
+    }
+
+    @Override
+    public void coduriPressed(ActionEvent e) {
+        EditCoduriService coduriService = new EditCoduriService(service.getProdusCopy().coduriSiPreturi);
+        EditCoduriForm coduriForm = new EditCoduriForm();
+        EditCoduriApplicator coduriApplicator = new EditCoduriApplicator(coduriForm);
+        coduriService.setApplicator(coduriApplicator);
+        coduriApplicator.autoCompleteData(service.getProdusCopy().coduriSiPreturi);
+        setEnabled(false);
+        coduriForm.setVisible(true);
+        coduriForm.setListener(new EventConfirmationListener() {
+            @Override
+            public void onConfirm(Object p) {
+            }
+
+            @Override
+            public void onCancel() {
+            }
+
+            @Override
+            public void onFinish(Object o) {
+                toFront(coduriForm);
             }
         });
     }

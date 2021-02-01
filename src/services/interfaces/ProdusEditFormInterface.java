@@ -28,4 +28,6 @@ public interface ProdusEditFormInterface {
     void similarePressed(ActionEvent e);
     
     void culoriPressed(ActionEvent e);
+    
+    void coduriPressed(ActionEvent e);
 }

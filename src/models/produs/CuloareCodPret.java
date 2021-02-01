@@ -44,4 +44,16 @@ public class CuloareCodPret {
         cod = culoareCodPret.cod;
         pret = culoareCodPret.pret;
     }
+
+    public String getNume() {
+        return nume;
+    }
+
+    public String getCod() {
+        return cod;
+    }
+
+    public String getPret() {
+        return pret;
+    }
 }

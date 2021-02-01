@@ -19,6 +19,10 @@ public class DimensiuneCulori {
     String dimensiune;
     List<CuloareCodPret> data;
 
+    public List<CuloareCodPret> getData() {
+        return data;
+    }
+
     private DimensiuneCulori() {
         data = new ArrayList<>();
         dimensiune = "";
@@ -37,10 +41,10 @@ public class DimensiuneCulori {
     }
 
     DimensiuneCulori(DimensiuneCulori source) {
-        data=new ArrayList<>();
-        dimensiune=source.dimensiune;
-        
-        source.data.forEach((CuloareCodPret culoareCodPret)->{
+        data = new ArrayList<>();
+        dimensiune = source.dimensiune;
+
+        source.data.forEach((CuloareCodPret culoareCodPret) -> {
             data.add(new CuloareCodPret(culoareCodPret));
         });
     }
@@ -50,9 +54,9 @@ public class DimensiuneCulori {
         JSONObject culoriCuCoduriSiPret = new JSONObject();
         for (CuloareCodPret ccp : data) {
             JSONArray codSiPret = new JSONArray();
-            codSiPret.add(ccp.cod);
-            codSiPret.add(ccp.pret);
-            culoriCuCoduriSiPret.put(ccp.nume, codSiPret);
+            codSiPret.add(ccp.getCod());
+            codSiPret.add(ccp.getPret());
+            culoriCuCoduriSiPret.put(ccp.getNume(), codSiPret);
         }
         obj.put(dimensiune, culoriCuCoduriSiPret);
         return culoriCuCoduriSiPret;
@@ -64,17 +68,29 @@ public class DimensiuneCulori {
             JSONObject manipulated = new JSONObject();
             for (CuloareCodPret ccp : dc.data) {
                 JSONArray codSiPret = new JSONArray();
-                codSiPret.add(ccp.cod);
-                codSiPret.add(ccp.pret);
-                manipulated.put(ccp.nume, codSiPret);
+                codSiPret.add(ccp.getCod());
+                codSiPret.add(ccp.getPret());
+                manipulated.put(ccp.getNume(), codSiPret);
             }
             obj.put(dc.dimensiune, manipulated);
         }
         return obj;
     }
 
+    public static List<DimensiuneCulori> copyFromAnotherInstance(List<DimensiuneCulori> original) {
+        List<DimensiuneCulori> toReturn = new ArrayList<>();
+        original.forEach(dimensiuneCulori -> {
+            toReturn.add(new DimensiuneCulori(dimensiuneCulori));
+        });
+        return toReturn;
+    }
+
     @Override
     public String toString() {
         return toJSONObject().toJSONString();
+    }
+
+    public String getDimensiune() {
+        return dimensiune;
     }
 }
