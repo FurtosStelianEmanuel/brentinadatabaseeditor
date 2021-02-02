@@ -6,6 +6,7 @@
 package services;
 
 import java.util.List;
+import javax.swing.JOptionPane;
 import models.produs.DimensiuneCulori;
 
 /**
@@ -25,5 +26,16 @@ public class EditCoduriService {
 
     public void setApplicator(EditCoduriApplicator applicator) {
         this.applicator = applicator;
+    }
+
+    public void addNewDimensiune() throws Exception {
+        String newColor = JOptionPane.showInputDialog(null, "Dimensiune : ");
+        for (DimensiuneCulori dimensiuneCuloare : copy) {
+            if (dimensiuneCuloare.getDimensiune().equals(newColor)) {
+                throw new Exception("Aceasta dimensiune exista deja");
+            }
+        }
+        copy.add(DimensiuneCulori.withDimensiuneName(newColor));
+        applicator.reapplyVisuals(copy);
     }
 }

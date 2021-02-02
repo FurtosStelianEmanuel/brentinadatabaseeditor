@@ -31,6 +31,7 @@ public class EditCoduriApplicator extends InitialComplete {
     @Override
     public void autoCompleteData(Object formDataObject) {
         List<DimensiuneCulori> dimensiuneCuloriList = (List<DimensiuneCulori>) formDataObject;
+
         DefaultTreeModel model = (DefaultTreeModel) form.jTree1.getModel();
         DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
         for (DimensiuneCulori dimensiuneCulori : dimensiuneCuloriList) {
@@ -47,6 +48,14 @@ public class EditCoduriApplicator extends InitialComplete {
             root.add(dimensiuneCuloriRootNode);
         }
         form.jTree1.expandRow(0);
+    }
+
+    void reapplyVisuals(List<DimensiuneCulori> dimensiuneCulori) {
+        form.jTree1.collapseRow(0);
+        DefaultTreeModel treeModel = (DefaultTreeModel) form.jTree1.getModel();
+        ((DefaultMutableTreeNode)treeModel.getRoot()).removeAllChildren();
+        autoCompleteData(dimensiuneCulori);
+        treeModel.reload();
     }
 
 }

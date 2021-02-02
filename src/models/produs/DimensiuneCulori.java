@@ -19,6 +19,14 @@ public class DimensiuneCulori {
     String dimensiune;
     List<CuloareCodPret> data;
 
+    public void setDimensiune(String dimensiune) {
+        this.dimensiune = dimensiune;
+    }
+
+    public void setData(List<CuloareCodPret> data) {
+        this.data = data;
+    }
+
     public List<CuloareCodPret> getData() {
         return data;
     }
@@ -85,6 +93,12 @@ public class DimensiuneCulori {
         return toReturn;
     }
 
+    public static DimensiuneCulori withDimensiuneName(String dimensiuneName){
+        DimensiuneCulori dimensiuneCulori=new DimensiuneCulori();
+        dimensiuneCulori.setDimensiune(dimensiuneName);
+        return dimensiuneCulori;
+    }
+    
     @Override
     public String toString() {
         return toJSONObject().toJSONString();

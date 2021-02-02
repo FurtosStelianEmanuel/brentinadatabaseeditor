@@ -483,7 +483,7 @@ public class ProdusEdit extends javax.swing.JFrame implements ProdusEditFormInte
     @Override
     public void coduriPressed(ActionEvent e) {
         EditCoduriService coduriService = new EditCoduriService(service.getProdusCopy().coduriSiPreturi);
-        EditCoduriForm coduriForm = new EditCoduriForm();
+        EditCoduriForm coduriForm = new EditCoduriForm(coduriService);
         EditCoduriApplicator coduriApplicator = new EditCoduriApplicator(coduriForm);
         coduriService.setApplicator(coduriApplicator);
         coduriApplicator.autoCompleteData(service.getProdusCopy().coduriSiPreturi);
