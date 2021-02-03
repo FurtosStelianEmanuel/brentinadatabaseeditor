@@ -5,12 +5,14 @@
  */
 package services;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 import models.produs.Culoare;
+import models.produs.CuloareCodPret;
 import models.produs.DimensiuneCulori;
 import models.produs.Produs;
 
@@ -36,7 +38,29 @@ public class EditCoduriService {
     }
 
     public void addNewDimensiune() throws Exception {
-        String newColor = JOptionPane.showInputDialog(null, "Dimensiune : ");
+        String dimensiuniDisponibile = "";
+        for (String dimensiune : copyProdus.dimensiuni) {
+            boolean found = false;
+            for (DimensiuneCulori dc : copy) {
+                if (dc.getDimensiune().equals(dimensiune)) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                dimensiuniDisponibile += dimensiune + " ";
+            }
+        }
+        if (dimensiuniDisponibile.isEmpty()) {
+            throw new Exception("Nu exista alte dimensiuni disponibile");
+        }
+        String newColor = JOptionPane.showInputDialog(null, "Dimensiuni disponibile : " + dimensiuniDisponibile);
+        if (newColor == null) {
+            throw new Exception("Ai renuntat la operatiunea de adaugare a dimensiunii");
+        }
+        if (newColor.isEmpty()) {
+            throw new Exception("Dimensiunea trebuie sa contina caractere");
+        }
         for (DimensiuneCulori dimensiuneCulori : copy) {
             if (dimensiuneCulori.getDimensiune().equals(newColor)) {
                 throw new Exception("Aceasta dimensiune exista deja");
@@ -64,6 +88,9 @@ public class EditCoduriService {
     }
 
     public void addNewCuloare(TreePath selectionPath) throws Exception {
+        if (selectionPath == null) {
+            throw new NullPointerException("Nu ai selectat nicio dimensiune");
+        }
         DefaultMutableTreeNode node = (DefaultMutableTreeNode) selectionPath.getLastPathComponent();
         Object b = node.getUserObject();
         DimensiuneCulori selectedDimensiune = null;
@@ -78,29 +105,100 @@ public class EditCoduriService {
         }
         String culoriDisponibile = "";
         for (Culoare culoare : copyProdus.culori) {
-            culoriDisponibile += culoare.getNume() + " ";//verifica daca nu a fost deja adaugata in tree
-        }
-        String newCuloare = JOptionPane.showInputDialog(null, String.format("Culori disponibile : %s", culoriDisponibile));
-        //verifica daca nu exista deja in tree si daca exista in culori
-        selectedDimensiune.addCuloareCodPret(newCuloare, "#", "7.00");
-        int index = indexInParentForPath(applicator.form.jTree1, selectionPath, selectedDimensiune.getDimensiune());
-        applicator.reapplyVisuals(copy);
-        applicator.expand(index);
-    }
-
-    public static int indexInParentForPath(JTree aTree, TreePath path, String name) { // muta l in applicator
-        Object p = null;
-        Object parent = null;
-        for (int i = 0; i < path.getPathCount(); i++) {
-            if (path.getPathComponent(i).toString().contains(name)) {
-                p = path.getPathComponent(i);
-                parent = i > 0 ? path.getPathComponent(i - 1) : null;
-                break;
+            if (!culoare.getNume().equals("multi")) {
+                boolean shouldAddColor = true;
+                for (CuloareCodPret ccp : selectedDimensiune.getData()) {
+                    if (ccp.getNume().equals(culoare.getNume()) || culoare.getNume().equals("multi")) {
+                        shouldAddColor = false;
+                        break;
+                    }
+                }
+                if (shouldAddColor) {
+                    culoriDisponibile += culoare.getNume() + " ";
+                }
+            } else {
+                for (String altaCuloare : culoare.getAlteCulori()) {
+                    boolean found = false;
+                    for (CuloareCodPret ccp : selectedDimensiune.getData()) {
+                        if (altaCuloare.equals(ccp.getNume())) {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        culoriDisponibile += altaCuloare + " ";
+                    }
+                }
             }
         }
-        if (p != null) {
-            return parent == null ? 0 : aTree.getModel().getIndexOfChild(parent, p) + 1;
+        if (culoriDisponibile.isEmpty()) {
+            throw new Exception("Toate culorile pentru aceasta dimensiune au coduri");
         }
-        return -1;
+        int choice = JOptionPane.showConfirmDialog(null, "Lasi programul sa adauge automat culorile?");
+        if (choice == JOptionPane.OK_OPTION) {
+            List<String> toateCulorile = new ArrayList<>();
+            for (Culoare c : copyProdus.culori) {
+                if (!c.getNume().equals("multi")) {
+                    boolean found = false;
+                    for (CuloareCodPret ccp : selectedDimensiune.getData()) {
+                        if (ccp.getNume().equals(c.getNume())) {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        toateCulorile.add(c.getNume());
+                    }
+                } else {
+                    for (String altaCuloare : c.getAlteCulori()) {
+                        boolean found = false;
+                        for (CuloareCodPret ccp : selectedDimensiune.getData()) {
+                            if (ccp.getNume().equals(altaCuloare)) {
+                                found = true;
+                                break;
+                            }
+                        }
+                        if (!found) {
+                            toateCulorile.add(altaCuloare);
+                        }
+                    }
+
+                }
+            }
+            for (String culoare : toateCulorile) {
+                selectedDimensiune.addCuloareCodPret(culoare, "#", "7.00");
+            }
+        } else {
+            String newCuloare = JOptionPane.showInputDialog(null, String.format("Culori disponibile : %s", culoriDisponibile));
+
+            if (newCuloare == null) {
+                throw new Exception("Ai abandonat adaugarea culorii");
+            }
+            if (newCuloare.isEmpty()) {
+                throw new Exception("Nu ai introdus nimic");
+            }
+            for (CuloareCodPret ccp : selectedDimensiune.getData()) {
+                if (ccp.getNume().equals(newCuloare)) {
+                    throw new Exception("Culoarea deja exista");
+                }
+            }
+            List<String> toateCulorile = new ArrayList<>();
+            for (Culoare c : copyProdus.culori) {
+                if (!c.getNume().equals("multi")) {
+                    toateCulorile.add(c.getNume());
+                } else {
+                    for (String altaCuloare : c.getAlteCulori()) {
+                        toateCulorile.add(altaCuloare);
+                    }
+                }
+            }
+            if (!toateCulorile.contains(newCuloare)) {
+                throw new Exception("Aceasta culoare nu exista");
+            }
+            selectedDimensiune.addCuloareCodPret(newCuloare, "#", "0.00");
+        }
+        int index = applicator.indexInParentForPath(selectionPath, selectedDimensiune.getDimensiune());
+        applicator.reapplyVisuals(copy);
+        applicator.expand(index);
     }
 }
