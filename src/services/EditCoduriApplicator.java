@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
+import javax.swing.tree.TreePath;
 import models.produs.CuloareCodPret;
 import models.produs.DimensiuneCulori;
 import models.produs.InitialComplete;
@@ -51,11 +52,12 @@ public class EditCoduriApplicator extends InitialComplete {
     }
 
     void reapplyVisuals(List<DimensiuneCulori> dimensiuneCulori) {
-        form.jTree1.collapseRow(0);
         DefaultTreeModel treeModel = (DefaultTreeModel) form.jTree1.getModel();
-        ((DefaultMutableTreeNode)treeModel.getRoot()).removeAllChildren();
+        ((DefaultMutableTreeNode) treeModel.getRoot()).removeAllChildren();
         autoCompleteData(dimensiuneCulori);
         treeModel.reload();
     }
-
+    void expand(int row){
+        form.jTree1.expandRow(row);
+    }
 }

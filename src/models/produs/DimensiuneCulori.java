@@ -31,6 +31,10 @@ public class DimensiuneCulori {
         return data;
     }
 
+    public void addCuloareCodPret(String culoare,String cod,String pret){
+        data.add(CuloareCodPret.fromStrings(culoare,cod,pret));
+    }
+    
     private DimensiuneCulori() {
         data = new ArrayList<>();
         dimensiune = "";

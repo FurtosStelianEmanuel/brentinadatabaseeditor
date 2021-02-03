@@ -16,6 +16,14 @@ import org.json.simple.JSONObject;
  */
 public class CuloareCodPret {
 
+    static CuloareCodPret fromStrings(String culoare, String cod, String pret) {
+        CuloareCodPret ccp=new CuloareCodPret();
+        ccp.nume=culoare;
+        ccp.cod=cod;
+        ccp.pret=pret;
+        return ccp;
+    }
+
     String nume;
     String cod;
     String pret;
