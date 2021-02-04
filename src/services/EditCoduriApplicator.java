@@ -7,7 +7,12 @@ package services;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTree;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
@@ -35,11 +40,28 @@ public class EditCoduriApplicator extends InitialComplete {
         model.addTreeModelListener(new TreeModelListener() {
             @Override
             public void treeNodesChanged(TreeModelEvent tme) {
+                boolean modified = false;
                 if (tme.getTreePath().getPath().length == 3) {
                     if (tme.getChildren().length == 1) {
-                        DefaultMutableTreeNode changedNode = (DefaultMutableTreeNode) tme.getChildren()[0];
-                        System.out.println(changedNode);
+                        DefaultMutableTreeNode changedNode = (DefaultMutableTreeNode) tme.getChildren()[0];//daca o sa ne folosim vreodata de preturi ele o sa fie al doilea prunc
+                        DefaultMutableTreeNode culoareNode = (DefaultMutableTreeNode) changedNode.getParent();
+                        DefaultMutableTreeNode dimensiuneNode = (DefaultMutableTreeNode) culoareNode.getParent();
+
+                        String dimensiune = (String) dimensiuneNode.getUserObject();
+                        String culoare = (String) culoareNode.getUserObject();
+                        String cod = (String) changedNode.getUserObject();
+
+                        try {
+                            form.getService().codUpdated(tme.getTreePath(), dimensiune, culoare, cod);
+                            modified = true;
+                        } catch (Exception ex) {
+                            JOptionPane.showMessageDialog(null, ex.getMessage());
+                            Logger.getLogger(EditCoduriApplicator.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
+                }
+                if (!modified){
+                    JOptionPane.showMessageDialog(null, "Modificarea ta nu a fost salvata in model,\n ai schimbat probabil numele la ceva ce nu trebuia (dimensiunea, culoarea etc..), \nda save si intra din nou in window");
                 }
             }
 
@@ -91,6 +113,7 @@ public class EditCoduriApplicator extends InitialComplete {
 
     /**
      * Cauta o culoare in dimensiunea specificata din JTree
+     *
      * @param dimensiune
      * @param numeCuloare
      * @return

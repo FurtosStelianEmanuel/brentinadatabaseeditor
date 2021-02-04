@@ -23,6 +23,11 @@ import models.produs.Produs;
 public class EditCoduriService {
 
     List<DimensiuneCulori> copy;
+
+    public List<DimensiuneCulori> getCopy() {
+        return copy;
+    }
+
     List<DimensiuneCulori> original;
     EditCoduriApplicator applicator;
     Produs copyProdus;
@@ -71,7 +76,7 @@ public class EditCoduriService {
     }
 
     public void deleteDimensiune(TreePath selectionPath) throws Exception {
-        if (selectionPath==null){
+        if (selectionPath == null) {
             throw new Exception("Nu ai selectat nicio dimensiune");
         }
         DefaultMutableTreeNode node = (DefaultMutableTreeNode) selectionPath.getLastPathComponent();
@@ -205,7 +210,69 @@ public class EditCoduriService {
         applicator.expand(index);
     }
 
-    public void deleteCuloare(TreePath selectionPath) {
-        Object path=selectionPath.
+    public void deleteCuloare(TreePath selectionPath) throws Exception {
+        if (selectionPath == null) {
+            throw new NullPointerException("Nu ai selectat nimic");
+        }
+        Object path[] = selectionPath.getPath();
+        if (path.length != 3) {
+            throw new Exception("Nu ai selectat o culoare");
+        }
+        String dimensiune = (String) ((DefaultMutableTreeNode) path[1]).getUserObject();
+        String culoare = (String) ((DefaultMutableTreeNode) path[2]).getUserObject();
+        DimensiuneCulori selectedDimensiune = null;
+        for (DimensiuneCulori dimensiuneCulori : copy) {
+            if (dimensiuneCulori.getDimensiune().equals(dimensiune)) {
+                selectedDimensiune = dimensiuneCulori;
+                break;
+            }
+        }
+        if (selectedDimensiune == null) {
+            throw new Exception("Nu am gasit dimensiunea aceastei culori");
+        }
+
+        CuloareCodPret selectedCuloareCodPret = null;
+        for (CuloareCodPret ccp : selectedDimensiune.getData()) {
+            if (ccp.getNume().equals(culoare)) {
+                selectedCuloareCodPret = ccp;
+                break;
+            }
+        }
+        if (selectedCuloareCodPret == null) {
+            throw new Exception("Nu am gasit culoarea");
+        }
+
+        selectedDimensiune.getData().remove(selectedCuloareCodPret);
+        int index = applicator.indexInParentForPath(selectionPath, selectedDimensiune.getDimensiune());
+        applicator.reapplyVisuals(copy);
+        applicator.expand(index);
+    }
+
+    public void codUpdated(TreePath selectionPath, String dimensiune, String culoare, String cod) throws Exception {
+        DimensiuneCulori selectedDimensiune = null;
+        for (DimensiuneCulori dimensiuneCulori : copy) {
+            if (dimensiuneCulori.getDimensiune().equals(dimensiune)) {
+                selectedDimensiune = dimensiuneCulori;
+                break;
+            }
+        }
+        if (selectedDimensiune == null) {
+            throw new Exception("Nu am gasit dimensiunea");
+        }
+        CuloareCodPret selectedCuloareCodPret = null;
+        for (CuloareCodPret ccp : selectedDimensiune.getData()) {
+            if (ccp.getNume().equals(culoare)) {
+                selectedCuloareCodPret = ccp;
+                break;
+            }
+        }
+        if (selectedCuloareCodPret == null) {
+            throw new Exception("Nu am gasit culoarea");
+        }
+
+        selectedCuloareCodPret.setCod(cod);
+        int index = applicator.indexInParentForPath(selectionPath, selectedDimensiune.getDimensiune());
+        applicator.reapplyVisuals(copy);
+        applicator.expand(index);
     }
 }
