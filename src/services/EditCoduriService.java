@@ -71,6 +71,9 @@ public class EditCoduriService {
     }
 
     public void deleteDimensiune(TreePath selectionPath) throws Exception {
+        if (selectionPath==null){
+            throw new Exception("Nu ai selectat nicio dimensiune");
+        }
         DefaultMutableTreeNode node = (DefaultMutableTreeNode) selectionPath.getLastPathComponent();
         Object b = node.getUserObject();
         boolean found = false;
@@ -200,5 +203,9 @@ public class EditCoduriService {
         int index = applicator.indexInParentForPath(selectionPath, selectedDimensiune.getDimensiune());
         applicator.reapplyVisuals(copy);
         applicator.expand(index);
+    }
+
+    public void deleteCuloare(TreePath selectionPath) {
+        Object path=selectionPath.
     }
 }

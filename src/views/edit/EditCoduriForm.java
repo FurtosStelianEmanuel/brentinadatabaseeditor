@@ -99,6 +99,11 @@ public class EditCoduriForm extends javax.swing.JFrame implements FormListenerIn
         jPanel2.add(jButton5);
 
         jButton6.setText("Sterge culoare");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
         jPanel2.add(jButton6);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -170,6 +175,10 @@ public class EditCoduriForm extends javax.swing.JFrame implements FormListenerIn
             Logger.getLogger(EditCoduriForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        service.deleteCuloare(jTree1.getSelectionPath());
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton jButton1;

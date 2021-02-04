@@ -89,6 +89,15 @@ public class EditCoduriApplicator extends InitialComplete {
         form.jTree1.expandRow(row);
     }
 
+    /**
+     * Cauta o culoare in dimensiunea specificata din JTree
+     * @param dimensiune
+     * @param numeCuloare
+     * @return
+     * @throws Exception
+     * @deprecated
+     */
+    @Deprecated
     boolean dimensiuneContainsCuloare(String dimensiune, String numeCuloare) throws Exception {
         DefaultTreeModel model = (DefaultTreeModel) form.jTree1.getModel();
         DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
