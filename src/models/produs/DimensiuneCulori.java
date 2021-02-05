@@ -31,8 +31,8 @@ public class DimensiuneCulori {
         return data;
     }
 
-    public void addCuloareCodPret(String culoare,String cod,String pret){
-        data.add(CuloareCodPret.fromStrings(culoare,cod,pret));
+    public void addCuloareCodPret(String culoare, String cod, String pret) {
+        data.add(CuloareCodPret.fromStrings(culoare, cod, pret));
     }
     
     private DimensiuneCulori() {
@@ -97,12 +97,12 @@ public class DimensiuneCulori {
         return toReturn;
     }
 
-    public static DimensiuneCulori withDimensiuneName(String dimensiuneName){
-        DimensiuneCulori dimensiuneCulori=new DimensiuneCulori();
+    public static DimensiuneCulori withDimensiuneName(String dimensiuneName) {
+        DimensiuneCulori dimensiuneCulori = new DimensiuneCulori();
         dimensiuneCulori.setDimensiune(dimensiuneName);
         return dimensiuneCulori;
     }
-    
+
     @Override
     public String toString() {
         return toJSONObject().toJSONString();

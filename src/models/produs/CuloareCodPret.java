@@ -25,6 +25,10 @@ public class CuloareCodPret {
     }
 
     String nume;
+
+    public void setCod(String cod) {
+        this.cod = cod;
+    }
     String cod;
     String pret;
 

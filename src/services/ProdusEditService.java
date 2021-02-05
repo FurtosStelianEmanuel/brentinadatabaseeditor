@@ -66,12 +66,12 @@ public class ProdusEditService implements ProdusEditInterface {
 
     @Override
     public void coduriSiPreturiChanged(List<DimensiuneCulori> coduriSiPreturi) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        copyProdus.coduriSiPreturi = coduriSiPreturi;
     }
 
     @Override
     public void culoriChanged(List<Culoare> culori) {
-        copyProdus.culori=culori;
+        copyProdus.culori = culori;
     }
 
     @Override
