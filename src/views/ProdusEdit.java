@@ -17,6 +17,8 @@ import services.EditCoduriApplicator;
 import services.EditCoduriService;
 import services.EditCuloriApplicator;
 import services.EditCuloriService;
+import services.EditImagineDefaultApplicator;
+import services.EditImagineDefaultService;
 import services.EditSimpleStringListsApplicator;
 import services.EditSimpleStringListsService;
 import services.EditTranslateProdusDescrieriApplicator;
@@ -28,13 +30,14 @@ import views.edit.EditSimpleStringListsForm;
 import services.interfaces.EventConfirmationListener;
 import views.edit.EditCoduriForm;
 import views.edit.EditCuloriForm;
+import views.edit.EditImagineDefaultForm;
 
 /**
  *
  * @author Manel
  */
 public class ProdusEdit extends javax.swing.JFrame implements ProdusEditFormInterface, FormListenerInterface {
-
+    
     EventConfirmationListener listener;
     ProdusEditService service;
 
@@ -46,18 +49,18 @@ public class ProdusEdit extends javax.swing.JFrame implements ProdusEditFormInte
     public ProdusEdit(ProdusEditService service) {
         initComponents();
         this.service = service;
-
+        
         placeholderTextField1.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent de) {
                 numeTextFieldChanged(placeholderTextField1.getText());
             }
-
+            
             @Override
             public void removeUpdate(DocumentEvent de) {
                 numeTextFieldChanged(placeholderTextField1.getText());
             }
-
+            
             @Override
             public void changedUpdate(DocumentEvent de) {
                 numeTextFieldChanged(placeholderTextField1.getText());
@@ -68,12 +71,12 @@ public class ProdusEdit extends javax.swing.JFrame implements ProdusEditFormInte
             public void insertUpdate(DocumentEvent de) {
                 descriereTextAreaChanged(jTextArea1.getText());
             }
-
+            
             @Override
             public void removeUpdate(DocumentEvent de) {
                 descriereTextAreaChanged(jTextArea1.getText());
             }
-
+            
             @Override
             public void changedUpdate(DocumentEvent de) {
                 descriereTextAreaChanged(jTextArea1.getText());
@@ -84,19 +87,19 @@ public class ProdusEdit extends javax.swing.JFrame implements ProdusEditFormInte
             public void insertUpdate(DocumentEvent de) {
                 umTextFieldChanged(placeholderTextField3.getText());
             }
-
+            
             @Override
             public void removeUpdate(DocumentEvent de) {
                 umTextFieldChanged(placeholderTextField3.getText());
             }
-
+            
             @Override
             public void changedUpdate(DocumentEvent de) {
                 umTextFieldChanged(placeholderTextField3.getText());
             }
         });
     }
-
+    
     @Override
     public void setListener(EventConfirmationListener listener) {
         this.listener = listener;
@@ -210,6 +213,11 @@ public class ProdusEdit extends javax.swing.JFrame implements ProdusEditFormInte
         jPanel3.setLayout(new java.awt.GridLayout(1, 0));
 
         jButton9.setText("Imagini");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
         jPanel3.add(jButton9);
 
         jSeparator4.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -299,6 +307,10 @@ public class ProdusEdit extends javax.swing.JFrame implements ProdusEditFormInte
         coduriPressed(evt);
     }//GEN-LAST:event_jButton8ActionPerformed
 
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        imagineDefaultPressed(evt);
+    }//GEN-LAST:event_jButton9ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton jButton1;
     public javax.swing.JButton jButton2;
@@ -325,23 +337,23 @@ public class ProdusEdit extends javax.swing.JFrame implements ProdusEditFormInte
     public void numeTextFieldChanged(String newValue) {
         service.numeChanged(newValue);
     }
-
+    
     @Override
     public void umTextFieldChanged(String newValue) {
         service.umChanged(newValue);
     }
-
+    
     @Override
     public void descriereTextAreaChanged(String newValue) {
         service.descriereChanged(newValue);
     }
-
+    
     public void toFront(JFrame toDispose) {
         setEnabled(true);
         toFront();
         toDispose.dispose();
     }
-
+    
     @Override
     public void translateButtonPressed(ActionEvent e) {
         EditTranslateProdusDescrieriForm translateProdusForm = new EditTranslateProdusDescrieriForm();
@@ -356,19 +368,19 @@ public class ProdusEdit extends javax.swing.JFrame implements ProdusEditFormInte
                 TranslateProdus translate = (TranslateProdus) translateObject;
                 service.translateChanged(translate);
             }
-
+            
             @Override
             public void onCancel() {
-
+                
             }
-
+            
             @Override
             public void onFinish(Object translateObject) {
                 toFront(translateProdusForm);
             }
         });
     }
-
+    
     @Override
     public void dimensiuniPressed(ActionEvent e) {
         EditSimpleStringListsService dimensiuniService = new EditSimpleStringListsService();
@@ -385,18 +397,18 @@ public class ProdusEdit extends javax.swing.JFrame implements ProdusEditFormInte
                 List<String> dimensiuni = (List<String>) p;
                 service.dimensiuniChanged(dimensiuni);
             }
-
+            
             @Override
             public void onCancel() {
             }
-
+            
             @Override
             public void onFinish(Object o) {
                 toFront(dimensiuniForm);
             }
         });
     }
-
+    
     @Override
     public void categoriiPressed(ActionEvent e) {
         EditSimpleStringListsService categoriiService = new EditSimpleStringListsService();
@@ -413,18 +425,18 @@ public class ProdusEdit extends javax.swing.JFrame implements ProdusEditFormInte
                 List<String> categorii = (List<String>) p;
                 service.categoriiChanged(categorii);
             }
-
+            
             @Override
             public void onCancel() {
             }
-
+            
             @Override
             public void onFinish(Object o) {
                 toFront(categoriiForm);
             }
         });
     }
-
+    
     @Override
     public void similarePressed(ActionEvent e) {
         EditSimpleStringListsService similareService = new EditSimpleStringListsService();
@@ -441,18 +453,18 @@ public class ProdusEdit extends javax.swing.JFrame implements ProdusEditFormInte
                 List<String> similare = (List<String>) p;
                 service.similareChanged(similare);
             }
-
+            
             @Override
             public void onCancel() {
             }
-
+            
             @Override
             public void onFinish(Object o) {
                 toFront(similareForm);
             }
         });
     }
-
+    
     @Override
     public void culoriPressed(ActionEvent e) {
         EditCuloriService culoriService = new EditCuloriService(service.getProdusCopy().culori, service.getProdusCopy());
@@ -468,19 +480,19 @@ public class ProdusEdit extends javax.swing.JFrame implements ProdusEditFormInte
                 List<Culoare> culori = (List<Culoare>) p;
                 service.culoriChanged(culori);
             }
-
+            
             @Override
             public void onCancel() {
-
+                
             }
-
+            
             @Override
             public void onFinish(Object o) {
                 toFront(culoriForm);
             }
         });
     }
-
+    
     @Override
     public void coduriPressed(ActionEvent e) {
         EditCoduriService coduriService = new EditCoduriService(service.getProdusCopy().coduriSiPreturi, service.getProdusCopy());
@@ -496,14 +508,42 @@ public class ProdusEdit extends javax.swing.JFrame implements ProdusEditFormInte
                 List<DimensiuneCulori> dimensiuneCulori = (List<DimensiuneCulori>) p;
                 service.coduriSiPreturiChanged(dimensiuneCulori);
             }
-
+            
             @Override
             public void onCancel() {
             }
-
+            
             @Override
             public void onFinish(Object o) {
                 toFront(coduriForm);
+            }
+        });
+    }
+    
+    @Override
+    public void imagineDefaultPressed(ActionEvent e) {
+        EditImagineDefaultService imagineDefaultService = new EditImagineDefaultService(service.getProdusCopy().imagineDefault, service.getProdusCopy().palleteType);
+        EditImagineDefaultForm editImagineDefaultForm = new EditImagineDefaultForm(imagineDefaultService);
+        EditImagineDefaultApplicator imagineDefaultApplicator = new EditImagineDefaultApplicator(editImagineDefaultForm);
+        imagineDefaultService.setApplicator(imagineDefaultApplicator);
+        imagineDefaultApplicator.autoCompleteData(service.getProdusCopy());
+        setEnabled(false);
+        editImagineDefaultForm.setVisible(true);
+        editImagineDefaultForm.setListener(new EventConfirmationListener() {
+            @Override
+            public void onConfirm(Object p) {
+                Object[] result = (Object[]) p;
+                service.imagineDefaultChanged((String) result[0]);
+                service.palleteTypeChanged((long) result[1]);
+            }
+            
+            @Override
+            public void onCancel() {
+            }
+            
+            @Override
+            public void onFinish(Object o) {
+                toFront(editImagineDefaultForm);
             }
         });
     }
