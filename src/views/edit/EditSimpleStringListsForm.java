@@ -8,11 +8,14 @@ package views.edit;
 import com.sun.glass.events.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import services.EditSimpleStringListsService;
 import services.interfaces.FormListenerInterface;
 import services.interfaces.EventConfirmationListener;
+import services.interfaces.ProductNotFoundException;
 
 /**
  *
@@ -176,7 +179,24 @@ public class EditSimpleStringListsForm extends javax.swing.JFrame implements For
         try {
             service.addSimpleString(placeholderTextField1.getText());
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
+            if (ex instanceof ProductNotFoundException) {
+                ProductNotFoundException productNotFound = (ProductNotFoundException) ex;
+                List<String> recomandate = productNotFound.getProduseRecomandate();
+                Object[] recomandateArray = new Object[recomandate.size()];
+                for (int i = 0; i < recomandate.size(); i++) {
+                    recomandateArray[i] = recomandate.get(i);
+                }
+                int choice = JOptionPane.showOptionDialog(null, "Recomandate", "Recomandate", 0, 0, null, recomandateArray, null);
+                if (choice > -1) {
+                    try {
+                        service.addSimpleString((String) recomandateArray[choice]);
+                    } catch (Exception ex1) {
+                        JOptionPane.showMessageDialog(null, ex.getMessage());
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
         }
     }//GEN-LAST:event_placeholderTextField1ActionPerformed
 

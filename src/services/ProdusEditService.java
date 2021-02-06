@@ -5,6 +5,7 @@
  */
 package services;
 
+import java.util.ArrayList;
 import java.util.List;
 import models.produs.Culoare;
 import models.produs.DimensiuneCulori;
@@ -20,10 +21,15 @@ public class ProdusEditService implements ProdusEditInterface {
 
     Produs copyProdus;
     Produs originalProdus;
+    List<String> numeProduse;
 
-    public ProdusEditService(Produs currentProdus) {
+    public ProdusEditService(Produs currentProdus, List<Produs> produse) {
         this.originalProdus = currentProdus;
         this.copyProdus = new Produs(currentProdus);
+        numeProduse = new ArrayList<>();
+        produse.forEach((produs) -> {
+            numeProduse.add(produs.nume);
+        });
     }
 
     public Produs getProdusCopy() {
@@ -94,4 +100,7 @@ public class ProdusEditService implements ProdusEditInterface {
         copyProdus.imagineDefault = imagineDefault;
     }
 
+    public List<String> getNumeProduse() {
+        return numeProduse;
+    }
 }
