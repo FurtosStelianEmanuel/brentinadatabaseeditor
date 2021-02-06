@@ -11,7 +11,6 @@ import javax.swing.JFileChooser;
 import main.Main;
 import models.database.DatabaseModel;
 import models.produs.Produs;
-import services.interfaces.FormListenerInterface;
 import views.MainForm;
 import views.ProdusEdit;
 import services.interfaces.EventConfirmationListener;
@@ -77,7 +76,7 @@ public class MainFormService implements MainFormServiceInterface {
 
     @Override
     public void editProdus(int index) {
-        ProdusEditService produsEditService = new ProdusEditService(model.continut.get(index));
+        ProdusEditService produsEditService = new ProdusEditService(model.continut.get(index), model.continut);
         ProdusEdit produsEditForm = new ProdusEdit(produsEditService);
         ProdusEditApplicator applicator = new ProdusEditApplicator(produsEditForm);
         applicator.autoCompleteData(model.continut.get(index));

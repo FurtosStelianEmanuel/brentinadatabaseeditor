@@ -5,7 +5,10 @@
  */
 package services;
 
+import java.util.ArrayList;
+import java.util.List;
 import services.interfaces.EditSimpleStringListsInterface;
+import services.interfaces.ProductNotFoundException;
 
 /**
  *
@@ -14,6 +17,18 @@ import services.interfaces.EditSimpleStringListsInterface;
 public class EditSimpleStringListsService implements EditSimpleStringListsInterface {
 
     EditSimpleStringListsApplicator applicator;
+    List<String> numeProduse;
+
+    public List<String> getNumeProduse() {
+        return numeProduse;
+    }
+
+    public EditSimpleStringListsService() {
+    }
+
+    public EditSimpleStringListsService(List<String> numeProduse) {
+        this.numeProduse = numeProduse;
+    }
 
     public void setApplicator(EditSimpleStringListsApplicator applicator) {
         this.applicator = applicator;
@@ -21,6 +36,25 @@ public class EditSimpleStringListsService implements EditSimpleStringListsInterf
 
     @Override
     public void addSimpleString(String dimensiune) throws Exception {
+
+        if (getNumeProduse() != null) {
+            String productName = null;
+            for (String numeProdus : getNumeProduse()) {
+                if (dimensiune.equals(numeProdus)) {
+                    productName = numeProdus;
+                    break;
+                }
+            }
+            if (productName == null) {
+                List<String> recomandate = new ArrayList<>();
+                for (String pName : getNumeProduse()) {
+                    if (pName.toLowerCase().trim().contains(dimensiune.toLowerCase().trim())) {
+                        recomandate.add(pName);
+                    }
+                }
+                throw new ProductNotFoundException(recomandate);
+            }
+        }
         applicator.addSimpleString(dimensiune);
     }
 
