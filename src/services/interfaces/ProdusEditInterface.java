@@ -35,4 +35,6 @@ public interface ProdusEditInterface {
     void palleteTypeChanged(long palleteType);
 
     void categoriiChanged(List<String> categorii);
+
+    void imagineDefaultChanged(String imagineDefault);
 }

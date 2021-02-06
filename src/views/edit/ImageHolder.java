@@ -38,15 +38,12 @@ import services.interfaces.EventConfirmationListener;
  *
  * @author Manel
  */
-public class ImageHolder extends JButton implements MouseMotionListener {
+public class ImageHolder extends JButton {
 
     final int fixedWidthForAll = 150;
     protected ImageIcon icon;
     final int garbageIconWidth = 25;
-    final Point garbageLocation;
     boolean isHoveringGarbage = false;
-    EventConfirmationListener eventConfirmationListener;
-
     final protected Cursor defaultCursor = new Cursor(Cursor.DEFAULT_CURSOR);
     final protected Cursor handCursor = new Cursor(Cursor.HAND_CURSOR);
     final Stroke garbageStroke = new BasicStroke(2);
@@ -55,19 +52,14 @@ public class ImageHolder extends JButton implements MouseMotionListener {
 
     public ImageHolder(String name) {
         super(name);
-        garbageLocation = new Point(
-                (int) (getPreferredSize().getWidth() - garbageIconWidth - 5),
-                (int) (getPreferredSize().getHeight() - garbageIconWidth - 5)
-        );
     }
 
+    public ImageHolder(){
+        super("Default");
+    }
+    
     public ImageHolder(Path path) {
         setImageHolderIcon(path);
-        garbageLocation = new Point(
-                (int) (getPreferredSize().getWidth() - garbageIconWidth - 5),
-                (int) (getPreferredSize().getHeight() - garbageIconWidth - 5)
-        );
-        addMouseMotionListener(this);
     }
 
     public Path getPathToImage() {
@@ -85,11 +77,7 @@ public class ImageHolder extends JButton implements MouseMotionListener {
         setSize(icon.getIconWidth(), icon.getIconWidth());
         setIcon(icon);
     }
-
-    public void setEventConfirmationListener(EventConfirmationListener confirmationListener) {
-        this.eventConfirmationListener = confirmationListener;
-    }
-
+    
     /**
      *
      * @param g
@@ -98,33 +86,7 @@ public class ImageHolder extends JButton implements MouseMotionListener {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
     }
-
-    private boolean isInsideGarbage(Point cursor) {
-        return cursor.getX() > garbageLocation.getX()
-                && cursor.getX() < garbageLocation.getX() + garbageIconWidth
-                && cursor.getY() > garbageLocation.getY()
-                && cursor.getY() < garbageLocation.getY() + garbageIconWidth;
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent me) {
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent me) {
-        if (isInsideGarbage(new Point(me.getX(), me.getY()))) {
-            if (!isHoveringGarbage) {
-                setCursor(handCursor);
-                isHoveringGarbage = true;
-            }
-        } else {
-            if (isHoveringGarbage) {
-                setCursor(defaultCursor);
-                isHoveringGarbage = false;
-            }
-        }
-    }
-
+    
     private static BufferedImage toBufferedImage(Image img) {
         if (img instanceof BufferedImage) {
             return (BufferedImage) img;

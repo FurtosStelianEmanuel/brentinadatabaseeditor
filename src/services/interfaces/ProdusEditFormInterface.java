@@ -22,12 +22,14 @@ public interface ProdusEditFormInterface {
     void translateButtonPressed(ActionEvent e);
 
     void dimensiuniPressed(ActionEvent e);
-    
+
     void categoriiPressed(ActionEvent e);
-    
+
     void similarePressed(ActionEvent e);
-    
+
     void culoriPressed(ActionEvent e);
-    
+
     void coduriPressed(ActionEvent e);
+
+    void imagineDefaultPressed(ActionEvent e);
 }

@@ -81,12 +81,17 @@ public class ProdusEditService implements ProdusEditInterface {
 
     @Override
     public void palleteTypeChanged(long palleteType) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        copyProdus.palleteType = palleteType;
     }
 
     @Override
     public void categoriiChanged(List<String> categorii) {
         copyProdus.categorii = categorii;
+    }
+
+    @Override
+    public void imagineDefaultChanged(String imagineDefault) {
+        copyProdus.imagineDefault = imagineDefault;
     }
 
 }
