@@ -51,7 +51,7 @@ public class MainFormService implements MainFormServiceInterface {
 
     @Override
     public void save() throws ClassNotFoundException, IOException {
-        databaseService.saveDatabase(model, Paths.get("C:", "users", "manel", "desktop", "output.json").toFile());
+        databaseService.saveDatabase(model, Paths.get(Main.PathToDatabase.toString(),"produse.json").toFile());
     }
 
     @Override
