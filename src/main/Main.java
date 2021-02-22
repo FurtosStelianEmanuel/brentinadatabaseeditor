@@ -8,6 +8,7 @@ package main;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import plugin.RequestSender;
 import services.DatabaseService;
 import services.MainFormApplicator;
 import services.MainFormService;
@@ -23,15 +24,17 @@ public class Main {
     DatabaseService databaseService;
     MainFormService mainFormService;
     MainFormApplicator mainFormApplicator;
+    RequestSender requestSender;
     MainForm mainForm;
 
     public static Path Path = Paths.get(SystemManager.get_path("BrentinaDatabaseEditor.jar"));
-    public static Path PathToImageBank=Paths.get("views","preview","imagini");
+    public static Path PathToImageBank = Paths.get("views", "preview", "imagini");
     public static Path PathToDatabase;
 
     Main() {
+        requestSender = new RequestSender();
         databaseService = new DatabaseService();
-        mainFormService = new MainFormService(databaseService);
+        mainFormService = new MainFormService(databaseService, requestSender);
 
         mainForm = new MainForm(mainFormService);
         mainFormApplicator = new MainFormApplicator(mainForm);

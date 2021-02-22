@@ -16,6 +16,10 @@ public interface MainFormServiceInterface {
     void save() throws ClassNotFoundException, IOException;
 
     void load() throws ClassNotFoundException, IOException;
+
+    void reloadDatabase();
     
+    void saveAndReload();
+
     void editProdus(int index);
 }
