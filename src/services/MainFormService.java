@@ -7,10 +7,16 @@ package services;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import main.Main;
 import models.database.DatabaseModel;
 import models.produs.Produs;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
+import org.json.simple.JSONObject;
+import plugin.RequestSender;
 import views.MainForm;
 import views.ProdusEdit;
 import services.interfaces.EventConfirmationListener;
@@ -25,8 +31,9 @@ public class MainFormService implements MainFormServiceInterface {
     DatabaseService databaseService;
     MainFormApplicator mainFormApplicator;
     DatabaseModel model;
+    private final RequestSender requestSender;
 
-    public MainFormService(DatabaseService databaseService) {
+    public MainFormService(DatabaseService databaseService, RequestSender requestSender) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -43,6 +50,7 @@ public class MainFormService implements MainFormServiceInterface {
         }
         //</editor-fold>
         this.databaseService = databaseService;
+        this.requestSender = requestSender;
     }
 
     public void setApplicator(MainFormApplicator mainFormApplicator) {
@@ -51,7 +59,7 @@ public class MainFormService implements MainFormServiceInterface {
 
     @Override
     public void save() throws ClassNotFoundException, IOException {
-        databaseService.saveDatabase(model, Paths.get(Main.PathToDatabase.toString(),"produse.json").toFile());
+        databaseService.saveDatabase(model, Paths.get(Main.PathToDatabase.toString(), "produse.json").toFile());
     }
 
     @Override
@@ -99,5 +107,33 @@ public class MainFormService implements MainFormServiceInterface {
             }
         });
         produsEditForm.setVisible(true);
+    }
+
+    @Override
+    public void reloadDatabase() {
+        requestSender.sendPostRequest("http://localhost/reload", new JSONObject(), new RequestSender.RequestHandler() {
+            @Override
+            public void onSucces(String body, CloseableHttpResponse response) {
+                System.out.println(body);
+                JOptionPane.showMessageDialog(null, "Succes ! ");
+            }
+
+            @Override
+            public void onError(IOException ex) {
+                Logger.getLogger(MainFormService.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Nu am putut aplica modificarile server-ului, incercati sa il reporniti manual");
+            }
+        });
+    }
+
+    @Override
+    public void saveAndReload() {
+        try {
+            save();
+            reloadDatabase();
+        } catch (ClassNotFoundException | IOException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+            Logger.getLogger(MainFormService.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
