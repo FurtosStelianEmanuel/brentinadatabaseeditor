@@ -18,8 +18,10 @@ public interface MainFormServiceInterface {
     void load() throws ClassNotFoundException, IOException;
 
     void reloadDatabase();
-    
+
     void saveAndReload();
+
+    void addProdus(String nume) throws Exception;
 
     void editProdus(int index);
 }

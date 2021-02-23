@@ -19,6 +19,23 @@ import org.json.simple.parser.ParseException;
  */
 public class Produs {
 
+    public static Produs emptyInstance() {
+        Produs p = new Produs();
+        p.categorii = new ArrayList<>();
+        p.coduriSiPreturi = new ArrayList<>();
+        p.culori = new ArrayList<>();
+        p.descriere = "";
+        p.dimensiuni = new ArrayList<>();
+        p.imagineDefault = "";
+        p.nume = "";
+        p.palleteType = 0;
+        p.pret = 3.0d;
+        p.similare = new ArrayList<>();
+        p.translate = TranslateProdus.emptyInstance();
+        p.um = "";
+        return p;
+    }
+
     public String nume;
     public List<String> dimensiuni;
     public List<DimensiuneCulori> coduriSiPreturi;
