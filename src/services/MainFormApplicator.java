@@ -27,6 +27,11 @@ public class MainFormApplicator implements MainFormApplicatorInterface {
     @Override
     public void updateTable(DatabaseModel databaseModel) {
         DefaultTableModel model = (DefaultTableModel) form.jTable1.getModel();
+
+        for (int i = model.getRowCount() - 1; i >= 0; i--) {
+            model.removeRow(i);
+        }
+
         for (int i = 0; i < databaseModel.continut.size(); i++) {
             Produs produs = databaseModel.continut.get(i);
             model.addRow(new Object[]{i, produs.nume, produs.similare, produs.categorii});

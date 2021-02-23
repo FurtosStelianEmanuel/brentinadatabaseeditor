@@ -30,7 +30,7 @@ import services.interfaces.MainFormServiceInterface;
 public class MainFormService implements MainFormServiceInterface {
 
     DatabaseService databaseService;
-    MainFormApplicator mainFormApplicator;
+    MainFormApplicator applicator;
     DatabaseModel model;
     private final RequestSender requestSender;
 
@@ -55,7 +55,7 @@ public class MainFormService implements MainFormServiceInterface {
     }
 
     public void setApplicator(MainFormApplicator mainFormApplicator) {
-        this.mainFormApplicator = mainFormApplicator;
+        this.applicator = mainFormApplicator;
     }
 
     @Override
@@ -71,15 +71,15 @@ public class MainFormService implements MainFormServiceInterface {
             if (chooser.getSelectedFile() != null) {
                 model = databaseService.loadDatabase(chooser.getSelectedFile());
                 Main.PathToDatabase = Paths.get(chooser.getSelectedFile().getParent());
-                mainFormApplicator.updateTable(model);
+                applicator.updateTable(model);
             }
         }
     }
 
     void backToMainForm() {
-        synchronized (mainFormApplicator.form.watcher) {
-            mainFormApplicator.form.watcher.notify();
-            mainFormApplicator.form.toFront();
+        synchronized (applicator.form.watcher) {
+            applicator.form.watcher.notify();
+            applicator.form.toFront();
         }
     }
 
@@ -173,6 +173,7 @@ public class MainFormService implements MainFormServiceInterface {
             public void onConfirm(Object produsObject) {
                 Produs produs = (Produs) produsObject;
                 model.continut.add(produs);
+                applicator.updateTable(model);
             }
 
             @Override
