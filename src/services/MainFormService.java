@@ -7,6 +7,7 @@ package services;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.EmptyStackException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -135,5 +136,56 @@ public class MainFormService implements MainFormServiceInterface {
             JOptionPane.showMessageDialog(null, ex);
             Logger.getLogger(MainFormService.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private boolean isAlreadyAddedToDatabase(String nume) {
+        for (Produs p : model.continut) {
+            if (p.nume.toLowerCase().equals(nume.toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void addProdus(String nume) throws Exception {
+        if (nume == null) {
+            throw new Exception("Ai anulat operatia");
+        }
+        if (nume.equals("")) {
+            throw new Exception("Nu ai tastat niciun nume");
+        }
+        if (isAlreadyAddedToDatabase(nume)) {
+            throw new Exception("Produsul a fost deja adaugat");
+        }
+        Produs produsToAdd = Produs.emptyInstance();
+        produsToAdd.nume = nume;
+        boolean directoryCreated = FileSystem.createDirectoryInImageBank(nume);
+        if (!directoryCreated) {
+            JOptionPane.showMessageDialog(null, "Nu am putut asigna un nou folder pentru acest produs");
+        }
+        ProdusEditService produsEditService = new ProdusEditService(produsToAdd, model.continut);
+        ProdusEdit produsEditForm = new ProdusEdit(produsEditService);
+        ProdusEditApplicator produsEditApplicator = new ProdusEditApplicator(produsEditForm);
+        produsEditApplicator.autoCompleteData(produsToAdd);
+        produsEditForm.setListener(new EventConfirmationListener() {
+            @Override
+            public void onConfirm(Object produsObject) {
+                Produs produs = (Produs) produsObject;
+                model.continut.add(produs);
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onFinish(Object produsObject) {
+                backToMainForm();
+                produsEditForm.dispose();
+            }
+        });
+        produsEditForm.setVisible(true);
     }
 }
