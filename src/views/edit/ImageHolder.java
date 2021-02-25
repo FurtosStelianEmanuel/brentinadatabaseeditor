@@ -54,10 +54,10 @@ public class ImageHolder extends JButton {
         super(name);
     }
 
-    public ImageHolder(){
-        super("Default");
+    public ImageHolder() {
+        super("Image not found");
     }
-    
+
     public ImageHolder(Path path) {
         setImageHolderIcon(path);
     }
@@ -77,7 +77,7 @@ public class ImageHolder extends JButton {
         setSize(icon.getIconWidth(), icon.getIconWidth());
         setIcon(icon);
     }
-    
+
     /**
      *
      * @param g
@@ -86,7 +86,7 @@ public class ImageHolder extends JButton {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
     }
-    
+
     private static BufferedImage toBufferedImage(Image img) {
         if (img instanceof BufferedImage) {
             return (BufferedImage) img;

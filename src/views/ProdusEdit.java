@@ -6,14 +6,12 @@
 package views;
 
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import models.produs.Culoare;
 import models.produs.DimensiuneCulori;
-import models.produs.Produs;
 import models.produs.TranslateProdus;
 import services.EditCoduriApplicator;
 import services.EditCoduriService;

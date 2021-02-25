@@ -7,7 +7,6 @@ package views.edit;
 
 import javax.swing.DefaultListModel;
 import models.produs.Culoare;
-import models.produs.Produs;
 import services.EditCuloareApplicator;
 import services.EditCuloareService;
 import services.EditCuloriService;
@@ -170,6 +169,7 @@ public class EditCuloriForm extends javax.swing.JFrame implements FormListenerIn
     }
 
     public void newCuloare() {
+        setEnabled(false);
         Culoare newCuloare = Culoare.emptyInstance();
         newCuloare.setUnghiuri(1);
         EditCuloareService culoareService = new EditCuloareService(newCuloare, service.getProdusCopy());
@@ -177,7 +177,6 @@ public class EditCuloriForm extends javax.swing.JFrame implements FormListenerIn
         EditCuloareApplicator applicator = new EditCuloareApplicator(culoareForm);
         applicator.autoCompleteData(null);
         culoareService.setApplicator(applicator);
-        setEnabled(false);
         culoareForm.setVisible(true);
         culoareForm.setListener(new EventConfirmationListener() {
             @Override
@@ -201,12 +200,12 @@ public class EditCuloriForm extends javax.swing.JFrame implements FormListenerIn
     }
 
     public void culoareSelected(int index) {
+        setEnabled(false);
         EditCuloareService culoareService = new EditCuloareService(service.getCopy().get(index), service.getProdusCopy());
         EditCuloareForm culoareForm = new EditCuloareForm(culoareService);
         EditCuloareApplicator applicator = new EditCuloareApplicator(culoareForm);
         culoareService.setApplicator(applicator);
         applicator.autoCompleteData(service.getCopy().get(index));
-        setEnabled(false);
         culoareForm.setVisible(true);
         culoareForm.setListener(new EventConfirmationListener() {
             @Override

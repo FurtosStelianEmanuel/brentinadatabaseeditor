@@ -42,16 +42,6 @@ public class EditCuloareService {
         return applicator;
     }
 
-    public void unghiuriChanged(int value) {
-        if (value < copy.getUnghiuri()) {
-            applicator.removeLastImageHolder();
-        } else if (value > copy.getUnghiuri()) {
-            applicator.addNewEmptyImageHolder();
-        }
-        copy.setUnghiuri(value);
-        applicator.repaint();
-    }
-
     public Culoare getCuloareOriginal() {
         return original;
     }
@@ -78,7 +68,6 @@ public class EditCuloareService {
         if (copy.getUnghiuri() > 1) {
             for (int i = 0; i < imageHolders.size(); i++) {
                 ImageHolder imageHolder = imageHolders.get(i);
-                //if (!imageHolder.getPathToImage().getParent().equals(productImageBank)) {
                 Path outputPath = Paths.get(
                         productImageBank.toString(),
                         String.format("%s_%d.jpg",
@@ -90,11 +79,9 @@ public class EditCuloareService {
                         StandardCopyOption.REPLACE_EXISTING
                 );
                 ImageHolder.writeCompressedImage(outputPath.toFile(), 0.7, 0.7);
-                //}
             }
         } else if (copy.getUnghiuri() == 1) {
             ImageHolder imageHolder = imageHolders.get(0);
-            //if (!imageHolder.getPathToImage().getParent().equals(productImageBank)) {
             Path outputPath = Paths.get(
                     productImageBank.toString(),
                     String.format("%s.jpg",
@@ -106,7 +93,6 @@ public class EditCuloareService {
                     StandardCopyOption.REPLACE_EXISTING
             );
             ImageHolder.writeCompressedImage(outputPath.toFile(), 0.7, 0.7);
-            //}
         }
     }
 
@@ -144,6 +130,12 @@ public class EditCuloareService {
         copy.setAlteCulori(getAlteCulori());
     }
 
+    /**
+     * Aducea behaviour nasol uneori, inlocuit de alte functii mai simple care tot asta fac (nu mai stiu care). Deprecated since 02/25/2021-11:10PM
+     *
+     * @deprecated
+     */
+    @Deprecated
     public void mapAllImagesWithBaseColorName() {
         List<ImageHolder> imageHolders = new ArrayList<>();
         for (Component component : applicator.form.jPanel3.getComponents()) {
@@ -208,5 +200,15 @@ public class EditCuloareService {
         } else {
             throw new Exception("Aceasta culoare este deja adaugata");
         }
+    }
+
+    public void removeUnghi(ImageHolder holder) {
+        applicator.removeUnghi(holder);
+        copy.setUnghiuri(applicator.form.getImageHolderCount());
+    }
+
+    public void addUnghi() {
+        applicator.addUnghi();
+        copy.setUnghiuri(applicator.form.getImageHolderCount());
     }
 }
