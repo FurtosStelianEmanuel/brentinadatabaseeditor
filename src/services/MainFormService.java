@@ -1,5 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
+* To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -7,7 +7,6 @@ package services;
 
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.EmptyStackException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -32,6 +31,7 @@ public class MainFormService implements MainFormServiceInterface {
     DatabaseService databaseService;
     MainFormApplicator applicator;
     DatabaseModel model;
+    DatabaseModel filteredModel;
     private final RequestSender requestSender;
 
     public MainFormService(DatabaseService databaseService, RequestSender requestSender) {
@@ -70,6 +70,11 @@ public class MainFormService implements MainFormServiceInterface {
         if (choice == JFileChooser.APPROVE_OPTION) {
             if (chooser.getSelectedFile() != null) {
                 model = databaseService.loadDatabase(chooser.getSelectedFile());
+                filteredModel = DatabaseModel.emptyInstance();
+                sortProducts();
+                model.continut.forEach((Produs produs) -> {
+                    filteredModel.continut.add(produs);
+                });
                 Main.PathToDatabase = Paths.get(chooser.getSelectedFile().getParent());
                 applicator.updateTable(model);
             }
@@ -173,6 +178,7 @@ public class MainFormService implements MainFormServiceInterface {
             public void onConfirm(Object produsObject) {
                 Produs produs = (Produs) produsObject;
                 model.continut.add(produs);
+                sortProducts();
                 applicator.updateTable(model);
             }
 
@@ -188,5 +194,90 @@ public class MainFormService implements MainFormServiceInterface {
             }
         });
         produsEditForm.setVisible(true);
+    }
+
+    public Produs getProdus(int selectedIndex) {
+        if (selectedIndex < 0) {
+            return null;
+        }
+        return model.continut.get(selectedIndex);
+    }
+
+    @Override
+    public void deleteProdus(Produs produs) throws IndexOutOfBoundsException, UnsupportedOperationException {
+        if (produs == null) {
+            throw new IndexOutOfBoundsException("Index < 0");
+        }
+        if (!model.continut.remove(produs)) {
+            throw new UnsupportedOperationException("Nu am putut scoate produsul " + produs.nume);
+        }
+        if (!filteredModel.continut.remove(produs)) {
+            throw new UnsupportedOperationException("Nu l am putut scoate nici din filteredModel");
+        }
+        
+        if (filterProducts(applicator.getFilter()) == 0) {
+            applicator.updateTable(model);
+            applicator.clearFilter();
+        } else {
+            applicator.updateTable(filteredModel);
+        }
+    }
+
+    private void sortProducts() {
+        model.continut.sort(Produs.NameComparator.getInstance());
+        applicator.updateTable(model);
+//        model.continut.sort((t, t1) -> {
+//            return 0; //To change body of generated lambdas, choose Tools | Templates.
+//        });
+    }
+
+    private void sortFilteredProducts() {
+        filteredModel.continut.sort(Produs.NameComparator.getInstance());
+        applicator.updateTable(filteredModel);
+    }
+
+    private boolean matchesFilter(String filter, Produs p) {
+        return p.nume.toLowerCase().contains(filter.toLowerCase());
+    }
+
+    void handleFilterMatch(Produs p) {
+        if (filteredModel.continut.contains(p)) {
+            return;
+        }
+        filteredModel.continut.add(p);
+    }
+
+    void handleFilterNonMatch(Produs p) {
+        if (!filteredModel.continut.contains(p)) {
+            return;
+        }
+        filteredModel.continut.remove(p);
+    }
+
+    @Override
+    public int filterProducts(String search) {
+        for (Produs produs : model.continut) {
+            if (matchesFilter(search, produs)) {
+                handleFilterMatch(produs);
+            } else {
+                handleFilterNonMatch(produs);
+            }
+        }
+        for (int i = model.continut.size(); i >= 0; i--) {
+
+        }
+        sortFilteredProducts();
+        return filteredModel.continut.size();
+    }
+
+    @Override
+    public Produs getProdusWithFilter(int index) {
+        if (index < 0) {
+            throw new IndexOutOfBoundsException("Index < 0");
+        }
+        if (index >= filteredModel.continut.size()) {
+            throw new IndexOutOfBoundsException("Index >= " + filteredModel.continut.size());
+        }
+        return filteredModel.continut.get(index);
     }
 }

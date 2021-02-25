@@ -4,8 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/services/interfaces/MainFormServiceInterface.java</file>
+            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/services/MainFormApplicator.java</file>
+            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/models/produs/CuloareCodPret.java</file>
             <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/views/ProdusEdit.java</file>
             <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/main/Main.java</file>
+            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/services/ProdusEditApplicator.java</file>
+            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/models/produs/Produs.java</file>
             <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/services/MainFormService.java</file>
             <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/plugin/RequestSender.java</file>
             <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/views/MainForm.java</file>

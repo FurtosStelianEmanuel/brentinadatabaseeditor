@@ -24,6 +24,14 @@ public class MainFormApplicator implements MainFormApplicatorInterface {
         this.form.jTable1.getColumn("Nr.").setMaxWidth(50);
     }
 
+    public void clearFilter() {
+        form.placeholderTextField1.setText("");
+    }
+
+    public String getFilter() {
+        return form.placeholderTextField1.getText();
+    }
+
     @Override
     public void updateTable(DatabaseModel databaseModel) {
         DefaultTableModel model = (DefaultTableModel) form.jTable1.getModel();

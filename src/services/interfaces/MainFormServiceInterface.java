@@ -6,6 +6,7 @@
 package services.interfaces;
 
 import java.io.IOException;
+import models.produs.Produs;
 
 /**
  *
@@ -23,5 +24,11 @@ public interface MainFormServiceInterface {
 
     void addProdus(String nume) throws Exception;
 
+    void deleteProdus(Produs produs) throws IndexOutOfBoundsException, UnsupportedOperationException;
+
+    int filterProducts(String search);
+
+    Produs getProdusWithFilter(int index) throws IndexOutOfBoundsException;
+    
     void editProdus(int index);
 }
