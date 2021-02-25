@@ -36,6 +36,13 @@ public class DatabaseModel {
         return model;
     }
 
+    public static DatabaseModel emptyInstance() {
+        DatabaseModel model = new DatabaseModel();
+        model.continut = new ArrayList<>();
+        model.produseAfisate = 3;
+        return model;
+    }
+
     public JSONObject toJSONObject() {
         JSONObject ob = new JSONObject();
         ob.put("produseAfisate", produseAfisate);

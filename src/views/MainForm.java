@@ -5,10 +5,15 @@
  */
 package views;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import models.produs.Produs;
 import services.MainFormService;
 
 /**
@@ -32,6 +37,25 @@ public class MainForm extends javax.swing.JFrame {
         this.service = service;
         initComponents();
         watcher = new Object();
+        placeholderTextField1.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                handleChange();
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                handleChange();
+            }
+
+            void handleChange() {
+                service.filterProducts(placeholderTextField1.getText());
+            }
+        });
     }
 
     /**
@@ -73,6 +97,11 @@ public class MainForm extends javax.swing.JFrame {
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
+            }
+        });
+        jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTable1KeyPressed(evt);
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -160,26 +189,54 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        final int selectedIndex = jTable1.getSelectedRow();
+    private void handleProdusEdit(int selectedIndex) {
+        if (selectedIndex < 0) {
+            return;
+        }
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if (selectedIndex != -1) {
-                    synchronized (watcher) {
-                        try {
-                            setEnabled(false);
-                            service.editProdus(selectedIndex);
-                            watcher.wait();
-                            setEnabled(true);
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                synchronized (watcher) {
+                    try {
+                        setEnabled(false);
+                        service.editProdus(selectedIndex);
+                        watcher.wait();
+                        setEnabled(true);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
         }).start();
+    }
 
+    private void handleDeleteProdus(int selectedIndex) {
+        if (selectedIndex < 0) {
+            return;
+        }
+        Produs selectedProdus = service.getProdusWithFilter(selectedIndex);
+        int choice = JOptionPane.showConfirmDialog(null, "Esti sigur ca vrei sa stergi produsul " + selectedProdus.nume);
+        if (choice == JOptionPane.CANCEL_OPTION
+                || choice == JOptionPane.CLOSED_OPTION
+                || choice == JOptionPane.NO_OPTION) {
+            return;
+        }
+        service.deleteProdus(selectedProdus);
+    }
+
+    private int previousSelectedIndex = -1;
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        final int selectedIndex = jTable1.getSelectedRow();
+        if (previousSelectedIndex == selectedIndex) {
+            switch (evt.getButton()) {
+                case MouseEvent.BUTTON1:
+                    handleProdusEdit(selectedIndex);
+                    break;
+                case MouseEvent.BUTTON3:
+                    handleDeleteProdus(selectedIndex);
+            }
+        }
+        previousSelectedIndex = selectedIndex;
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
@@ -198,6 +255,12 @@ public class MainForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_jMenu2MouseClicked
+
+    private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
+            handleDeleteProdus(previousSelectedIndex);
+        }
+    }//GEN-LAST:event_jTable1KeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JMenu jMenu1;

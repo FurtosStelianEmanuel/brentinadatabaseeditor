@@ -6,6 +6,7 @@
 package models.produs;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,23 +19,6 @@ import org.json.simple.parser.ParseException;
  * @author Manel
  */
 public class Produs {
-
-    public static Produs emptyInstance() {
-        Produs p = new Produs();
-        p.categorii = new ArrayList<>();
-        p.coduriSiPreturi = new ArrayList<>();
-        p.culori = new ArrayList<>();
-        p.descriere = "";
-        p.dimensiuni = new ArrayList<>();
-        p.imagineDefault = "";
-        p.nume = "";
-        p.palleteType = 0;
-        p.pret = 3.0d;
-        p.similare = new ArrayList<>();
-        p.translate = TranslateProdus.emptyInstance();
-        p.um = "";
-        return p;
-    }
 
     public String nume;
     public List<String> dimensiuni;
@@ -109,6 +93,23 @@ public class Produs {
         });
     }
 
+    public static Produs emptyInstance() {
+        Produs p = new Produs();
+        p.categorii = new ArrayList<>();
+        p.coduriSiPreturi = new ArrayList<>();
+        p.culori = new ArrayList<>();
+        p.descriere = "";
+        p.dimensiuni = new ArrayList<>();
+        p.imagineDefault = "";
+        p.nume = "";
+        p.palleteType = 0;
+        p.pret = 3.0d;
+        p.similare = new ArrayList<>();
+        p.translate = TranslateProdus.emptyInstance();
+        p.um = "";
+        return p;
+    }
+
     public static Produs fromJSONObject(JSONObject produs) {
         Produs p = new Produs();
         p.nume = (String) produs.get("nume");
@@ -176,6 +177,18 @@ public class Produs {
         map.put("palleteType", palleteType);
         map.put("translate", translate.toJSONObject());
         return map;
+    }
+
+    public static class NameComparator implements Comparator<Produs> {
+
+        @Override
+        public int compare(Produs t1, Produs t2) {
+            return t1.nume.compareToIgnoreCase(t2.nume);
+        }
+
+        public static NameComparator getInstance() {
+            return new NameComparator();
+        }
     }
 
     @Override
