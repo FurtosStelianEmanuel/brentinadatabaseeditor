@@ -8,7 +8,6 @@ package services;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 import models.produs.Culoare;
@@ -70,6 +69,16 @@ public class EditCoduriService {
             if (dimensiuneCulori.getDimensiune().equals(newColor)) {
                 throw new Exception("Aceasta dimensiune exista deja");
             }
+        }
+        boolean found = false;
+        for (String dimensiuneProdus : copyProdus.dimensiuni) {
+            if (dimensiuneProdus.equals(newColor)) {
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            throw new Exception("Aceasta dimensiune nu este disponibila");
         }
         copy.add(DimensiuneCulori.withDimensiuneName(newColor));
         applicator.reapplyVisuals(copy);

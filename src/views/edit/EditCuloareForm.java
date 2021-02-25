@@ -44,10 +44,9 @@ public class EditCuloareForm extends javax.swing.JFrame implements FormListenerI
                 Document d = de.getDocument();
                 try {
                     String text = d.getText(0, d.getLength());
-                    if (text.contains("multi")){
+                    if (text.contains("multi")) {
                         numeCuloare.setEnabled(false);
-                        jSpinner1.setValue(1);
-                        jSpinner1.setEnabled(false);
+                        jLabel2.setText("1");
                         jPanel2.setVisible(true);
                     }
                 } catch (BadLocationException ex) {
@@ -82,7 +81,8 @@ public class EditCuloareForm extends javax.swing.JFrame implements FormListenerI
         germanaCuloare = new views.PlaceholderTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
+        jLabel2 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         culoarePaletar = new javax.swing.JButton(){
             @Override
@@ -108,13 +108,17 @@ public class EditCuloareForm extends javax.swing.JFrame implements FormListenerI
         jLabel1.setText("Unghiuri : ");
         jPanel1.add(jLabel1);
 
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
-        jSpinner1.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jSpinner1StateChanged(evt);
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("0");
+        jPanel1.add(jLabel2);
+
+        jButton5.setText("Adauga unghi");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
             }
         });
-        jPanel1.add(jSpinner1);
+        jPanel1.add(jButton5);
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jPanel1.add(jSeparator1);
@@ -144,7 +148,7 @@ public class EditCuloareForm extends javax.swing.JFrame implements FormListenerI
             }
         });
 
-        jPanel2.setLayout(new java.awt.GridLayout());
+        jPanel2.setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel2.add(alteCulori);
 
@@ -175,7 +179,7 @@ public class EditCuloareForm extends javax.swing.JFrame implements FormListenerI
                     .addComponent(englezaCuloare, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(maghiaraCuloare, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(germanaCuloare, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane2)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -224,19 +228,12 @@ public class EditCuloareForm extends javax.swing.JFrame implements FormListenerI
             service.mapAllOtherFieldsToObject();
             service.moveAllImagesToRightFolder(jPanel3.getComponents());
             service.mapNewImagesToDatabase(jPanel3.getComponents());
-            //service.mapAllImagesWithBaseColorName();
             listener.onConfirm(service.getCuloareCopy());
             listener.onFinish(service.getCuloareCopy());
         } catch (IOException ex) {
             Logger.getLogger(EditCuloareForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jSpinner1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner1StateChanged
-        if (service.getApplicator().isAutocompleteDone()) {
-            service.unghiuriChanged((int) jSpinner1.getValue());
-        }
-    }//GEN-LAST:event_jSpinner1StateChanged
 
     private void culoarePaletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_culoarePaletarActionPerformed
         Color showDialogColor = JColorChooser.showDialog(null, "Alegeti o culoare pentru paletar", Color.yellow);
@@ -262,6 +259,23 @@ public class EditCuloareForm extends javax.swing.JFrame implements FormListenerI
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        service.unghiAdded(getImageHolderCount());
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    public int getImageHolderCount() {
+        int count = 0;
+        for (Component component : jPanel3.getComponents()) {
+            if (component instanceof ImageHolder) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public void unghiRemoved(ImageHolder holder) {
+        service.removeUnghi(holder);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JComboBox<String> alteCulori;
     public javax.swing.JButton culoarePaletar;
@@ -271,13 +285,14 @@ public class EditCuloareForm extends javax.swing.JFrame implements FormListenerI
     public javax.swing.JButton jButton2;
     public javax.swing.JButton jButton3;
     public javax.swing.JButton jButton4;
+    public javax.swing.JButton jButton5;
     public javax.swing.JLabel jLabel1;
+    public javax.swing.JLabel jLabel2;
     public javax.swing.JPanel jPanel1;
     public javax.swing.JPanel jPanel2;
     public javax.swing.JPanel jPanel3;
     public javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JSeparator jSeparator1;
-    public javax.swing.JSpinner jSpinner1;
     public views.PlaceholderTextField maghiaraCuloare;
     public views.PlaceholderTextField numeCuloare;
     // End of variables declaration//GEN-END:variables

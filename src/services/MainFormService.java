@@ -90,15 +90,16 @@ public class MainFormService implements MainFormServiceInterface {
 
     @Override
     public void editProdus(int index) {
-        ProdusEditService produsEditService = new ProdusEditService(model.continut.get(index), model.continut);
+        ProdusEditService produsEditService = new ProdusEditService(filteredModel.continut.get(index), filteredModel.continut);
         ProdusEdit produsEditForm = new ProdusEdit(produsEditService);
         ProdusEditApplicator applicator = new ProdusEditApplicator(produsEditForm);
-        applicator.autoCompleteData(model.continut.get(index));
+        applicator.autoCompleteData(filteredModel.continut.get(index));
         produsEditForm.setListener(new EventConfirmationListener() {
             @Override
             public void onConfirm(Object produsObject) {
                 Produs produs = (Produs) produsObject;
                 model.continut.set(index, produs);
+                filteredModel.continut.set(index, produs);
             }
 
             @Override
@@ -178,8 +179,9 @@ public class MainFormService implements MainFormServiceInterface {
             public void onConfirm(Object produsObject) {
                 Produs produs = (Produs) produsObject;
                 model.continut.add(produs);
-                sortProducts();
-                applicator.updateTable(model);
+                filteredModel.continut.add(produs);
+                //sortProducts();
+                sortFilteredProducts();
             }
 
             @Override
@@ -208,13 +210,16 @@ public class MainFormService implements MainFormServiceInterface {
         if (produs == null) {
             throw new IndexOutOfBoundsException("Index < 0");
         }
-        if (!model.continut.remove(produs)) {
+        if (!model.continut.contains(produs)) {
             throw new UnsupportedOperationException("Nu am putut scoate produsul " + produs.nume);
         }
-        if (!filteredModel.continut.remove(produs)) {
+        if (!filteredModel.continut.contains(produs)) {
             throw new UnsupportedOperationException("Nu l am putut scoate nici din filteredModel");
         }
-        
+
+        filteredModel.continut.remove(produs);
+        model.continut.remove(produs);
+
         if (filterProducts(applicator.getFilter()) == 0) {
             applicator.updateTable(model);
             applicator.clearFilter();
@@ -262,9 +267,6 @@ public class MainFormService implements MainFormServiceInterface {
             } else {
                 handleFilterNonMatch(produs);
             }
-        }
-        for (int i = model.continut.size(); i >= 0; i--) {
-
         }
         sortFilteredProducts();
         return filteredModel.continut.size();

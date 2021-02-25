@@ -5,6 +5,7 @@
  */
 package services;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -12,6 +13,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import main.Main;
 import models.produs.Culoare;
 import services.interfaces.InitialCompleteInterface;
@@ -26,23 +28,53 @@ public class EditCuloareApplicator implements InitialCompleteInterface {
 
     public final EditCuloareForm form;
 
-    public static ActionListener ADD_IMAGE_ACTIONLISTENER = new ActionListener() {
+    public ActionListener ADD_IMAGE_ACTIONLISTENER = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent ae) {
-            ImageHolder src = (ImageHolder) ae.getSource();
-            JFileChooser chooser = new JFileChooser(Main.PathToDatabase.toFile());
-            chooser.showOpenDialog(null);
-            if (chooser.getSelectedFile() != null) {
-                src.setImageHolderIcon(chooser.getSelectedFile().toPath());
+            int choice = JOptionPane.showOptionDialog(null, "Ce doriti sa faceti cu aceasta poza?",
+                    "Optiune unghi",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{"Editeaza poza", "Sterge poza"}, "Editeaza poza");
+            switch (choice) {
+                case 0: {
+                    ImageHolder src = (ImageHolder) ae.getSource();
+                    JFileChooser chooser = new JFileChooser(Main.PathToDatabase.toFile());
+                    chooser.showOpenDialog(null);
+                    if (chooser.getSelectedFile() != null) {
+                        src.setImageHolderIcon(chooser.getSelectedFile().toPath());
+                    }
+                    src.setText("");
+                }
+                break;
+                case 1: {
+                    ImageHolder source = (ImageHolder) ae.getSource();
+                    for (int i = form.jPanel3.getComponentCount() - 1; i >= 0; i--) {
+                        Component component = form.jPanel3.getComponent(i);
+                        if (component instanceof ImageHolder) {
+                            if (component == source) {
+                                form.jPanel3.remove(source);
+                                form.unghiRemoved(source);
+                                form.jPanel3.repaint();
+                                break;
+                            }
+                        }
+                    }
+                }
+                break;
             }
-            src.setText("");
+            if (choice == 0) {
+
+            } else {
+
+            }
+
         }
     };
 
     public EditCuloareApplicator(EditCuloareForm form) {
         this.form = form;
     }
-
+    
+    @Deprecated
     public void addNewEmptyImageHolder() {
         ImageHolder button = new ImageHolder("Adauga imagine");
         button.addActionListener(ADD_IMAGE_ACTIONLISTENER);
@@ -50,6 +82,7 @@ public class EditCuloareApplicator implements InitialCompleteInterface {
         form.jPanel3.revalidate();
     }
 
+    @Deprecated
     public void removeLastImageHolder() {
         form.jPanel3.remove(form.jPanel3.getComponent(form.jPanel3.getComponentCount() - 1));
         form.jPanel3.revalidate();
@@ -67,13 +100,15 @@ public class EditCuloareApplicator implements InitialCompleteInterface {
                             form.getService().produsCopy.nume,
                             String.format("%s_%d.jpg", c.getNume(), i)
                     ).toFile();
+                    ImageHolder holder;
                     if (!f.exists()) {
                         System.out.println("Nu am gasit imagine pentru culoarea " + String.format("%s_%d.jpg", c.getNume(), i));
+                        holder = new ImageHolder();
                     } else {
-                        ImageHolder holder = new ImageHolder(f.toPath());
-                        holder.addActionListener(ADD_IMAGE_ACTIONLISTENER);
-                        form.jPanel3.add(holder);
+                        holder = new ImageHolder(f.toPath());
                     }
+                    holder.addActionListener(ADD_IMAGE_ACTIONLISTENER);
+                    form.jPanel3.add(holder);
                 }
             } else if (c.getUnghiuri() == 1) {
                 File f = Paths.get(
@@ -84,14 +119,16 @@ public class EditCuloareApplicator implements InitialCompleteInterface {
                         form.getService().produsCopy.nume,
                         String.format("%s.jpg", c.getNume())
                 ).toFile();
+                ImageHolder holder;
                 if (!f.exists()) {
                     System.out.println("Nu am gasit imagine pentru culoarea)" + String.format("%s.jpg", c.getNume()));
+                    holder = new ImageHolder();
                     //cand iti da asta, verifica daca jsonu e pus in folderu bun
                 } else {
-                    ImageHolder holder = new ImageHolder(f.toPath());
-                    holder.addActionListener(ADD_IMAGE_ACTIONLISTENER);
-                    form.jPanel3.add(holder);
+                    holder = new ImageHolder(f.toPath());
                 }
+                holder.addActionListener(ADD_IMAGE_ACTIONLISTENER);
+                form.jPanel3.add(holder);
             }
         } else {
             ImageHolder holder = new ImageHolder("Adauga o imagine");
@@ -115,13 +152,13 @@ public class EditCuloareApplicator implements InitialCompleteInterface {
             form.englezaCuloare.setText(culoare.getTranslation().getEnglish());
             form.maghiaraCuloare.setText(culoare.getTranslation().getHungarian());
             form.germanaCuloare.setText(culoare.getTranslation().getGerman());
-            form.jSpinner1.setValue(culoare.getUnghiuri());
+            form.jLabel2.setText(Long.toString(culoare.getUnghiuri()));
             form.culoarePaletar.setBackground(culoare.getRGB());
             setAvailableImages(culoare);
             form.jPanel2.setVisible(culoare.getNume().equals("multi"));
             if (form.jPanel2.isVisible()) {
                 if (culoare.getAlteCulori() != null) {
-                    form.jSpinner1.setEnabled(false);
+                    form.jButton5.setEnabled(false);
                     form.numeCuloare.setEnabled(false);
                     DefaultComboBoxModel model = (DefaultComboBoxModel) form.alteCulori.getModel();
                     for (String altaCuloare : culoare.getAlteCulori()) {
@@ -148,5 +185,17 @@ public class EditCuloareApplicator implements InitialCompleteInterface {
         alteCulori.forEach(culoare -> {
             model.addElement(culoare);
         });
+    }
+
+    void addUnghi(ImageHolder holder) {
+        form.jPanel3.add(holder);
+        form.jLabel2.setText(Integer.toString(form.getImageHolderCount()));
+        form.jPanel3.revalidate();
+    }
+
+    void removeUnghi(ImageHolder holder) {
+        form.jPanel3.remove(holder);
+        form.jLabel2.setText(Integer.toString(form.getImageHolderCount()));
+        form.jPanel3.revalidate();
     }
 }
