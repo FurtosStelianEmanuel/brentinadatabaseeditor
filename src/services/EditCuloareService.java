@@ -42,13 +42,6 @@ public class EditCuloareService {
         return applicator;
     }
 
-    public void unghiAdded(long value) {
-        copy.setUnghiuri(value);
-        ImageHolder holder = new ImageHolder("Adauga o imagine");
-        holder.addActionListener(getApplicator().ADD_IMAGE_ACTIONLISTENER);
-        applicator.addUnghi(holder);
-    }
-
     public Culoare getCuloareOriginal() {
         return original;
     }
@@ -211,6 +204,11 @@ public class EditCuloareService {
 
     public void removeUnghi(ImageHolder holder) {
         applicator.removeUnghi(holder);
+        copy.setUnghiuri(applicator.form.getImageHolderCount());
+    }
+
+    public void addUnghi() {
+        applicator.addUnghi();
         copy.setUnghiuri(applicator.form.getImageHolderCount());
     }
 }

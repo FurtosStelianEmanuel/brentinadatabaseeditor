@@ -260,7 +260,7 @@ public class EditCuloareForm extends javax.swing.JFrame implements FormListenerI
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        service.unghiAdded(getImageHolderCount());
+        addUnghi();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     public int getImageHolderCount() {
@@ -273,7 +273,11 @@ public class EditCuloareForm extends javax.swing.JFrame implements FormListenerI
         return count;
     }
 
-    public void unghiRemoved(ImageHolder holder) {
+    public void addUnghi() {
+        service.addUnghi();
+    }
+
+    public void removeUnghi(ImageHolder holder) {
         service.removeUnghi(holder);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

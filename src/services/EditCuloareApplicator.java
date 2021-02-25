@@ -51,9 +51,7 @@ public class EditCuloareApplicator implements InitialCompleteInterface {
                         Component component = form.jPanel3.getComponent(i);
                         if (component instanceof ImageHolder) {
                             if (component == source) {
-                                form.jPanel3.remove(source);
-                                form.unghiRemoved(source);
-                                form.jPanel3.repaint();
+                                form.removeUnghi(source);
                                 break;
                             }
                         }
@@ -73,7 +71,7 @@ public class EditCuloareApplicator implements InitialCompleteInterface {
     public EditCuloareApplicator(EditCuloareForm form) {
         this.form = form;
     }
-    
+
     @Deprecated
     public void addNewEmptyImageHolder() {
         ImageHolder button = new ImageHolder("Adauga imagine");
@@ -187,15 +185,19 @@ public class EditCuloareApplicator implements InitialCompleteInterface {
         });
     }
 
-    void addUnghi(ImageHolder holder) {
+    void addUnghi() {
+        ImageHolder holder = new ImageHolder();
+        holder.addActionListener(ADD_IMAGE_ACTIONLISTENER);
         form.jPanel3.add(holder);
         form.jLabel2.setText(Integer.toString(form.getImageHolderCount()));
+        form.jPanel3.repaint();
         form.jPanel3.revalidate();
     }
 
     void removeUnghi(ImageHolder holder) {
         form.jPanel3.remove(holder);
         form.jLabel2.setText(Integer.toString(form.getImageHolderCount()));
+        form.jPanel3.repaint();
         form.jPanel3.revalidate();
     }
 }
