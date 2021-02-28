@@ -7,6 +7,8 @@ package services;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -21,6 +23,7 @@ import views.MainForm;
 import views.ProdusEdit;
 import services.interfaces.EventConfirmationListener;
 import services.interfaces.MainFormServiceInterface;
+import views.edit.EditNewProductsForm;
 
 /**
  *
@@ -96,8 +99,8 @@ public class MainFormService implements MainFormServiceInterface {
     public void editProdus(int index) {
         ProdusEditService produsEditService = new ProdusEditService(filteredModel.continut.get(index), filteredModel.continut);
         ProdusEdit produsEditForm = new ProdusEdit(produsEditService);
-        ProdusEditApplicator applicator = new ProdusEditApplicator(produsEditForm);
-        applicator.autoCompleteData(filteredModel.continut.get(index));
+        ProdusEditApplicator produsEditApplicator = new ProdusEditApplicator(produsEditForm);
+        produsEditApplicator.autoCompleteData(filteredModel.continut.get(index));
         produsEditForm.setListener(new EventConfirmationListener() {
             @Override
             public void onConfirm(Object produsObject) {
@@ -285,5 +288,34 @@ public class MainFormService implements MainFormServiceInterface {
             throw new IndexOutOfBoundsException("Index >= " + filteredModel.continut.size());
         }
         return filteredModel.continut.get(index);
+    }
+
+    @Override
+    public void editNewProducts() {
+        EditNewProductsService newProductsService = new EditNewProductsService(model.continut);
+        EditNewProductsForm editNewProductsForm = new EditNewProductsForm(newProductsService);
+        EditNewProductsApplicator editNewProductsApplicator = new EditNewProductsApplicator(editNewProductsForm);
+        newProductsService.setApplicator(editNewProductsApplicator);
+        applicator.form.setEnabled(false);
+        editNewProductsApplicator.autoCompleteData(model);
+        editNewProductsForm.setVisible(true);
+        editNewProductsForm.setListener(new EventConfirmationListener() {
+            @Override
+            public void onConfirm(Object p) {
+                List<UUID> uuids = (List<UUID>) p;
+                model.newProducts = uuids;
+            }
+
+            @Override
+            public void onCancel() {
+            }
+
+            @Override
+            public void onFinish(Object o) {
+                backToMainForm();
+                editNewProductsForm.dispose();
+                applicator.form.setEnabled(true);
+            }
+        });
     }
 }

@@ -64,7 +64,7 @@ public class EditCuloareService {
         if (imageHolders.size() != copy.getUnghiuri()) {
             throw new UnsupportedOperationException("imaginile si unghiurile nu se potrivesc");
         }
-        Path productImageBank = Paths.get(Main.PathToDatabase.toString(), Main.PathToImageBank.toString(), produsCopy.nume);
+        Path productImageBank = Paths.get(Main.PathToDatabase.toString(), Main.PathToImageBank.toString(), produsCopy.id.toString());
         if (copy.getUnghiuri() > 1) {
             for (int i = 0; i < imageHolders.size(); i++) {
                 ImageHolder imageHolder = imageHolders.get(i);

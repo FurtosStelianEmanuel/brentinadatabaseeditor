@@ -109,7 +109,7 @@ public class EditCuloareForm extends javax.swing.JFrame implements FormListenerI
         jPanel1.add(jLabel1);
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("0");
+        jLabel2.setText("1");
         jPanel1.add(jLabel2);
 
         jButton5.setText("Adauga unghi");
