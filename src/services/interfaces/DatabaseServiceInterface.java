@@ -18,4 +18,6 @@ public interface DatabaseServiceInterface {
     DatabaseModel loadDatabase(File file) throws ClassNotFoundException, IOException;
 
     void saveDatabase(DatabaseModel model, File file) throws ClassNotFoundException, IOException;
+
+    void migrateToUUID(DatabaseModel model) throws ClassNotFoundException, IOException;
 }
