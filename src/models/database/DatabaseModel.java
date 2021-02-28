@@ -7,6 +7,9 @@ package models.database;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import models.produs.Produs;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -19,10 +22,12 @@ public class DatabaseModel {
 
     public long produseAfisate;
     public List<Produs> continut;
+    public List<UUID> newProducts;
 
     private DatabaseModel() {
         produseAfisate = 2;
         continut = new ArrayList<>();
+        newProducts = new ArrayList<>();
     }
 
     public static DatabaseModel fromJSONObject(JSONObject database) {
@@ -33,6 +38,9 @@ public class DatabaseModel {
             Produs produs = Produs.fromJSONObject((JSONObject) produsObject);
             model.continut.add(produs);
         }
+        if (database.get("produseNoi") != null) {
+            model.newProducts = (List<UUID>) database.get("produseNoi");
+        }
         return model;
     }
 
@@ -40,6 +48,7 @@ public class DatabaseModel {
         DatabaseModel model = new DatabaseModel();
         model.continut = new ArrayList<>();
         model.produseAfisate = 3;
+        model.newProducts = new ArrayList<>();
         return model;
     }
 
@@ -47,6 +56,8 @@ public class DatabaseModel {
         JSONObject ob = new JSONObject();
         ob.put("produseAfisate", produseAfisate);
         ob.put("continut", continut);
+        List<String> uuids = newProducts.stream().map(id -> id.toString()).collect(Collectors.toList());
+        ob.put("produseNoi", uuids);
         return ob;
     }
 }

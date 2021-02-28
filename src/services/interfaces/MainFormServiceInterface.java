@@ -29,6 +29,8 @@ public interface MainFormServiceInterface {
     int filterProducts(String search);
 
     Produs getProdusWithFilter(int index) throws IndexOutOfBoundsException;
-    
+
+    void editNewProducts();
+
     void editProdus(int index);
 }

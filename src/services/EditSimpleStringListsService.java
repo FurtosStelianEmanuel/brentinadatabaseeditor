@@ -66,5 +66,4 @@ public class EditSimpleStringListsService implements EditSimpleStringListsInterf
     public void changeOrder(int focusedIndex, int direction) {
         applicator.changeOrder(focusedIndex, direction);
     }
-
 }
