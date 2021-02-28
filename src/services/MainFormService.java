@@ -97,7 +97,7 @@ public class MainFormService implements MainFormServiceInterface {
 
     @Override
     public void editProdus(int index) {
-        ProdusEditService produsEditService = new ProdusEditService(filteredModel.continut.get(index), filteredModel.continut);
+        ProdusEditService produsEditService = new ProdusEditService(filteredModel.continut.get(index), model.continut);
         ProdusEdit produsEditForm = new ProdusEdit(produsEditService);
         ProdusEditApplicator produsEditApplicator = new ProdusEditApplicator(produsEditForm);
         produsEditApplicator.autoCompleteData(filteredModel.continut.get(index));
@@ -105,8 +105,18 @@ public class MainFormService implements MainFormServiceInterface {
             @Override
             public void onConfirm(Object produsObject) {
                 Produs produs = (Produs) produsObject;
-                model.continut.set(index, produs);
+
                 filteredModel.continut.set(index, produs);
+                for (int i = 0; i < model.continut.size(); i++) {
+                    Produs modelProdus = model.continut.get(i);
+                    if (modelProdus.id == produs.id) {
+                        model.continut.set(i, produs);
+                        break;
+                    }
+                }
+
+                sortProductsNoUpdateOnUI();
+                sortFilteredProducts();
             }
 
             @Override
@@ -187,7 +197,7 @@ public class MainFormService implements MainFormServiceInterface {
                 Produs produs = (Produs) produsObject;
                 model.continut.add(produs);
                 filteredModel.continut.add(produs);
-                //sortProducts();
+                sortProductsNoUpdateOnUI();
                 sortFilteredProducts();
             }
 
@@ -241,6 +251,10 @@ public class MainFormService implements MainFormServiceInterface {
 //        model.continut.sort((t, t1) -> {
 //            return 0; //To change body of generated lambdas, choose Tools | Templates.
 //        });
+    }
+
+    private void sortProductsNoUpdateOnUI() {
+        model.continut.sort(Produs.NameComparator.getInstance());
     }
 
     private void sortFilteredProducts() {
