@@ -10,9 +10,14 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import main.Main;
 import models.database.DatabaseModel;
+import models.produs.Produs;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -43,4 +48,15 @@ public class DatabaseService implements DatabaseServiceInterface {
         }
     }
 
+    @Override
+    public void migrateToUUID(DatabaseModel databaseModel) throws ClassNotFoundException, IOException {
+        for (Produs produs : databaseModel.continut) {
+            UUID produsId = UUID.randomUUID();
+            produs.id = produsId;
+            FileSystem.renameDirectory(Paths.get(Main.PathToDatabase.toString(), Main.PathToImageBank.toString(), produs.nume), produsId.toString());
+        }
+        saveDatabase(databaseModel, Paths.get(Main.PathToDatabase.toString(), "produse.json").toFile());
+        JOptionPane.showMessageDialog(null, "UUID migration done, set migration flag to false and restart");
+        System.exit(0);
+    }
 }

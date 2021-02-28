@@ -47,7 +47,7 @@ public class EditImagineDefaultApplicator extends InitialComplete {
     @Override
     public void autoCompleteData(Object formDataObject) {
         Produs produs = (Produs) formDataObject;
-        Path productImageBank = Paths.get(Main.PathToDatabase.toString(), Main.PathToImageBank.toString(), produs.nume);
+        Path productImageBank = Paths.get(Main.PathToDatabase.toString(), Main.PathToImageBank.toString(), produs.id.toString());
         for (Culoare culoare : produs.culori) {
             if (culoare.getUnghiuri() == 1) {
                 Path imagePath = Paths.get(

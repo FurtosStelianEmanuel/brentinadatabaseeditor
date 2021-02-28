@@ -8,6 +8,7 @@ package models.produs;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.simple.JSONArray;
@@ -27,8 +28,10 @@ public class Produs {
     public String imagineDefault;
     public String descriere;
     public TranslateProdus translate;
+    public UUID id;
     /**
-     * momentan nu are nicio functionalitate in spate, ar trebui scos din model (in viitor)
+     * momentan nu are nicio functionalitate in spate, ar trebui scos din model
+     * (in viitor)
      */
     public double pret;
     public List<String> similare;
@@ -48,6 +51,7 @@ public class Produs {
         categorii = new ArrayList<>();
         um = "";
         palleteType = 0;
+        id = UUID.fromString("00000000-0000-0000-0000-000000000000");
     }
 
     public Produs(Produs source) {
@@ -71,6 +75,7 @@ public class Produs {
         translate.nume.en = source.translate.nume.en;
         translate.nume.hu = source.translate.nume.hu;
         translate.nume.de = source.translate.nume.de;
+        id = source.id;
 
         source.coduriSiPreturi.forEach((DimensiuneCulori dimensiuneCulori) -> {
             coduriSiPreturi.add(new DimensiuneCulori(dimensiuneCulori));
@@ -107,6 +112,7 @@ public class Produs {
         p.similare = new ArrayList<>();
         p.translate = TranslateProdus.emptyInstance();
         p.um = "";
+        p.id = UUID.fromString("00000000-0000-0000-0000-000000000000");
         return p;
     }
 
@@ -159,6 +165,10 @@ public class Produs {
         if (palleteType != null) {
             p.palleteType = (long) palleteType;
         }
+        Object objectId = produs.get("id");
+        if (objectId != null) {
+            p.id = UUID.fromString((String) objectId);
+        }
         return p;
     }
 
@@ -176,6 +186,7 @@ public class Produs {
         map.put("categorii", categorii);
         map.put("palleteType", palleteType);
         map.put("translate", translate.toJSONObject());
+        map.put("id", id.toString());
         return map;
     }
 

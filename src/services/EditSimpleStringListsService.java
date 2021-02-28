@@ -35,12 +35,11 @@ public class EditSimpleStringListsService implements EditSimpleStringListsInterf
     }
 
     @Override
-    public void addSimpleString(String dimensiune) throws Exception {
-
+    public void addSimpleString(String simpleString) throws Exception {
         if (getNumeProduse() != null) {
             String productName = null;
             for (String numeProdus : getNumeProduse()) {
-                if (dimensiune.equals(numeProdus)) {
+                if (simpleString.equals(numeProdus)) {
                     productName = numeProdus;
                     break;
                 }
@@ -48,14 +47,14 @@ public class EditSimpleStringListsService implements EditSimpleStringListsInterf
             if (productName == null) {
                 List<String> recomandate = new ArrayList<>();
                 for (String pName : getNumeProduse()) {
-                    if (pName.toLowerCase().trim().contains(dimensiune.toLowerCase().trim())) {
+                    if (pName.toLowerCase().trim().contains(simpleString.toLowerCase().trim())) {
                         recomandate.add(pName);
                     }
                 }
                 throw new ProductNotFoundException(recomandate);
             }
         }
-        applicator.addSimpleString(dimensiune);
+        applicator.addSimpleString(simpleString);
     }
 
     @Override
