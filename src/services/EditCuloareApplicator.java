@@ -95,7 +95,7 @@ public class EditCuloareApplicator implements InitialCompleteInterface {
                             "views",
                             "preview",
                             "imagini",
-                            form.getService().produsCopy.nume,
+                            form.getService().produsCopy.id.toString(),
                             String.format("%s_%d.jpg", c.getNume(), i)
                     ).toFile();
                     ImageHolder holder;
@@ -114,7 +114,7 @@ public class EditCuloareApplicator implements InitialCompleteInterface {
                         "views",
                         "preview",
                         "imagini",
-                        form.getService().produsCopy.nume,
+                        form.getService().produsCopy.id.toString(),
                         String.format("%s.jpg", c.getNume())
                 ).toFile();
                 ImageHolder holder;

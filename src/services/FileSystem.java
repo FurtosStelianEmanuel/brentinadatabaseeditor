@@ -6,6 +6,7 @@
 package services;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import main.Main;
 
@@ -21,5 +22,13 @@ public class FileSystem {
             throw new Exception("Directory already exists");
         }
         return f.mkdir();
+    }
+
+    public static boolean renameDirectory(Path pathToDirectory, String newName) {
+        File directory = pathToDirectory.toFile();
+        if (!directory.exists()) {
+            return false;
+        }
+        return directory.renameTo(Paths.get(pathToDirectory.getParent().toString(), newName).toFile());
     }
 }
