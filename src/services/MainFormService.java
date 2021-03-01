@@ -182,8 +182,9 @@ public class MainFormService implements MainFormServiceInterface {
             throw new Exception("Produsul a fost deja adaugat");
         }
         Produs produsToAdd = Produs.emptyInstance();
+        produsToAdd.id=UUID.randomUUID();
         produsToAdd.nume = nume;
-        boolean directoryCreated = FileSystem.createDirectoryInImageBank(nume);
+        boolean directoryCreated = FileSystem.createDirectoryInImageBank(produsToAdd.id.toString());
         if (!directoryCreated) {
             JOptionPane.showMessageDialog(null, "Nu am putut asigna un nou folder pentru acest produs");
         }
