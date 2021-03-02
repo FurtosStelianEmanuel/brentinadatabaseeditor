@@ -3,24 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Proiecte/brentinadatabaseeditor/src/views/edit/EditCoduriForm.java</file>
-            <file>file:/D:/Proiecte/brentinadatabaseeditor/src/services/EditCoduriService.java</file>
-            <file>file:/D:/Proiecte/brentinadatabaseeditor/src/services/DatabaseService.java</file>
-            <file>file:/D:/Proiecte/brentinadatabaseeditor/src/views/MainForm.java</file>
-            <file>file:/D:/Proiecte/brentinadatabaseeditor/src/models/produs/CuloareCodPret.java</file>
-            <file>file:/D:/Proiecte/brentinadatabaseeditor/src/services/interfaces/DatabaseServiceInterface.java</file>
-            <file>file:/D:/Proiecte/brentinadatabaseeditor/src/services/EditSimpleStringListsService.java</file>
-            <file>file:/D:/Proiecte/brentinadatabaseeditor/src/services/EditImagineDefaultService.java</file>
-            <file>file:/D:/Proiecte/brentinadatabaseeditor/src/services/EditSimpleStringListsApplicator.java</file>
-            <file>file:/D:/Proiecte/brentinadatabaseeditor/src/services/EditCoduriApplicator.java</file>
-            <file>file:/D:/Proiecte/brentinadatabaseeditor/src/services/EditCuloareApplicator.java</file>
-            <file>file:/D:/Proiecte/brentinadatabaseeditor/src/views/edit/EditSimpleStringListsForm.java</file>
-            <file>file:/D:/Proiecte/brentinadatabaseeditor/src/views/ProdusEdit.java</file>
-            <file>file:/D:/Proiecte/brentinadatabaseeditor/src/models/produs/Produs.java</file>
-            <file>file:/D:/Proiecte/brentinadatabaseeditor/src/services/EditImagineDefaultApplicator.java</file>
-            <file>file:/D:/Proiecte/brentinadatabaseeditor/src/models/produs/DimensiuneCulori.java</file>
-            <file>file:/D:/Proiecte/brentinadatabaseeditor/src/services/MainFormService.java</file>
-            <file>file:/D:/Proiecte/brentinadatabaseeditor/src/services/FileSystem.java</file>
+            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/views/ProdusEdit.java</file>
+            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/main/Main.java</file>
+            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/services/MainFormService.java</file>
+            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/views/MainForm.java</file>
         </group>
     </open-files>
 </project-private>
