@@ -156,7 +156,6 @@ public class EditCuloareApplicator implements InitialCompleteInterface {
             form.jPanel2.setVisible(culoare.getNume().equals("multi"));
             if (form.jPanel2.isVisible()) {
                 if (culoare.getAlteCulori() != null) {
-                    form.jButton5.setEnabled(false);
                     form.numeCuloare.setEnabled(false);
                     DefaultComboBoxModel model = (DefaultComboBoxModel) form.alteCulori.getModel();
                     for (String altaCuloare : culoare.getAlteCulori()) {
