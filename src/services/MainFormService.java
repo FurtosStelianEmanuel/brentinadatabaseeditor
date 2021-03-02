@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.naming.directory.SchemaViolationException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import main.Main;
@@ -37,6 +38,7 @@ public class MainFormService implements MainFormServiceInterface {
     DatabaseModel filteredModel;
     private final RequestSender requestSender;
     boolean runUUIDMigration = false;
+    boolean runSimilareUUIDMigration = false;
 
     public MainFormService(DatabaseService databaseService, RequestSender requestSender) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -67,8 +69,24 @@ public class MainFormService implements MainFormServiceInterface {
         databaseService.saveDatabase(model, Paths.get(Main.PathToDatabase.toString(), "produse.json").toFile());
     }
 
+    private void checkMigrations(DatabaseModel model) throws ClassNotFoundException, IOException, SchemaViolationException {
+        boolean migrationRan = false;
+        if (runUUIDMigration) {
+            databaseService.migrateToUUID(model);
+            migrationRan = true;
+        }
+        if (runSimilareUUIDMigration) {
+            databaseService.migrateSimilareUUIDs(model);
+            migrationRan = true;
+        }
+        if (migrationRan) {
+            JOptionPane.showMessageDialog(null, "Migrations were executed, set runMigration flags to false and restart");
+            System.exit(0);
+        }
+    }
+
     @Override
-    public void load() throws ClassNotFoundException, IOException {
+    public void load() throws ClassNotFoundException, IOException, SchemaViolationException {
         JFileChooser chooser = new JFileChooser(Main.Path.toFile());
         int choice = chooser.showOpenDialog(null);
         if (choice == JFileChooser.APPROVE_OPTION) {
@@ -80,9 +98,7 @@ public class MainFormService implements MainFormServiceInterface {
                     filteredModel.continut.add(produs);
                 });
                 Main.PathToDatabase = Paths.get(chooser.getSelectedFile().getParent());
-                if (runUUIDMigration) {
-                    databaseService.migrateToUUID(model);
-                }
+                checkMigrations(model);
                 applicator.updateTable(model);
             }
         }
@@ -182,7 +198,7 @@ public class MainFormService implements MainFormServiceInterface {
             throw new Exception("Produsul a fost deja adaugat");
         }
         Produs produsToAdd = Produs.emptyInstance();
-        produsToAdd.id=UUID.randomUUID();
+        produsToAdd.id = UUID.randomUUID();
         produsToAdd.nume = nume;
         boolean directoryCreated = FileSystem.createDirectoryInImageBank(produsToAdd.id.toString());
         if (!directoryCreated) {

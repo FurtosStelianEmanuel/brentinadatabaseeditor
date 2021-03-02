@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -30,11 +31,10 @@ public class Produs {
     public TranslateProdus translate;
     public UUID id;
     /**
-     * momentan nu are nicio functionalitate in spate, ar trebui scos din model
-     * (in viitor)
+     * momentan nu are nicio functionalitate in spate, ar trebui scos din model (in viitor)
      */
     public double pret;
-    public List<String> similare;
+    public List<UUID> similare;
     public List<String> categorii;
     public String um;
     public long palleteType;
@@ -89,7 +89,7 @@ public class Produs {
             dimensiuni.add(dimensiune);
         });
 
-        source.similare.forEach((String similar) -> {
+        source.similare.forEach((UUID similar) -> {
             similare.add(similar);
         });
 
@@ -151,7 +151,7 @@ public class Produs {
         }
         JSONArray similare = (JSONArray) produs.get("similare");
         for (Object similar : similare) {
-            p.similare.add((String) similar);
+            p.similare.add(UUID.fromString((String) similar));
         }
         JSONArray categorii = (JSONArray) produs.get("categorii");
         for (Object o : categorii) {
@@ -182,7 +182,7 @@ public class Produs {
         map.put("descriere", descriere);
         map.put("pret", pret);
         map.put("um", um);
-        map.put("similare", similare);
+        map.put("similare", similare.stream().map(similarId -> similarId.toString()).collect(Collectors.toList()));
         map.put("categorii", categorii);
         map.put("palleteType", palleteType);
         map.put("translate", translate.toJSONObject());

@@ -7,6 +7,7 @@ package services;
 
 import java.awt.event.KeyEvent;
 import java.util.List;
+import java.util.UUID;
 import javax.swing.DefaultListModel;
 import models.produs.InitialComplete;
 import services.interfaces.EditSimpleStringListsInterface;
@@ -113,4 +114,8 @@ public class EditSimpleStringListsApplicator extends InitialComplete implements 
         }
     }
 
+    @Override
+    public UUID getIdOfProdus(String nume) {
+        throw new UnsupportedOperationException("Method should not be called from here");
+    }
 }

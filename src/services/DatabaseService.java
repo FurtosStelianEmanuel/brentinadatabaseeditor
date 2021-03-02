@@ -11,10 +11,11 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
+import javax.naming.directory.SchemaViolationException;
 import main.Main;
 import models.database.DatabaseModel;
 import models.produs.Produs;
@@ -56,7 +57,25 @@ public class DatabaseService implements DatabaseServiceInterface {
             FileSystem.renameDirectory(Paths.get(Main.PathToDatabase.toString(), Main.PathToImageBank.toString(), produs.nume), produsId.toString());
         }
         saveDatabase(databaseModel, Paths.get(Main.PathToDatabase.toString(), "produse.json").toFile());
-        JOptionPane.showMessageDialog(null, "UUID migration done, set migration flag to false and restart");
-        System.exit(0);
+    }
+
+    private String getIdProdus(List<Produs> continut, String nume) {
+        for (Produs produs : continut) {
+            if (produs.nume.equals(nume)) {
+                return produs.id.toString();
+            }
+        }
+        return "00000000-0000-0000-0000-000000000000";
+    }
+
+    @Override
+    public void migrateSimilareUUIDs(DatabaseModel databaseModel) throws ClassNotFoundException, IOException, SchemaViolationException {
+        throw new SchemaViolationException("Produs model contains UUIDs, not strings as similare");
+//        for (Produs produs : databaseModel.continut) {
+//            for (int i = 0; i < produs.similare.size(); i++) {
+//                produs.similare.set(i, getIdProdus(databaseModel.continut, produs.similare.get(i)));
+//            }
+//        }
+//        saveDatabase(databaseModel, Paths.get(Main.PathToDatabase.toString(), "produse.json").toFile());
     }
 }

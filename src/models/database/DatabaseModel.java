@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import models.produs.Produs;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

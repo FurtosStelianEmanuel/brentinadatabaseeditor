@@ -7,6 +7,10 @@ package services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
+import models.produs.Produs;
 import services.interfaces.EditSimpleStringListsInterface;
 import services.interfaces.ProductNotFoundException;
 
@@ -17,17 +21,17 @@ import services.interfaces.ProductNotFoundException;
 public class EditSimpleStringListsService implements EditSimpleStringListsInterface {
 
     EditSimpleStringListsApplicator applicator;
-    List<String> numeProduse;
+    List<Produs> produse;
 
     public List<String> getNumeProduse() {
-        return numeProduse;
+        return produse.stream().map(p -> p.nume).collect(Collectors.toList());
     }
 
     public EditSimpleStringListsService() {
     }
 
-    public EditSimpleStringListsService(List<String> numeProduse) {
-        this.numeProduse = numeProduse;
+    public EditSimpleStringListsService(List<Produs> produse) {
+        this.produse = produse;
     }
 
     public void setApplicator(EditSimpleStringListsApplicator applicator) {
@@ -65,5 +69,15 @@ public class EditSimpleStringListsService implements EditSimpleStringListsInterf
     @Override
     public void changeOrder(int focusedIndex, int direction) {
         applicator.changeOrder(focusedIndex, direction);
+    }
+
+    @Override
+    public UUID getIdOfProdus(String name) {
+        try {
+            Optional<Produs> search = produse.stream().filter(p -> p.nume.equals(name)).findAny();
+            return search.get().id;
+        } catch (NullPointerException ex) {
+            return UUID.fromString("00000000-0000-0000-0000-000000000000");
+        }
     }
 }

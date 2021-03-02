@@ -7,6 +7,7 @@ package views;
 
 import java.awt.event.ActionEvent;
 import java.util.List;
+import java.util.UUID;
 import javax.swing.JFrame;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -436,21 +437,21 @@ public class ProdusEdit extends javax.swing.JFrame implements ProdusEditFormInte
             }
         });
     }
-
+    
     @Override
     public void similarePressed(ActionEvent e) {
-        EditSimpleStringListsService similareService = new EditSimpleStringListsService(service.getNumeProduse());
+        EditSimpleStringListsService similareService = new EditSimpleStringListsService(service.getProduseCopy());
         EditSimpleStringListsForm similareForm = new EditSimpleStringListsForm(similareService);
         similareForm.setLocationRelativeTo(this);
         EditSimpleStringListsApplicator similareApplicator = new EditSimpleStringListsApplicator(similareForm, EditSimpleStringListsApplicator.Types.Similare);
         similareService.setApplicator(similareApplicator);
-        similareApplicator.autoCompleteData(service.getProdusCopy().similare);
+        similareApplicator.autoCompleteData(service.getProduseSimilareNames());
         similareForm.setVisible(true);
         setEnabled(false);
         similareForm.setListener(new EventConfirmationListener() {
             @Override
             public void onConfirm(Object p) {
-                List<String> similare = (List<String>) p;
+                List<UUID> similare = (List<UUID>) p;
                 service.similareChanged(similare);
             }
 
