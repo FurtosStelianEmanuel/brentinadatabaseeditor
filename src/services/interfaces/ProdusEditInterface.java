@@ -6,6 +6,7 @@
 package services.interfaces;
 
 import java.util.List;
+import java.util.UUID;
 import models.produs.Culoare;
 import models.produs.DimensiuneCulori;
 import models.produs.TranslateProdus;
@@ -30,7 +31,7 @@ public interface ProdusEditInterface {
 
     void culoriChanged(List<Culoare> culori);
 
-    void similareChanged(List<String> similare);
+    void similareChanged(List<UUID> similare);
 
     void palleteTypeChanged(long palleteType);
 

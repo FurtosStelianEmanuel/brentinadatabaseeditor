@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package models.database;
+package services.migrations.models.databasenosimilareuuid;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import models.produs.Produs;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import services.migrations.models.produsnosimilareuuid.Produs;
 
 /**
  *

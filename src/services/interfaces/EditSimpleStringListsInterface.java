@@ -5,6 +5,8 @@
  */
 package services.interfaces;
 
+import java.util.UUID;
+
 /**
  *
  * @author Manel
@@ -16,4 +18,6 @@ public interface EditSimpleStringListsInterface {
     void removeSimpleString(int i);
 
     void changeOrder(int focusedIndex, int direction);
+    
+    UUID getIdOfProdus(String nume);
 }

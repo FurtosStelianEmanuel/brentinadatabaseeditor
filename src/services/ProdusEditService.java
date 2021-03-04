@@ -7,6 +7,10 @@ package services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
 import models.produs.Culoare;
 import models.produs.DimensiuneCulori;
 import models.produs.Produs;
@@ -21,14 +25,18 @@ public class ProdusEditService implements ProdusEditInterface {
 
     Produs copyProdus;
     Produs originalProdus;
-    List<String> numeProduse;
+    List<Produs> produseCopy;
+
+    public List<Produs> getProduseCopy() {
+        return produseCopy;
+    }
 
     public ProdusEditService(Produs currentProdus, List<Produs> produse) {
         this.originalProdus = currentProdus;
         this.copyProdus = new Produs(currentProdus);
-        numeProduse = new ArrayList<>();
+        this.produseCopy = new ArrayList<>();
         produse.forEach((produs) -> {
-            numeProduse.add(produs.nume);
+            this.produseCopy.add(new Produs(produs));
         });
     }
 
@@ -81,7 +89,7 @@ public class ProdusEditService implements ProdusEditInterface {
     }
 
     @Override
-    public void similareChanged(List<String> similare) {
+    public void similareChanged(List<UUID> similare) {
         copyProdus.similare = similare;
     }
 
@@ -101,6 +109,23 @@ public class ProdusEditService implements ProdusEditInterface {
     }
 
     public List<String> getNumeProduse() {
-        return numeProduse;
+        return produseCopy.stream().map(p -> p.nume).collect(Collectors.toList());
+    }
+
+    private Produs getProdusById(UUID id) {
+        try {
+            Optional<Produs> produs = produseCopy.stream().filter(p -> p.id.equals(id)).findFirst();
+            return produs.get();
+        } catch (NoSuchElementException ex) {
+            return null;
+        }
+    }
+
+    public List<String> getProduseSimilareNames() {
+        List<String> toReturn = new ArrayList<>();
+        copyProdus.similare.stream().map((id) -> getProdusById(id)).filter((produs) -> (produs != null)).forEachOrdered((produs) -> {
+            toReturn.add(produs.nume);
+        });
+        return toReturn;
     }
 }

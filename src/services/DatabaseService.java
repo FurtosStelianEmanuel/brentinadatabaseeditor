@@ -11,10 +11,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import main.Main;
 import models.database.DatabaseModel;
 import models.produs.Produs;
@@ -56,7 +56,48 @@ public class DatabaseService implements DatabaseServiceInterface {
             FileSystem.renameDirectory(Paths.get(Main.PathToDatabase.toString(), Main.PathToImageBank.toString(), produs.nume), produsId.toString());
         }
         saveDatabase(databaseModel, Paths.get(Main.PathToDatabase.toString(), "produse.json").toFile());
-        JOptionPane.showMessageDialog(null, "UUID migration done, set migration flag to false and restart");
-        System.exit(0);
+    }
+
+    private String getIdProdus(List<services.migrations.models.produsnosimilareuuid.Produs> continut, String nume) {
+        for (services.migrations.models.produsnosimilareuuid.Produs produs : continut) {
+            if (produs.nume.equals(nume)) {
+                return produs.id.toString();
+            }
+        }
+        return "00000000-0000-0000-0000-000000000000";
+    }
+
+    private services.migrations.models.databasenosimilareuuid.DatabaseModel loadDatabaseNoUUIDSimilare(File file) throws IOException {
+        try (BufferedReader input = new BufferedReader(new FileReader(file))) {
+            JSONParser parser = new JSONParser();
+            JSONObject json = (JSONObject) parser.parse(input);
+            return services.migrations.models.databasenosimilareuuid.DatabaseModel.fromJSONObject(json);
+        } catch (ParseException ex) {
+            Logger.getLogger(DatabaseService.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    private void saveDatabaseNoUUIDSimilare(services.migrations.models.databasenosimilareuuid.DatabaseModel model, File f) throws IOException {
+        try (FileWriter output = new FileWriter(f)) {
+            output.write(model.toJSONObject().toJSONString());
+        }
+    }
+
+    @Override
+    public void migrateSimilareUUIDs(File file) throws ClassNotFoundException, IOException {
+        services.migrations.models.databasenosimilareuuid.DatabaseModel model = loadDatabaseNoUUIDSimilare(file);
+        for (services.migrations.models.produsnosimilareuuid.Produs produs : model.continut) {
+            for (int i = produs.similare.size() - 1; i >= 0; i--) {
+                String id = getIdProdus(model.continut, produs.similare.get(i));
+                if (!id.equals("00000000-0000-0000-0000-000000000000")) {
+                    produs.similare.set(i, id);
+                } else {
+                    System.out.println(String.format("%s a pierdut referinta la %s", produs.nume, produs.similare.get(i)));
+                    produs.similare.remove(i);
+                }
+            }
+        }
+        saveDatabaseNoUUIDSimilare(model, Paths.get(Main.PathToDatabase.toString(), "produse.json").toFile());
     }
 }

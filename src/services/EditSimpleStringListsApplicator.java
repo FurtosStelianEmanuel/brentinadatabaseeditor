@@ -7,6 +7,7 @@ package services;
 
 import java.awt.event.KeyEvent;
 import java.util.List;
+import java.util.UUID;
 import javax.swing.DefaultListModel;
 import models.produs.InitialComplete;
 import services.interfaces.EditSimpleStringListsInterface;
@@ -25,6 +26,8 @@ public class EditSimpleStringListsApplicator extends InitialComplete implements 
         Categorii,
         Similare
     }
+
+    Types type;
 
     private String mainField = "Introduceti o dimensiune";
     private String emptyMainField = "Dimensiune goala", alreadyAdded = "Dimensiune deja adaugata";
@@ -54,7 +57,7 @@ public class EditSimpleStringListsApplicator extends InitialComplete implements 
             default:
                 System.out.println("Unknown command");
         }
-
+        this.type = type;
         form.jLabel1.setText(message1);
         form.jLabel2.setText(message2);
         form.placeholderTextField1.setPlaceholder(mainField);
@@ -64,8 +67,8 @@ public class EditSimpleStringListsApplicator extends InitialComplete implements 
     public void autoCompleteData(Object formDataObject) {
         List<String> dimensiuni = (List<String>) formDataObject;
         DefaultListModel model = (DefaultListModel) form.jList1.getModel();
-        dimensiuni.forEach((String dimensiune) -> {
-            model.addElement(dimensiune);
+        dimensiuni.forEach((dimensiune) -> {
+            model.addElement(dimensiune.toString());
         });
     }
 
@@ -113,4 +116,12 @@ public class EditSimpleStringListsApplicator extends InitialComplete implements 
         }
     }
 
+    public Types getType() {
+        return type;
+    }
+
+    @Override
+    public UUID getIdOfProdus(String nume) {
+        throw new UnsupportedOperationException("Method should not be called from here");
+    }
 }
