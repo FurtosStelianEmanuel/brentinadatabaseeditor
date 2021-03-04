@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.naming.directory.SchemaViolationException;
 import main.Main;
 import models.database.DatabaseModel;
 import models.produs.Produs;
@@ -86,7 +85,7 @@ public class DatabaseService implements DatabaseServiceInterface {
     }
 
     @Override
-    public void migrateSimilareUUIDs(File file) throws ClassNotFoundException, IOException, SchemaViolationException {
+    public void migrateSimilareUUIDs(File file) throws ClassNotFoundException, IOException {
         services.migrations.models.databasenosimilareuuid.DatabaseModel model = loadDatabaseNoUUIDSimilare(file);
         for (services.migrations.models.produsnosimilareuuid.Produs produs : model.continut) {
             for (int i = produs.similare.size() - 1; i >= 0; i--) {

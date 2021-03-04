@@ -7,7 +7,6 @@ package services.interfaces;
 
 import java.io.File;
 import java.io.IOException;
-import javax.naming.directory.SchemaViolationException;
 import models.database.DatabaseModel;
 
 /**
@@ -22,5 +21,5 @@ public interface DatabaseServiceInterface {
 
     void migrateToUUID(DatabaseModel model) throws ClassNotFoundException, IOException;
 
-    void migrateSimilareUUIDs(File file) throws ClassNotFoundException, IOException, SchemaViolationException;
+    void migrateSimilareUUIDs(File file) throws ClassNotFoundException, IOException;
 }

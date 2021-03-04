@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.naming.directory.SchemaViolationException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import main.Main;
@@ -70,7 +69,7 @@ public class MainFormService implements MainFormServiceInterface {
         databaseService.saveDatabase(model, Paths.get(Main.PathToDatabase.toString(), "produse.json").toFile());
     }
 
-    private void checkMigrations(DatabaseModel model, File f) throws ClassNotFoundException, IOException, SchemaViolationException {
+    private void checkMigrations(DatabaseModel model, File f) throws ClassNotFoundException, IOException {
         boolean migrationRan = false;
         if (runUUIDMigration) {
             databaseService.migrateToUUID(model);
@@ -87,7 +86,7 @@ public class MainFormService implements MainFormServiceInterface {
     }
 
     @Override
-    public void load() throws ClassNotFoundException, IOException, SchemaViolationException {
+    public void load() throws ClassNotFoundException, IOException {
         JFileChooser chooser = new JFileChooser(Main.Path.toFile());
         int choice = chooser.showOpenDialog(null);
         if (choice == JFileChooser.APPROVE_OPTION) {
