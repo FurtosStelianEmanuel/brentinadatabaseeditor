@@ -21,10 +21,17 @@ import services.interfaces.ProductNotFoundException;
 public class EditSimpleStringListsService implements EditSimpleStringListsInterface {
 
     EditSimpleStringListsApplicator applicator;
+
+    public EditSimpleStringListsApplicator getApplicator() {
+        return applicator;
+    }
     List<Produs> produse;
 
     public List<String> getNumeProduse() {
-        return produse.stream().map(p -> p.nume).collect(Collectors.toList());
+        if (produse != null) {
+            return produse.stream().map(p -> p.nume).collect(Collectors.toList());
+        }
+        return null;
     }
 
     public EditSimpleStringListsService() {

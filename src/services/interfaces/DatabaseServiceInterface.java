@@ -22,5 +22,5 @@ public interface DatabaseServiceInterface {
 
     void migrateToUUID(DatabaseModel model) throws ClassNotFoundException, IOException;
 
-    void migrateSimilareUUIDs(DatabaseModel model) throws ClassNotFoundException, IOException, SchemaViolationException;
+    void migrateSimilareUUIDs(File file) throws ClassNotFoundException, IOException, SchemaViolationException;
 }

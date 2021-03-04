@@ -7,6 +7,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -115,7 +116,7 @@ public class ProdusEditService implements ProdusEditInterface {
         try {
             Optional<Produs> produs = produseCopy.stream().filter(p -> p.id.equals(id)).findFirst();
             return produs.get();
-        } catch (NullPointerException ex) {
+        } catch (NoSuchElementException ex) {
             return null;
         }
     }

@@ -5,6 +5,7 @@
  */
 package services;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
@@ -69,14 +70,14 @@ public class MainFormService implements MainFormServiceInterface {
         databaseService.saveDatabase(model, Paths.get(Main.PathToDatabase.toString(), "produse.json").toFile());
     }
 
-    private void checkMigrations(DatabaseModel model) throws ClassNotFoundException, IOException, SchemaViolationException {
+    private void checkMigrations(DatabaseModel model, File f) throws ClassNotFoundException, IOException, SchemaViolationException {
         boolean migrationRan = false;
         if (runUUIDMigration) {
             databaseService.migrateToUUID(model);
             migrationRan = true;
         }
         if (runSimilareUUIDMigration) {
-            databaseService.migrateSimilareUUIDs(model);
+            databaseService.migrateSimilareUUIDs(f);
             migrationRan = true;
         }
         if (migrationRan) {
@@ -91,14 +92,14 @@ public class MainFormService implements MainFormServiceInterface {
         int choice = chooser.showOpenDialog(null);
         if (choice == JFileChooser.APPROVE_OPTION) {
             if (chooser.getSelectedFile() != null) {
+                Main.PathToDatabase = Paths.get(chooser.getSelectedFile().getParent());
+                checkMigrations(model, chooser.getSelectedFile());
                 model = databaseService.loadDatabase(chooser.getSelectedFile());
                 filteredModel = DatabaseModel.emptyInstance();
                 sortProducts();
                 model.continut.forEach((Produs produs) -> {
                     filteredModel.continut.add(produs);
                 });
-                Main.PathToDatabase = Paths.get(chooser.getSelectedFile().getParent());
-                checkMigrations(model);
                 applicator.updateTable(model);
             }
         }

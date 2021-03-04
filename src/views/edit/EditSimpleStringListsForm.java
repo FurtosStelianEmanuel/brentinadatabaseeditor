@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.UUID;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import services.EditSimpleStringListsApplicator;
+import services.EditSimpleStringListsApplicator.Types;
 import services.EditSimpleStringListsService;
 import services.interfaces.FormListenerInterface;
 import services.interfaces.EventConfirmationListener;
@@ -201,7 +203,7 @@ public class EditSimpleStringListsForm extends javax.swing.JFrame implements For
                 }
 
             } else {
-                JOptionPane.showMessageDialog(null, ex.getMessage());
+                JOptionPane.showMessageDialog(null, ex.getMessage() + ex.toString());
             }
         }
     }//GEN-LAST:event_placeholderTextField1ActionPerformed
@@ -212,13 +214,22 @@ public class EditSimpleStringListsForm extends javax.swing.JFrame implements For
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        List<UUID> ids = new ArrayList<>();
         DefaultListModel model = (DefaultListModel) jList1.getModel();
-        for (int i = 0; i < model.size(); i++) {
-            ids.add(service.getIdOfProdus((String) model.get(i)));
+        if (service.getApplicator().getType() == Types.Similare) {
+            List<UUID> ids = new ArrayList<>();
+            for (int i = 0; i < model.size(); i++) {
+                ids.add(service.getIdOfProdus((String) model.get(i)));
+            }
+            listener.onConfirm(ids);
+            listener.onFinish(ids);
+        } else {
+            List<String> categorii = new ArrayList<>();
+            for (int i = 0; i < model.size(); i++) {
+                categorii.add((String) model.get(i));
+            }
+            listener.onConfirm(categorii);
+            listener.onFinish(categorii);
         }
-        listener.onConfirm(ids);
-        listener.onFinish(ids);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed

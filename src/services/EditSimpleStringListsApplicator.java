@@ -27,6 +27,8 @@ public class EditSimpleStringListsApplicator extends InitialComplete implements 
         Similare
     }
 
+    Types type;
+
     private String mainField = "Introduceti o dimensiune";
     private String emptyMainField = "Dimensiune goala", alreadyAdded = "Dimensiune deja adaugata";
     private String message1 = "Puteti folosi si sagetile ca sa mutati in sus sau in jos dimensiunea selectata", message2 = "Sau tasta delete pentru a sterge o dimensiune";
@@ -55,7 +57,7 @@ public class EditSimpleStringListsApplicator extends InitialComplete implements 
             default:
                 System.out.println("Unknown command");
         }
-
+        this.type = type;
         form.jLabel1.setText(message1);
         form.jLabel2.setText(message2);
         form.placeholderTextField1.setPlaceholder(mainField);
@@ -65,8 +67,8 @@ public class EditSimpleStringListsApplicator extends InitialComplete implements 
     public void autoCompleteData(Object formDataObject) {
         List<String> dimensiuni = (List<String>) formDataObject;
         DefaultListModel model = (DefaultListModel) form.jList1.getModel();
-        dimensiuni.forEach((String dimensiune) -> {
-            model.addElement(dimensiune);
+        dimensiuni.forEach((dimensiune) -> {
+            model.addElement(dimensiune.toString());
         });
     }
 
@@ -112,6 +114,10 @@ public class EditSimpleStringListsApplicator extends InitialComplete implements 
                 break;
             }
         }
+    }
+
+    public Types getType() {
+        return type;
     }
 
     @Override
