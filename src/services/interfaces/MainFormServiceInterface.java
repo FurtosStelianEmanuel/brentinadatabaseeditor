@@ -6,7 +6,6 @@
 package services.interfaces;
 
 import java.io.IOException;
-import javax.naming.directory.SchemaViolationException;
 import models.produs.Produs;
 
 /**
@@ -17,7 +16,7 @@ public interface MainFormServiceInterface {
 
     void save() throws ClassNotFoundException, IOException;
 
-    void load() throws ClassNotFoundException, IOException, SchemaViolationException;
+    void load() throws ClassNotFoundException, IOException;
 
     void reloadDatabase();
 

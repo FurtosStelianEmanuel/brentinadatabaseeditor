@@ -16,7 +16,6 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JOptionPane;
 import main.Main;
 import models.produs.Culoare;
 import models.produs.Produs;
@@ -61,8 +60,8 @@ public class EditCuloareService {
         double compressHighRes = 0;
         double resizeHighRes = 0;
 
-        double compressLowRes = 0;
-        double resizeLowRes = 0;
+        double compressLowRes = 0.2;
+        double resizeLowRes = 0.4;
 
         if (sizeInKb >= 200 && sizeInKb <= 500) {
             compressHighRes = 0.3;

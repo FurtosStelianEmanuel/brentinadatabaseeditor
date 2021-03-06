@@ -106,10 +106,6 @@ public class DatabaseService implements DatabaseServiceInterface {
         saveDatabaseNoUUIDSimilare(model, Paths.get(Main.PathToDatabase.toString(), "produse.json").toFile());
     }
 
-    double map(double x, double in_min, double in_max, double out_min, double out_max) {
-        return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-    }
-
     public void showFileSizes(File json) throws ClassNotFoundException, IOException {
         DatabaseModel model = loadDatabase(json);
         Path imageBankPath = Paths.get(Main.PathToDatabase.toString(), Main.PathToImageBank.toString());
@@ -213,7 +209,31 @@ public class DatabaseService implements DatabaseServiceInterface {
                     double newkb = Files.size(file.toPath()) * .001d;
                     System.out.println("After " + compress + " compression and " + resize + " resize -> " + newkb + " dropped " + (kb - newkb) + "kb");
                 } else {
-                    System.out.println("Ignorat " + file.toString() + " -> " + kb * .001d);
+                    System.out.println("Ignorat " + file.toString() + " -> " + kb);
+                }
+            }
+        }
+    }
+
+    boolean deleteDirectory(File directoryToBeDeleted) {
+        File[] allContents = directoryToBeDeleted.listFiles();
+        if (allContents != null) {
+            for (File file : allContents) {
+                deleteDirectory(file);
+            }
+        }
+        return directoryToBeDeleted.delete();
+    }
+
+    private void removeFoldersThatArentUsed(DatabaseModel model) {
+        File imageBank = Paths.get(Main.PathToDatabase.toString(), Main.PathToImageBank.toString()).toFile();
+        for (File f : imageBank.listFiles()) {
+            Produs produs = model.continut.stream().filter(p -> p.id.toString().equals(f.getName())).findAny().orElse(null);
+            if (produs == null) {
+                if (!deleteDirectory(f)) {
+                    System.out.println("Nu am putut sterge " + f.toString());
+                } else {
+                    System.out.println("Am sters " + f.toString());
                 }
             }
         }
@@ -223,6 +243,7 @@ public class DatabaseService implements DatabaseServiceInterface {
     public void cleanUpScript(File json) throws ClassNotFoundException, IOException {
         DatabaseModel model = loadDatabase(json);
         removeImagesThatAreNotUsed(model);
-        compressImagesAboveKb(model, 200);
+        compressImagesAboveKb(model, 600);
+        removeFoldersThatArentUsed(model);
     }
 }
