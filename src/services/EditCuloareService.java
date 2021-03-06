@@ -16,6 +16,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import main.Main;
 import models.produs.Culoare;
 import models.produs.Produs;
@@ -54,6 +55,45 @@ public class EditCuloareService {
         this.applicator = applicator;
     }
 
+    private void writeCompressedImages(Path image) throws IOException {
+        double sizeInKb = Files.size(image) * .001d;
+
+        double compressHighRes = 0;
+        double resizeHighRes = 0;
+
+        double compressLowRes = 0;
+        double resizeLowRes = 0;
+
+        if (sizeInKb >= 200 && sizeInKb <= 500) {
+            compressHighRes = 0.3;
+            resizeHighRes = 0.6;
+
+            compressLowRes = 0.4;
+            resizeLowRes = 0.6;
+        } else if (sizeInKb >= 500 && sizeInKb <= 5000) {
+            compressHighRes = 0.5;
+            resizeHighRes = 0.6;
+
+            compressLowRes = 0.6;
+            resizeLowRes = 0.7;
+        } else if (sizeInKb >= 5000 && sizeInKb < 10000) {
+            compressHighRes = 0.6;
+            resizeHighRes = 0.6;
+
+            compressLowRes = 0.7;
+            resizeLowRes = 0.6;
+        } else if (sizeInKb > 10000) {
+            compressHighRes = 0.7;
+            resizeHighRes = 0.7;
+
+            compressLowRes = 0.8;
+            resizeLowRes = 0.8;
+        }
+
+        ImageHolder.writeCompressedImage(image.toFile(), compressLowRes, resizeLowRes, "-min.jpg");
+        ImageHolder.writeCompressedImage(image.toFile(), compressHighRes, resizeHighRes, ".jpg");
+    }
+
     public void moveAllImagesToRightFolder(Component[] components) throws IOException {
         List<ImageHolder> imageHolders = new ArrayList<>();
         for (Component component : components) {
@@ -78,7 +118,7 @@ public class EditCuloareService {
                         outputPath,
                         StandardCopyOption.REPLACE_EXISTING
                 );
-                ImageHolder.writeCompressedImage(outputPath.toFile(), 0.7, 0.7);
+                writeCompressedImages(outputPath);
             }
         } else if (copy.getUnghiuri() == 1) {
             ImageHolder imageHolder = imageHolders.get(0);
@@ -92,7 +132,7 @@ public class EditCuloareService {
                     outputPath,
                     StandardCopyOption.REPLACE_EXISTING
             );
-            ImageHolder.writeCompressedImage(outputPath.toFile(), 0.7, 0.7);
+            writeCompressedImages(outputPath);
         }
     }
 

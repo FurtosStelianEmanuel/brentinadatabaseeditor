@@ -10,18 +10,23 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import main.Main;
 import models.database.DatabaseModel;
+import models.produs.Culoare;
 import models.produs.Produs;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import services.interfaces.DatabaseServiceInterface;
+import views.edit.ImageHolder;
 
 /**
  *
@@ -99,5 +104,125 @@ public class DatabaseService implements DatabaseServiceInterface {
             }
         }
         saveDatabaseNoUUIDSimilare(model, Paths.get(Main.PathToDatabase.toString(), "produse.json").toFile());
+    }
+
+    double map(double x, double in_min, double in_max, double out_min, double out_max) {
+        return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+    }
+
+    public void showFileSizes(File json) throws ClassNotFoundException, IOException {
+        DatabaseModel model = loadDatabase(json);
+        Path imageBankPath = Paths.get(Main.PathToDatabase.toString(), Main.PathToImageBank.toString());
+        double max = 0;
+        for (Produs p : model.continut) {
+            File produsDirectory = Paths.get(imageBankPath.toString(), p.id.toString()).toFile();
+            File[] files = produsDirectory.listFiles();
+            System.out.println(p.nume);
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    continue;
+                }
+                double kb = Files.size(file.toPath()) * .001d;
+                if (kb > max) {
+                    max = kb;
+                }
+                System.out.println(p.nume + " " + file.getName() + " " + kb);
+            }
+        }
+        System.out.println("max " + max);
+    }
+
+    private boolean shouldDeleteFile(Produs p, File f) {
+        if (f.isDirectory()) {
+            return false;
+        }
+        String fileName = f.getName();
+        for (Culoare c : p.culori) {
+            if (c.getUnghiuri() == 1) {
+                Pattern highRes = Pattern.compile(c.getNume() + "\\.jpg");
+                Pattern lowRes = Pattern.compile(c.getNume() + "-min\\.jpg");
+                if (highRes.matcher(fileName).matches() || lowRes.matcher(fileName).matches()) {
+                    return false;
+                }
+            } else if (c.getUnghiuri() > 1) {
+                for (int i = 1; i <= c.getUnghiuri(); i++) {
+                    Pattern highRes = Pattern.compile(c.getNume() + "_" + i + "\\.jpg");
+                    Pattern lowRes = Pattern.compile(c.getNume() + "_" + i + "-min\\.jpg");
+                    if (highRes.matcher(fileName).matches() || lowRes.matcher(fileName).matches()) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private void removeImagesThatAreNotUsed(DatabaseModel model) {
+        Path imageBankPath = Paths.get(Main.PathToDatabase.toString(), Main.PathToImageBank.toString());
+        for (Produs p : model.continut) {
+            File produsDirectory = Paths.get(imageBankPath.toString(), p.id.toString()).toFile();
+            File[] files = produsDirectory.listFiles();
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    continue;
+                }
+                if (shouldDeleteFile(p, file)) {
+                    if (!file.delete()) {
+                        System.out.println("Nu am putut sterge " + file.toString());
+                    } else {
+                        System.out.println("Am sters " + file.toString());
+                    }
+                }
+            }
+        }
+    }
+
+    private void compressImagesAboveKb(DatabaseModel model, double kbThreshold) throws IOException {
+        Path imageBankPath = Paths.get(Main.PathToDatabase.toString(), Main.PathToImageBank.toString());
+        for (Produs p : model.continut) {
+            File produsDirectory = Paths.get(imageBankPath.toString(), p.id.toString()).toFile();
+            File[] files = produsDirectory.listFiles();
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    continue;
+                }
+                double kb = Files.size(file.toPath()) * .001d;
+                if (kb > kbThreshold) {
+                    System.out.println("Compressing " + file.toString());
+                    System.out.println("Initial size : " + kb);
+                    double compress = 0;
+                    double resize = 0;
+                    if (kb <= 500) {
+                        compress = 0.5;
+                        resize = 0.3;
+                    } else if (kb >= 500 && kb <= 800) {
+                        compress = 0.55;
+                        resize = 0.35;
+                    } else if (kb >= 800 && kb <= 1100) {
+                        compress = 0.6;
+                        resize = 0.4;
+                    } else if (kb > 1100 && kb < 9000) {
+                        compress = 0.7;
+                        resize = 0.5;
+                    } else {
+                        compress = 0.8;
+                        resize = 0.7;
+                    }
+                    ImageHolder.writeCompressedImage(file, compress, resize);
+                    double newkb = Files.size(file.toPath()) * .001d;
+                    System.out.println("After " + compress + " compression and " + resize + " resize -> " + newkb + " dropped " + (kb - newkb) + "kb");
+                } else {
+                    System.out.println("Ignorat " + file.toString() + " -> " + kb * .001d);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void cleanUpScript(File json) throws ClassNotFoundException, IOException {
+        DatabaseModel model = loadDatabase(json);
+        removeImagesThatAreNotUsed(model);
+        compressImagesAboveKb(model, 200);
     }
 }
