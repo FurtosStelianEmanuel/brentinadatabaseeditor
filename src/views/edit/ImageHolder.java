@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.Iterator;
+import javax.activation.UnsupportedDataTypeException;
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
@@ -32,7 +33,6 @@ import javax.imageio.ImageWriter;
 import javax.imageio.stream.ImageOutputStream;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import services.interfaces.EventConfirmationListener;
 
 /**
  *
@@ -105,18 +105,73 @@ public class ImageHolder extends JButton {
     }
 
     public static void writeCompressedImage(File imageFile, double compress, double resize) throws FileNotFoundException, IOException {
-        File compressedImageFile = new File(imageFile.getParent(), String.format("%s-min.jpg", imageFile.getName().replace(".jpg", "")));
+        if (compress == 0 && resize == 0) {
+            return;
+        }
+        File compressedImageFile = new File(imageFile.toString());
         OutputStream os;
         ImageWriter writer;
         ImageOutputStream ios;
         try (InputStream is = new FileInputStream(imageFile)) {
-            os = new FileOutputStream(compressedImageFile);
+
             double quality = 1 - compress;
             BufferedImage image = ImageIO.read(is);
             image = toBufferedImage(
                     image.getScaledInstance(
-                            (int) (image.getWidth() * resize),
-                            (int) (image.getHeight() * resize),
+                            (int) (image.getWidth() * (1 - resize)),
+                            (int) (image.getHeight() * (1 - resize)),
+                            Image.SCALE_SMOOTH)
+            );
+
+            Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName("jpg");
+            if (!writers.hasNext()) {
+                throw new IllegalStateException("No writers found");
+            }
+
+            os = new FileOutputStream(compressedImageFile);
+            writer = (ImageWriter) writers.next();
+            ios = ImageIO.createImageOutputStream(os);
+            writer.setOutput(ios);
+
+            ImageWriteParam param = writer.getDefaultWriteParam();
+            param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+            param.setCompressionQuality((float) quality);
+
+            writer.write(null, new IIOImage(image, null, null), param);
+
+            os.close();
+            ios.close();
+            writer.dispose();
+        }
+    }
+
+    /**
+     *
+     * @param imageFile
+     * @param compress
+     * @param resize
+     * @param suffix fie "-min.jpg" fie ".jpg"
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public static void writeCompressedImage(File imageFile, double compress, double resize, String suffix) throws FileNotFoundException, IOException {
+        if (!suffix.equals("-min.jpg") && !suffix.equals(".jpg")) {
+            throw new UnsupportedDataTypeException("Suffix-ul trebuie sa fie .jpg sau -min.jpg");
+        }
+        if (compress == 0 && resize == 0) {
+            return;
+        }
+        File compressedImageFile = new File(imageFile.getParent(), String.format("%s" + suffix, imageFile.getName().replace(".jpg", "")));
+        OutputStream os;
+        ImageWriter writer;
+        ImageOutputStream ios;
+        try (InputStream is = new FileInputStream(imageFile)) {
+            double quality = 1 - compress;
+            BufferedImage image = ImageIO.read(is);
+            image = toBufferedImage(
+                    image.getScaledInstance(
+                            (int) (image.getWidth() * (1 - resize)),
+                            (int) (image.getHeight() * (1 - resize)),
                             Image.SCALE_SMOOTH)
             );
 
@@ -126,6 +181,7 @@ public class ImageHolder extends JButton {
             }
 
             writer = (ImageWriter) writers.next();
+            os = new FileOutputStream(compressedImageFile);
             ios = ImageIO.createImageOutputStream(os);
             writer.setOutput(ios);
 

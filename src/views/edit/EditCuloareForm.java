@@ -224,15 +224,22 @@ public class EditCuloareForm extends javax.swing.JFrame implements FormListenerI
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        try {
-            service.mapAllOtherFieldsToObject();
-            service.moveAllImagesToRightFolder(jPanel3.getComponents());
-            service.mapNewImagesToDatabase(jPanel3.getComponents());
-            listener.onConfirm(service.getCuloareCopy());
-            listener.onFinish(service.getCuloareCopy());
-        } catch (IOException ex) {
-            Logger.getLogger(EditCuloareForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        service.mapAllOtherFieldsToObject();
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    service.moveAllImagesToRightFolder(jPanel3.getComponents());
+                    JOptionPane.showMessageDialog(null, "Imaginile s au mutat");
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null, ex.toString());
+                    Logger.getLogger(EditCuloareForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }.start();
+        service.mapNewImagesToDatabase(jPanel3.getComponents());
+        listener.onConfirm(service.getCuloareCopy());
+        listener.onFinish(service.getCuloareCopy());
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void culoarePaletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_culoarePaletarActionPerformed

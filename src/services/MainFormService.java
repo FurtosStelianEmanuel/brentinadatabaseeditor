@@ -39,6 +39,7 @@ public class MainFormService implements MainFormServiceInterface {
     private final RequestSender requestSender;
     boolean runUUIDMigration = false;
     boolean runSimilareUUIDMigration = false;
+    boolean runCleanupScript = false;
 
     public MainFormService(DatabaseService databaseService, RequestSender requestSender) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -77,6 +78,10 @@ public class MainFormService implements MainFormServiceInterface {
         }
         if (runSimilareUUIDMigration) {
             databaseService.migrateSimilareUUIDs(f);
+            migrationRan = true;
+        }
+        if (runCleanupScript) {
+            databaseService.cleanUpScript(f);
             migrationRan = true;
         }
         if (migrationRan) {
