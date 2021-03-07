@@ -17,6 +17,10 @@ import org.json.simple.JSONObject;
  */
 public class Category {
 
+    public static Category emptyInstance() {
+        return new Category();
+    }
+
     String name;
     TranslateCategory translate;
     UUID id;
@@ -100,5 +104,25 @@ public class Category {
 
     public UUID getParentId() {
         return parentId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setTranslate(TranslateCategory translate) {
+        this.translate = translate;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public void setHierarchyIndex(long hierarchyIndex) {
+        this.hierarchyIndex = hierarchyIndex;
+    }
+
+    public void setParentId(UUID parentId) {
+        this.parentId = parentId;
     }
 }

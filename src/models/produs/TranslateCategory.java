@@ -13,6 +13,10 @@ import org.json.simple.JSONObject;
  */
 public class TranslateCategory {
 
+    public static TranslateCategory fromStrings(String en, String hu, String de) {
+        return new TranslateCategory(en, hu, de);
+    }
+
     String en;
     String hu;
     String de;
