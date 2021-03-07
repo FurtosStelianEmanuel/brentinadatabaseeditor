@@ -79,6 +79,7 @@ public class MainForm extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -165,6 +166,14 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem5);
+
+        jMenuItem7.setText("Categorii");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem7);
 
         jMenuBar1.add(jMenu2);
 
@@ -282,6 +291,10 @@ public class MainForm extends javax.swing.JFrame {
         service.editNewProducts();
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        service.editCategorii();
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JMenu jMenu1;
     public javax.swing.JMenu jMenu2;
@@ -292,6 +305,7 @@ public class MainForm extends javax.swing.JFrame {
     public javax.swing.JMenuItem jMenuItem4;
     public javax.swing.JMenuItem jMenuItem5;
     public javax.swing.JMenuItem jMenuItem6;
+    public javax.swing.JMenuItem jMenuItem7;
     public javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTable jTable1;
     public views.PlaceholderTextField placeholderTextField1;

@@ -24,6 +24,7 @@ import views.MainForm;
 import views.ProdusEdit;
 import services.interfaces.EventConfirmationListener;
 import services.interfaces.MainFormServiceInterface;
+import views.edit.EditAllCategoriesForm;
 import views.edit.EditNewProductsForm;
 
 /**
@@ -350,6 +351,32 @@ public class MainFormService implements MainFormServiceInterface {
             public void onFinish(Object o) {
                 backToMainForm();
                 editNewProductsForm.dispose();
+                applicator.form.setEnabled(true);
+            }
+        });
+    }
+
+    @Override
+    public void editCategorii() {
+        EditAllCategoriesService allCategoriesService = new EditAllCategoriesService(model.categories);
+        EditAllCategoriesForm allCategoriesForm = new EditAllCategoriesForm(allCategoriesService);
+        EditAllCategoriesApplicator allCategoriesApplicator = new EditAllCategoriesApplicator(allCategoriesForm);
+        applicator.form.setEnabled(false);
+        allCategoriesForm.setVisible(true);
+        allCategoriesApplicator.autoCompleteData(model.categories);
+        allCategoriesForm.setListener(new EventConfirmationListener() {
+            @Override
+            public void onConfirm(Object p) {
+            }
+
+            @Override
+            public void onCancel() {
+            }
+
+            @Override
+            public void onFinish(Object o) {
+                backToMainForm();
+                allCategoriesForm.dispose();
                 applicator.form.setEnabled(true);
             }
         });
