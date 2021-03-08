@@ -114,7 +114,12 @@ public class EditDescendantsForm extends javax.swing.JFrame implements InitialCo
     }
 
     private List<Produs> getRecommendedProducts(String nume) {
-        return produse.stream().filter(p -> p.nume.toLowerCase().contains(nume.toLowerCase())).collect(Collectors.toList());
+        DefaultListModel model = (DefaultListModel) jList1.getModel();
+        List<String> alreadyAdded = new ArrayList<>();
+        for (int i = 0; i < model.size(); i++) {
+            alreadyAdded.add((String) model.get(i));
+        }
+        return produse.stream().filter(p -> p.nume.toLowerCase().contains(nume.toLowerCase())).filter(p -> !alreadyAdded.contains(p.nume)).collect(Collectors.toList());
     }
 
     private Produs getSelectedProdus(String nume) {
@@ -125,14 +130,19 @@ public class EditDescendantsForm extends javax.swing.JFrame implements InitialCo
         String toAdd = placeholderTextField1.getText();
         if (!existsInProductList(toAdd)) {
             Object[] productNames = getRecommendedProducts(toAdd).stream().map(p -> p.nume).collect(Collectors.toList()).toArray();
-            Object choice = JOptionPane.showInputDialog(null, "Produse disponibile",
-                    "Alegeti un produs", JOptionPane.INFORMATION_MESSAGE, null,
-                    productNames, productNames[0]);
-            if (choice == null) {
-                JOptionPane.showMessageDialog(null, "Ai anulat operatia");
+            if (productNames.length > 0) {
+                Object choice = JOptionPane.showInputDialog(null, "Produse disponibile",
+                        "Alegeti un produs", JOptionPane.INFORMATION_MESSAGE, null,
+                        productNames, productNames[0]);
+                if (choice == null) {
+                    JOptionPane.showMessageDialog(null, "Ai anulat operatia");
+                    return;
+                }
+                toAdd = (String) choice;
+            } else {
+                JOptionPane.showMessageDialog(null, "Nu a fost gasit niciun produs care sa poata fi adaugat");
                 return;
             }
-            toAdd = (String) choice;
         }
         Produs selectedProdus = getSelectedProdus(toAdd);
         if (selectedProdus == null) {
