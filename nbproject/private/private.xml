@@ -3,17 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/services/interfaces/ProductNotFoundException.java</file>
-            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/services/DatabaseService.java</file>
-            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/views/ProdusEdit.java</file>
-            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/services/interfaces/DatabaseServiceInterface.java</file>
-            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/services/ProdusEditService.java</file>
-            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/services/EditSimpleStringListsApplicator.java</file>
-            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/services/EditSimpleStringListsService.java</file>
-            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/services/EditNewProductsService.java</file>
+            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/views/edit/EditAllCategoriesForm.java</file>
+            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/models/database/Category.java</file>
+            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/services/EditAllCategoriesService.java</file>
+            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/services/EditAllCategoriesApplicator.java</file>
+            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/models/produs/TranslateCategory.java</file>
+            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/services/EditCoduriApplicator.java</file>
             <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/services/MainFormService.java</file>
-            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/views/edit/EditSimpleStringListsForm.java</file>
-            <file>file:/C:/Users/Manel/Documents/NetBeansProjects/BrentinaDatabaseEditor/src/views/MainForm.java</file>
         </group>
     </open-files>
 </project-private>

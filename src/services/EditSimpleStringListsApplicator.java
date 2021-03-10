@@ -38,22 +38,31 @@ public class EditSimpleStringListsApplicator extends InitialComplete implements 
         this.form = form;
 
         switch (type) {
-            case Categorii:
+            case Categorii: {
                 emptyMainField = "Categorie goala";
                 alreadyAdded = "Categorie deja adaugata";
                 message1 = "Puteti folosi si sagetile ca sa mutati in sus sau in jos categoria selectata";
                 message2 = "Sau tasta delete pentru a sterge o dimensiune";
                 mainField = "Introduceti o categorie noua";
-                break;
-            case Similare:
+                form.placeholderTextField1.setEnabled(false);
+                form.jList1.setEnabled(false);
+                form.jButton3.setEnabled(false);
+                form.jButton4.setEnabled(false);
+                form.jButton5.setEnabled(false);
+                form.jButton2.setEnabled(false);
+            }
+            break;
+            case Similare: {
                 emptyMainField = "Produs similar gol";
                 alreadyAdded = "Produs similar deja adaugat";
                 message1 = "Puteti folosi si sagetile ca sa mutati in sus sau in jos produsul similar selectat";
                 message2 = "Sau tasta delete pentru a sterge un produs similar";
                 mainField = "Introduceti un produs similar";
-                break;
-            case Default:
-                break;
+            }
+            break;
+            case Default: {
+            }
+            break;
             default:
                 System.out.println("Unknown command");
         }

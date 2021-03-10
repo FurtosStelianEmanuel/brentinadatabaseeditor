@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import main.Main;
+import models.database.Category;
 import models.database.DatabaseModel;
 import models.produs.Produs;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
@@ -24,6 +25,7 @@ import views.MainForm;
 import views.ProdusEdit;
 import services.interfaces.EventConfirmationListener;
 import services.interfaces.MainFormServiceInterface;
+import views.edit.EditAllCategoriesForm;
 import views.edit.EditNewProductsForm;
 
 /**
@@ -350,6 +352,37 @@ public class MainFormService implements MainFormServiceInterface {
             public void onFinish(Object o) {
                 backToMainForm();
                 editNewProductsForm.dispose();
+                applicator.form.setEnabled(true);
+            }
+        });
+    }
+
+    @Override
+    public void editCategorii() {
+        EditAllCategoriesService allCategoriesService = new EditAllCategoriesService(model.categories, model.continut);
+        EditAllCategoriesForm allCategoriesForm = new EditAllCategoriesForm(allCategoriesService);
+        EditAllCategoriesApplicator allCategoriesApplicator = new EditAllCategoriesApplicator(allCategoriesForm);
+        allCategoriesService.setApplicator(allCategoriesApplicator);
+        applicator.form.setEnabled(false);
+        allCategoriesForm.setVisible(true);
+        allCategoriesApplicator.autoCompleteData(model.categories);
+        allCategoriesForm.setListener(new EventConfirmationListener() {
+            @Override
+            public void onConfirm(Object p) {
+                EditAllCategoriesForm.EditAllCategoriesOutput output = (EditAllCategoriesForm.EditAllCategoriesOutput) p;
+                model.categories = output.getCategorii();
+                model.continut = output.getProduse();
+                applicator.updateTable(model);
+            }
+
+            @Override
+            public void onCancel() {
+            }
+
+            @Override
+            public void onFinish(Object o) {
+                backToMainForm();
+                allCategoriesForm.dispose();
                 applicator.form.setEnabled(true);
             }
         });

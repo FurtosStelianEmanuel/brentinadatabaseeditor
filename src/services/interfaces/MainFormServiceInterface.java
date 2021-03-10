@@ -33,4 +33,6 @@ public interface MainFormServiceInterface {
     void editNewProducts();
 
     void editProdus(int index);
+    
+    void editCategorii();
 }

@@ -22,11 +22,13 @@ public class DatabaseModel {
     public long produseAfisate;
     public List<Produs> continut;
     public List<UUID> newProducts;
+    public List<Category> categories;
 
     private DatabaseModel() {
         produseAfisate = 2;
         continut = new ArrayList<>();
         newProducts = new ArrayList<>();
+        categories = new ArrayList<>();
     }
 
     public static DatabaseModel fromJSONObject(JSONObject database) {
@@ -39,6 +41,13 @@ public class DatabaseModel {
         }
         if (database.get("produseNoi") != null) {
             model.newProducts = (List<UUID>) database.get("produseNoi");
+        }
+        if (database.get("categories") != null) {
+            JSONArray categories = (JSONArray) database.get("categories");
+            for (Object object : categories) {
+                Category category = Category.fromJSONObject((JSONObject) object);
+                model.categories.add(category);
+            }
         }
         return model;
     }
@@ -57,6 +66,7 @@ public class DatabaseModel {
         ob.put("continut", continut);
         List<String> uuids = newProducts.stream().map(id -> id.toString()).collect(Collectors.toList());
         ob.put("produseNoi", uuids);
+        ob.put("categories", categories);
         return ob;
     }
 }
