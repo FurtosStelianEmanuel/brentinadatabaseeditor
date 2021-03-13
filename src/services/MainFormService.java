@@ -15,7 +15,6 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import main.Main;
-import models.database.Category;
 import models.database.DatabaseModel;
 import models.produs.Produs;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
@@ -42,6 +41,7 @@ public class MainFormService implements MainFormServiceInterface {
     boolean runUUIDMigration = false;
     boolean runSimilareUUIDMigration = false;
     boolean runCleanupScript = false;
+    boolean runDescriptionPortingFromFile = false;
 
     public MainFormService(DatabaseService databaseService, RequestSender requestSender) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -86,6 +86,10 @@ public class MainFormService implements MainFormServiceInterface {
             databaseService.cleanUpScript(f);
             migrationRan = true;
         }
+        if (runDescriptionPortingFromFile) {
+            databaseService.portDescriptionsFromFile(model, Paths.get("c:", "users", "manel", "desktop", "backup.json").toFile());
+            migrationRan = true;
+        }
         if (migrationRan) {
             JOptionPane.showMessageDialog(null, "Migrations were executed, set runMigration flags to false and restart");
             System.exit(0);
@@ -99,8 +103,8 @@ public class MainFormService implements MainFormServiceInterface {
         if (choice == JFileChooser.APPROVE_OPTION) {
             if (chooser.getSelectedFile() != null) {
                 Main.PathToDatabase = Paths.get(chooser.getSelectedFile().getParent());
-                checkMigrations(model, chooser.getSelectedFile());
                 model = databaseService.loadDatabase(chooser.getSelectedFile());
+                checkMigrations(model, chooser.getSelectedFile());
                 filteredModel = DatabaseModel.emptyInstance();
                 sortProducts();
                 model.continut.forEach((Produs produs) -> {

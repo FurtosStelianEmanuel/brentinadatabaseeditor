@@ -24,4 +24,6 @@ public interface DatabaseServiceInterface {
     void migrateSimilareUUIDs(File file) throws ClassNotFoundException, IOException;
 
     void cleanUpScript(File json) throws ClassNotFoundException, IOException;
+
+    void portDescriptionsFromFile(DatabaseModel model, File otherJson) throws ClassNotFoundException, IOException;
 }

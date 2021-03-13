@@ -246,4 +246,19 @@ public class DatabaseService implements DatabaseServiceInterface {
         compressImagesAboveKb(model, 600);
         removeFoldersThatArentUsed(model);
     }
+
+    @Override
+    public void portDescriptionsFromFile(DatabaseModel model, File otherJson) throws ClassNotFoundException, IOException {
+        DatabaseModel otherModel = loadDatabase(otherJson);
+        otherModel.continut.forEach((Produs auxProduct) -> {
+            Produs toAddTo = model.continut.stream().filter(p -> p.id.equals(auxProduct.id)).findAny().orElse(null);
+            if (toAddTo != null) {
+                toAddTo.descriere = auxProduct.descriere;
+                System.out.println("Descriere ported for " + auxProduct.nume);
+            } else {
+                System.out.println("Nu am gasit produsul " + auxProduct.nume);
+            }
+        });
+        saveDatabase(model, Paths.get(Main.PathToDatabase.toString(), "produse.json").toFile());
+    }
 }

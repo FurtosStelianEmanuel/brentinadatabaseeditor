@@ -66,6 +66,7 @@ public class Produs {
         pret = source.pret;
         um = source.um;
         palleteType = source.palleteType;
+        descriere = source.descriere;
 
         translate.descriereEn = source.translate.descriereEn;
         translate.descriereHu = source.translate.descriereHu;
