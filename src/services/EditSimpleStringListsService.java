@@ -57,8 +57,10 @@ public class EditSimpleStringListsService implements EditSimpleStringListsInterf
             }
             if (productName == null) {
                 List<String> recomandate = new ArrayList<>();
+                List<String> currentSimilare = applicator.getCurrentSimilare();
                 for (String pName : getNumeProduse()) {
-                    if (pName.toLowerCase().trim().contains(simpleString.toLowerCase().trim())) {
+                    if (pName.toLowerCase().trim().contains(simpleString.toLowerCase().trim())
+                            && !currentSimilare.stream().anyMatch(name -> name.equals(pName))) {
                         recomandate.add(pName);
                     }
                 }

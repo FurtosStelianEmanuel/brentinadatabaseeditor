@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.UUID;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import services.EditSimpleStringListsApplicator;
 import services.EditSimpleStringListsApplicator.Types;
 import services.EditSimpleStringListsService;
 import services.interfaces.FormListenerInterface;

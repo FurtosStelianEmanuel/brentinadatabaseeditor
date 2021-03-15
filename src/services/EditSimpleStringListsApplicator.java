@@ -6,6 +6,7 @@
 package services;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import javax.swing.DefaultListModel;
@@ -20,6 +21,15 @@ import views.edit.EditSimpleStringListsForm;
 public class EditSimpleStringListsApplicator extends InitialComplete implements EditSimpleStringListsInterface {
 
     EditSimpleStringListsForm form;
+
+    public List<String> getCurrentSimilare() {
+        DefaultListModel model = (DefaultListModel) form.jList1.getModel();
+        List<String> toReturn = new ArrayList<>();
+        for (int i = 0; i < model.size(); i++) {
+            toReturn.add((String) model.getElementAt(i));
+        }
+        return toReturn;
+    }
 
     public enum Types {
         Default,

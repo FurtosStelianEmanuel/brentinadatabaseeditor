@@ -58,7 +58,7 @@ public class EditAllCategoriesForm extends javax.swing.JFrame implements FormLis
         jScrollPane1 = new javax.swing.JScrollPane();
         jTree1 = new javax.swing.JTree();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         jButton1.setText("Save");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -74,7 +74,7 @@ public class EditAllCategoriesForm extends javax.swing.JFrame implements FormLis
             }
         });
 
-        jPanel1.setLayout(new java.awt.GridLayout());
+        jPanel1.setLayout(new java.awt.GridLayout(1, 0));
 
         jButton3.setText("Adauga sub-categorie");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -92,7 +92,7 @@ public class EditAllCategoriesForm extends javax.swing.JFrame implements FormLis
         });
         jPanel1.add(jButton4);
 
-        jPanel2.setLayout(new java.awt.GridLayout());
+        jPanel2.setLayout(new java.awt.GridLayout(1, 0));
 
         jButton5.setText("Adauga categorie");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -110,7 +110,7 @@ public class EditAllCategoriesForm extends javax.swing.JFrame implements FormLis
         });
         jPanel2.add(jButton6);
 
-        jPanel3.setLayout(new java.awt.GridLayout());
+        jPanel3.setLayout(new java.awt.GridLayout(1, 0));
 
         jButton7.setText("Editeaza categorie");
         jButton7.addActionListener(new java.awt.event.ActionListener() {

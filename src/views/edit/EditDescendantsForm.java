@@ -55,7 +55,7 @@ public class EditDescendantsForm extends javax.swing.JFrame implements InitialCo
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         placeholderTextField1.setPlaceholder("Introdu numele unui produs");
         placeholderTextField1.addActionListener(new java.awt.event.ActionListener() {
