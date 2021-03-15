@@ -423,7 +423,7 @@ public class ProdusEdit extends javax.swing.JFrame implements ProdusEditFormInte
         categoriiForm.setListener(new EventConfirmationListener() {
             @Override
             public void onConfirm(Object p) {
-                List<String> categorii = (List<String>) p;
+                List<UUID> categorii = (List<UUID>) p;
                 service.categoriiChanged(categorii);
             }
 

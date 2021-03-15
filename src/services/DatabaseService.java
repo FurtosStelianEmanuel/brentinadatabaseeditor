@@ -48,8 +48,13 @@ public class DatabaseService implements DatabaseServiceInterface {
 
     @Override
     public void saveDatabase(DatabaseModel model, File file) throws ClassNotFoundException, IOException {
-        try (FileWriter output = new FileWriter(file)) {
-            output.write(model.toJSONObject().toJSONString());
+        try {
+            String toSave = model.toJSONObject().toJSONString();
+            try (FileWriter output = new FileWriter(file)) {
+                output.write(toSave);
+            }
+        } catch (Exception ex) {
+            throw new IOException("Nu am putut salva fisierul");
         }
     }
 
@@ -253,8 +258,16 @@ public class DatabaseService implements DatabaseServiceInterface {
         otherModel.continut.forEach((Produs auxProduct) -> {
             Produs toAddTo = model.continut.stream().filter(p -> p.id.equals(auxProduct.id)).findAny().orElse(null);
             if (toAddTo != null) {
-                toAddTo.descriere = auxProduct.descriere;
-                System.out.println("Descriere ported for " + auxProduct.nume);
+                boolean shouldPort = false;
+                if (auxProduct.descriere != null) {
+                    if (!auxProduct.descriere.equals("")) {
+                        shouldPort = true;
+                    }
+                }
+                if (shouldPort) {
+                    toAddTo.descriere = auxProduct.descriere;
+                    System.out.println("Descriere ported for " + auxProduct.nume);
+                }
             } else {
                 System.out.println("Nu am gasit produsul " + auxProduct.nume);
             }

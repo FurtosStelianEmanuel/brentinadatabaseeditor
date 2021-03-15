@@ -7,6 +7,7 @@ package views.edit;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -150,7 +151,7 @@ public class EditDescendantsForm extends javax.swing.JFrame implements InitialCo
             return;
         }
         selectedProdus.categorii.clear();
-        selectedProdus.categorii.add(category.getId().toString());
+        selectedProdus.categorii.add(UUID.fromString(category.getId().toString()));
         boolean found = false;
         for (int i = 0; i < produse.size(); i++) {
             if (produse.get(i).id.equals(selectedProdus.id)) {

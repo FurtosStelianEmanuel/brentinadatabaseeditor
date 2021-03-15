@@ -29,5 +29,6 @@ public class ProdusEditApplicator extends InitialComplete {
         form.placeholderTextField1.setText(produs.nume);
         form.placeholderTextField3.setText(produs.um);
         form.jTextArea1.setText(produs.descriere);
+        form.setTitle(produs.id.toString());
     }
 }

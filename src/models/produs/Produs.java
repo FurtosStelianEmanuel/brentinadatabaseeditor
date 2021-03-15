@@ -30,12 +30,9 @@ public class Produs {
     public String descriere;
     public TranslateProdus translate;
     public UUID id;
-    /**
-     * momentan nu are nicio functionalitate in spate, ar trebui scos din model (in viitor)
-     */
     public double pret;
     public List<UUID> similare;
-    public List<String> categorii;
+    public List<UUID> categorii;
     public String um;
     public long palleteType;
 
@@ -67,6 +64,7 @@ public class Produs {
         um = source.um;
         palleteType = source.palleteType;
         descriere = source.descriere;
+        id = source.id;
 
         translate.descriereEn = source.translate.descriereEn;
         translate.descriereHu = source.translate.descriereHu;
@@ -76,7 +74,6 @@ public class Produs {
         translate.nume.en = source.translate.nume.en;
         translate.nume.hu = source.translate.nume.hu;
         translate.nume.de = source.translate.nume.de;
-        id = source.id;
 
         source.coduriSiPreturi.forEach((DimensiuneCulori dimensiuneCulori) -> {
             coduriSiPreturi.add(new DimensiuneCulori(dimensiuneCulori));
@@ -94,7 +91,7 @@ public class Produs {
             similare.add(similar);
         });
 
-        source.categorii.forEach((String categorie) -> {
+        source.categorii.forEach((UUID categorie) -> {
             categorii.add(categorie);
         });
     }
@@ -156,7 +153,7 @@ public class Produs {
         }
         JSONArray categorii = (JSONArray) produs.get("categorii");
         for (Object o : categorii) {
-            p.categorii.add((String) o);
+            p.categorii.add(UUID.fromString((String) o));
         }
         Object um = produs.get("um");
         if (um != null) {
@@ -184,7 +181,7 @@ public class Produs {
         map.put("pret", pret);
         map.put("um", um);
         map.put("similare", similare.stream().map(similarId -> similarId.toString()).collect(Collectors.toList()));
-        map.put("categorii", categorii);
+        map.put("categorii", categorii.stream().map(cat -> cat.toString()).collect(Collectors.toList()));
         map.put("palleteType", palleteType);
         map.put("translate", translate.toJSONObject());
         map.put("id", id.toString());

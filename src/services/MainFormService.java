@@ -346,6 +346,7 @@ public class MainFormService implements MainFormServiceInterface {
             public void onConfirm(Object p) {
                 List<UUID> uuids = (List<UUID>) p;
                 model.newProducts = uuids;
+                filteredModel.newProducts = uuids;
             }
 
             @Override

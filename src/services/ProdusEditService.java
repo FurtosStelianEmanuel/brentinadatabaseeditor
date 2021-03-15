@@ -99,7 +99,7 @@ public class ProdusEditService implements ProdusEditInterface {
     }
 
     @Override
-    public void categoriiChanged(List<String> categorii) {
+    public void categoriiChanged(List<UUID> categorii) {
         copyProdus.categorii = categorii;
     }
 

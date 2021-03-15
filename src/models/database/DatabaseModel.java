@@ -40,7 +40,10 @@ public class DatabaseModel {
             model.continut.add(produs);
         }
         if (database.get("produseNoi") != null) {
-            model.newProducts = (List<UUID>) database.get("produseNoi");
+            JSONArray produseNoi = (JSONArray) database.get("produseNoi");
+            for (Object o : produseNoi) {
+                model.newProducts.add(UUID.fromString((String) o));
+            }
         }
         if (database.get("categories") != null) {
             JSONArray categories = (JSONArray) database.get("categories");

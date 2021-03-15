@@ -230,7 +230,6 @@ public class EditAllCategoriesForm extends javax.swing.JFrame implements FormLis
     }
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
         listener.onConfirm(new EditAllCategoriesOutput(service.getCategorii(), service.getProduse()));
         listener.onFinish(new EditAllCategoriesOutput(service.getCategorii(), service.getProduse()));
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -253,6 +252,10 @@ public class EditAllCategoriesForm extends javax.swing.JFrame implements FormLis
         }
     }//GEN-LAST:event_jButton8ActionPerformed
 
+    @Override
+    public void setListener(EventConfirmationListener e) {
+        this.listener = e;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton jButton1;
     public javax.swing.JButton jButton2;
@@ -269,9 +272,4 @@ public class EditAllCategoriesForm extends javax.swing.JFrame implements FormLis
     public javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JTree jTree1;
     // End of variables declaration//GEN-END:variables
-
-    @Override
-    public void setListener(EventConfirmationListener e) {
-        this.listener = e;
-    }
 }

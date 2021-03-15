@@ -13,7 +13,6 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import models.produs.Produs;
 import services.EditNewProductsService;
-import services.EditSimpleStringListsService;
 import services.interfaces.FormListenerInterface;
 import services.interfaces.EventConfirmationListener;
 import services.interfaces.ProductNotFoundException;
