@@ -64,8 +64,7 @@ public class DatabaseModel {
         JSONObject ob = new JSONObject();
         ob.put("produseAfisate", produseAfisate);
         ob.put("continut", continut);
-        List<String> uuids = newProducts.stream().map(id -> id.toString()).collect(Collectors.toList());
-        ob.put("produseNoi", uuids);
+        ob.put("produseNoi", newProducts.stream().map(id -> id.toString()).collect(Collectors.toList()));
         ob.put("categories", categories);
         return ob;
     }

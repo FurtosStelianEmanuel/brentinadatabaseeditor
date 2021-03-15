@@ -376,6 +376,8 @@ public class MainFormService implements MainFormServiceInterface {
                 EditAllCategoriesForm.EditAllCategoriesOutput output = (EditAllCategoriesForm.EditAllCategoriesOutput) p;
                 model.categories = output.getCategorii();
                 model.continut = output.getProduse();
+                filteredModel.categories = output.getCategorii();
+                filteredModel.continut = output.getProduse();
                 applicator.updateTable(model);
             }
 
