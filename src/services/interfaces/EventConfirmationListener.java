@@ -5,8 +5,6 @@
  */
 package services.interfaces;
 
-import models.produs.Produs;
-
 /**
  *
  * @author Manel

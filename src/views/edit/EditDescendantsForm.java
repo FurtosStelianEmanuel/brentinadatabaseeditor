@@ -186,7 +186,7 @@ public class EditDescendantsForm extends javax.swing.JFrame implements InitialCo
 
     private void updateList(List<Produs> produseUpdated) {
         List<String> descendants = produseUpdated.stream().filter(p -> p.categorii.size() > 0)
-                .filter(p -> p.categorii.get(0).equals(category.getId().toString()))
+                .filter(p -> p.categorii.get(0).equals(category.getId()))
                 .map(produs -> produs.nume)
                 .collect(Collectors.toList());
         DefaultListModel model = (DefaultListModel) jList1.getModel();
