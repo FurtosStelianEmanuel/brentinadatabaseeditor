@@ -20,6 +20,22 @@ public class TranslateProdus implements TranslateProdusInterface {
     String descriereDe;
     Nume nume;
 
+    public void setDescriereEn(String descriereEn) {
+        this.descriereEn = descriereEn;
+    }
+
+    public void setDescriereHu(String descriereHu) {
+        this.descriereHu = descriereHu;
+    }
+
+    public void setDescriereDe(String descriereDe) {
+        this.descriereDe = descriereDe;
+    }
+
+    public void setNume(Nume nume) {
+        this.nume = nume;
+    }
+
     private TranslateProdus() {
         descriereEn = "";
         descriereHu = "";

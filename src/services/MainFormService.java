@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import main.Main;
+import models.database.Category;
 import models.database.DatabaseModel;
 import models.produs.Produs;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
@@ -308,6 +309,12 @@ public class MainFormService implements MainFormServiceInterface {
         filteredModel.continut.remove(p);
     }
 
+    /**
+     * ---fixed---03/27/2021---cum sa reproduci: 1)editeaza categoriile (optional) adauga un produs la o categorie 2)da click pe save la categorii 3)incearca sa filtrezi ceva pe form-ul principal Expected: Filter should work Actual: Weird visual bug due to exception happening in filterProducts (java.util.ConcurrentModificationException) After this the products also seem to be deleted from model.continut and if you click save they are deleted permanently ---fixed---
+     * 
+     * @param search
+     * @return
+     */
     @Override
     public int filterProducts(String search) {
         for (Produs produs : model.continut) {
@@ -375,10 +382,14 @@ public class MainFormService implements MainFormServiceInterface {
             @Override
             public void onConfirm(Object p) {
                 EditAllCategoriesForm.EditAllCategoriesOutput output = (EditAllCategoriesForm.EditAllCategoriesOutput) p;
-                model.categories = output.getCategorii();
-                model.continut = output.getProduse();
-                filteredModel.categories = output.getCategorii();
-                filteredModel.continut = output.getProduse();
+                model.categories = Category.Copy(output.getCategorii());
+                model.continut.forEach(produs -> {
+                    produs.categorii = output.getProduse().stream().filter(updatedProduct -> updatedProduct.id.equals(produs.id)).findAny().orElse(null).categorii;
+                });
+                filteredModel.categories = Category.Copy(output.getCategorii());
+                filteredModel.continut.forEach(produs -> {
+                    produs.categorii = output.getProduse().stream().filter(updatedProduct -> updatedProduct.id.equals(produs.id)).findAny().orElse(null).categorii;
+                });
                 applicator.updateTable(model);
             }
 

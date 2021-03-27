@@ -52,7 +52,7 @@ public class EditSimpleStringListsApplicator extends InitialComplete implements 
                 emptyMainField = "Categorie goala";
                 alreadyAdded = "Categorie deja adaugata";
                 message1 = "Puteti folosi si sagetile ca sa mutati in sus sau in jos categoria selectata";
-                message2 = "Sau tasta delete pentru a sterge o dimensiune";
+                message2 = "Sau tasta delete pentru a sterge o categorie";
                 mainField = "Introduceti o categorie noua";
                 form.placeholderTextField1.setEnabled(false);
                 form.jList1.setEnabled(false);

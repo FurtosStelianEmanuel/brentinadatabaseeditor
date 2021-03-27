@@ -34,10 +34,14 @@ public class DimensiuneCulori {
     public void addCuloareCodPret(String culoare, String cod, String pret) {
         data.add(CuloareCodPret.fromStrings(culoare, cod, pret));
     }
-    
+
     private DimensiuneCulori() {
         data = new ArrayList<>();
         dimensiune = "";
+    }
+
+    public static DimensiuneCulori emptyObject() {
+        return new DimensiuneCulori();
     }
 
     public static List<DimensiuneCulori> fromJSONObject(JSONObject coduriSiPreturi) {

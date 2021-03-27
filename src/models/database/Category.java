@@ -5,6 +5,7 @@
  */
 package models.database;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import models.produs.TranslateCategory;
@@ -83,6 +84,14 @@ public class Category {
             object.put("parentId", category.parentId.toString());
             toReturn.add(object);
         }
+        return toReturn;
+    }
+
+    public static List<Category> Copy(List<Category> categories) {
+        List<Category> toReturn = new ArrayList<>();
+        categories.forEach(cat -> {
+            toReturn.add(new Category(cat));
+        });
         return toReturn;
     }
 

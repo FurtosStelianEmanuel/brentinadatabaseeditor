@@ -17,6 +17,18 @@ public class Nume {
     String hu;
     String de;
 
+    public void setEn(String en) {
+        this.en = en;
+    }
+
+    public void setHu(String hu) {
+        this.hu = hu;
+    }
+
+    public void setDe(String de) {
+        this.de = de;
+    }
+
     private Nume() {
         en = "";
         hu = "";
