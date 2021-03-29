@@ -23,7 +23,7 @@ public class CuloareFactory extends Factory<Culoare> {
         
         basicObject = Culoare.emptyInstance();
         basicObject.setAlteCulori(Arrays.asList(getVariableName("Alta culoare #1"), getVariableName("Alta culoare #2")));
-        basicObject.setNume(getVariableName("Nume"));
+        basicObject.setNume("multi");
         basicObject.setRgb(Color.red);
         basicObject.setTranslate(translateCuloareFactory.getBasicObject());
         basicObject.setUnghiuri(1);

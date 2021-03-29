@@ -10,6 +10,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import models.produs.Produs;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import org.junit.Test;
@@ -25,17 +28,31 @@ public class ProdusTest {
     File goodInputFile = Paths.get("c:", "users", "manel", "desktop", "produse.json").toFile();
     File outpootFile = Paths.get("c:", "users", "manel", "desktop", "output.json").toFile();
     ProdusFactory produsFactory;
+    JSONParser parser;
 
     public ProdusTest() {
         dbService = new DatabaseService();
         produsFactory = new ProdusFactory();
+        parser = new JSONParser();
     }
 
     @Test
-    public void When_ProdusConstructorCalledWithProdus_Then_DeepCopyCreated() throws ClassNotFoundException, IOException {
+    public void When_ConstructorCalledWithProdus_Then_DeepCopyCreated() throws ClassNotFoundException, IOException {
         Produs produs = produsFactory.getBasicObject();
         Produs result = new Produs(produs);
 
+        assertBasicProdusCopiedCorrectly(produs, result);
+    }
+
+    @Test
+    public void When_fromJSONObject_Then_ProdusCreated() throws ParseException {
+        Produs produs = produsFactory.getBasicObject();
+        Produs result = Produs.fromJSONObject((JSONObject) parser.parse(produs.toJSONObject().toJSONString()));
+
+        assertBasicProdusCopiedCorrectly(produs, result);
+    }
+
+    private void assertBasicProdusCopiedCorrectly(Produs produs, Produs result) {
         assertFalse(produs == result);
 
         assertEquals(produs.id, result.id);
