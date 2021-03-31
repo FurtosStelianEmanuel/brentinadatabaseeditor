@@ -27,8 +27,11 @@ public class Main {
     RequestSender requestSender;
     MainForm mainForm;
 
-    public static Path Path = Paths.get(SystemManager.get_path("BrentinaDatabaseEditor.jar"));
+    public static final String JAR_NAME = "BrentinaDatabaseEditor.jar";
+    public static final String UPDATE_MODE_SUCCES_TOKEN = "--updatemodestarted--";
+    public static Path Path = Paths.get(SystemManager.get_path(JAR_NAME));
     public static Path PathToImageBank = Paths.get("views", "preview", "imagini");
+    public static Path PathToRestartInUpdateMode = Paths.get("updatemode.ps1");
     public static Path PathToDatabase;
 
     Main() {
@@ -44,8 +47,20 @@ public class Main {
         mainForm.setLocationRelativeTo(null);
     }
 
-    public static void main(String[] args) throws ClassNotFoundException, IOException {
+    public static void main(String[] args) throws ClassNotFoundException, IOException, InterruptedException {
         Main m = new Main();
+        if (args.length > 0) {
+            if (args[0].equals("update")) {
+                System.out.println("Pornit in update");
+                m.mainForm.startInUpdateMode();
+            } else {
+                System.out.println("Unsupported command");
+                System.exit(0);
+            }
+        }
+        while(true){
+            Thread.sleep(2000);
+        }
         /*DatabaseService service=new DatabaseService();
         DatabaseModel model=service.loadDatabase(Paths.get("C:", "users","manel","desktop","produse.json").toFile());
         //service.saveDatabase(model,Paths.get("C:", "users","manel","desktop","test.json").toFile());*/

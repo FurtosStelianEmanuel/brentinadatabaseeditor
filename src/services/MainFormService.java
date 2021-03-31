@@ -5,8 +5,10 @@
  */
 package services;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
@@ -311,7 +313,7 @@ public class MainFormService implements MainFormServiceInterface {
 
     /**
      * ---fixed---03/27/2021---cum sa reproduci: 1)editeaza categoriile (optional) adauga un produs la o categorie 2)da click pe save la categorii 3)incearca sa filtrezi ceva pe form-ul principal Expected: Filter should work Actual: Weird visual bug due to exception happening in filterProducts (java.util.ConcurrentModificationException) After this the products also seem to be deleted from model.continut and if you click save they are deleted permanently ---fixed---
-     * 
+     *
      * @param search
      * @return
      */
@@ -404,5 +406,65 @@ public class MainFormService implements MainFormServiceInterface {
                 applicator.form.setEnabled(true);
             }
         });
+    }
+
+    @Override
+    public void updateProgramAndSite() throws IOException {
+        int choice = JOptionPane.showConfirmDialog(null, "Daca ati modificat baza de date fara sa salvati undeva modificarile dumneavoastra\n va rog sa le salvati inainte de update, continuati ?");
+        if (choice == JOptionPane.CANCEL_OPTION || choice == JOptionPane.CLOSED_OPTION || choice == JOptionPane.NO_OPTION) {
+            return;
+        }
+
+        File updateJarDirectory = Paths.get(Main.Path.toString()).toFile().getParentFile();
+        if (updateJarDirectory == null) {
+            throw new IOException("Acest folder trebuie sa aiba un parinte");
+        }
+
+        File updateJar = Paths.get(updateJarDirectory.getPath(), Main.JAR_NAME).toFile();
+        if (!updateJar.exists()) {
+            throw new IOException("Nu am gasit un executabil\n" + updateJar.getPath());
+        }
+
+        File powerShellScript = Paths.get(updateJarDirectory.getPath(), Main.PathToRestartInUpdateMode.toString()).toFile();
+        if (!powerShellScript.exists()) {
+            throw new IOException("Nu am gasit un script " + powerShellScript.getPath());
+        }
+
+        String command = String.format(
+                "powershell -ExecutionPolicy Bypass \"%s\"",
+                powerShellScript.getPath()
+        );
+        Process process = Runtime.getRuntime().exec(command);
+        BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        String line;
+
+        boolean found = false;
+        String output = "";
+        while ((line = br.readLine()) != null) {
+            if (line.contains(Main.UPDATE_MODE_SUCCES_TOKEN)) {
+                found = true;
+                break;
+            }
+            output += line;
+        }
+
+        if (!found) {
+            throw new IOException("Nu am putut reporni in modul de update\n" + output);
+        }
+
+        System.exit(0);
+        /*
+        System.out.println(Arrays.toString(args));
+        Process p = Runtime.getRuntime().exec("powershell -ExecutionPolicy Bypass C:\\users\\manel\\desktop\\test.ps1");
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+
+        String line = null;
+        System.out.println("<OUTPUT>");
+
+        while ((line = br.readLine()) != null) {
+            System.out.println(line);
+        }
+         */
     }
 }
