@@ -23,12 +23,14 @@ public class DatabaseModel {
     public List<Produs> continut;
     public List<UUID> newProducts;
     public List<Category> categories;
+    public List<AltaCuloare> alteCulori;
 
     private DatabaseModel() {
         produseAfisate = 2;
         continut = new ArrayList<>();
         newProducts = new ArrayList<>();
         categories = new ArrayList<>();
+        alteCulori = new ArrayList<>();
     }
 
     public static DatabaseModel fromJSONObject(JSONObject database) {
@@ -52,15 +54,18 @@ public class DatabaseModel {
                 model.categories.add(category);
             }
         }
+        if (database.get("alteCulori") != null) {
+            JSONArray alteCulori_ = (JSONArray) database.get("alteCulori");
+            for (Object object : alteCulori_) {
+                AltaCuloare altaCuloare = AltaCuloare.fromJSONObject((JSONObject) object);
+                model.alteCulori.add(altaCuloare);
+            }
+        }
         return model;
     }
 
     public static DatabaseModel emptyInstance() {
-        DatabaseModel model = new DatabaseModel();
-        model.continut = new ArrayList<>();
-        model.produseAfisate = 3;
-        model.newProducts = new ArrayList<>();
-        return model;
+        return new DatabaseModel();
     }
 
     public JSONObject toJSONObject() {
@@ -69,6 +74,7 @@ public class DatabaseModel {
         ob.put("continut", continut);
         ob.put("produseNoi", newProducts.stream().map(id -> id.toString()).collect(Collectors.toList()));
         ob.put("categories", categories);
+        ob.put("alteCulori", alteCulori);
         return ob;
     }
 }

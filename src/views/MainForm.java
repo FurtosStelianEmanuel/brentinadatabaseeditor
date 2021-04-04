@@ -95,6 +95,7 @@ public class MainForm extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -198,6 +199,14 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem7);
+
+        jMenuItem9.setText("Traduceri alte culori");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem9);
 
         jMenuBar1.add(jMenu2);
 
@@ -334,6 +343,10 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        service.editAlteCuloriTranslations();
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JMenu jMenu1;
     public javax.swing.JMenu jMenu2;
@@ -347,6 +360,7 @@ public class MainForm extends javax.swing.JFrame {
     public javax.swing.JMenuItem jMenuItem6;
     public javax.swing.JMenuItem jMenuItem7;
     public javax.swing.JMenuItem jMenuItem8;
+    public javax.swing.JMenuItem jMenuItem9;
     public javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTable jTable1;
     public views.PlaceholderTextField placeholderTextField1;
