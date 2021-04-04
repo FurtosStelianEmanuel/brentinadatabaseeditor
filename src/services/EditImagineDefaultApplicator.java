@@ -18,7 +18,7 @@ import models.produs.Culoare;
 import models.produs.InitialComplete;
 import models.produs.Produs;
 import views.edit.EditImagineDefaultForm;
-import views.edit.ImageHolder;
+import views.auxclasses.ImageHolder;
 
 /**
  *

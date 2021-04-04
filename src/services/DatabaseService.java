@@ -26,7 +26,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import services.interfaces.DatabaseServiceInterface;
-import views.edit.ImageHolder;
+import views.auxclasses.ImageHolder;
 
 /**
  *

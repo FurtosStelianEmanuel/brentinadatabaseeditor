@@ -20,7 +20,7 @@ import main.Main;
 import models.produs.Culoare;
 import models.produs.Produs;
 import models.produs.TranslateCuloare;
-import views.edit.ImageHolder;
+import views.auxclasses.ImageHolder;
 
 /**
  *

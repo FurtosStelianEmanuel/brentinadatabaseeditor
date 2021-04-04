@@ -18,7 +18,7 @@ import main.Main;
 import models.produs.Culoare;
 import services.interfaces.InitialCompleteInterface;
 import views.edit.EditCuloareForm;
-import views.edit.ImageHolder;
+import views.auxclasses.ImageHolder;
 
 /**
  *

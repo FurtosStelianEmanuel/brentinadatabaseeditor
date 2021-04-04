@@ -5,6 +5,7 @@
  */
 package views.edit;
 
+import views.auxclasses.ImageHolder;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
