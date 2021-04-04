@@ -32,6 +32,7 @@ public class Main {
     public static Path Path = Paths.get(SystemManager.get_path(JAR_NAME));
     public static Path PathToImageBank = Paths.get("views", "preview", "imagini");
     public static Path PathToRestartInUpdateMode = Paths.get("updatemode.ps1");
+    public static Path PathToUpdateDatabaseScript = Paths.get("migratedatabase.ps1");
     public static Path PathToDatabase;
 
     Main() {
@@ -57,9 +58,6 @@ public class Main {
                 System.out.println("Unsupported command");
                 System.exit(0);
             }
-        }
-        while(true){
-            Thread.sleep(2000);
         }
         /*DatabaseService service=new DatabaseService();
         DatabaseModel model=service.loadDatabase(Paths.get("C:", "users","manel","desktop","produse.json").toFile());

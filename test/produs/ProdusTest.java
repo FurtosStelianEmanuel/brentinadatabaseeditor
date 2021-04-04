@@ -45,7 +45,7 @@ public class ProdusTest {
     }
 
     @Test
-    public void When_fromJSONObject_Then_ProdusCreated() throws ParseException {
+    public void When_fromJSONObject_Then_ProdusCreated() throws ParseException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         Produs produs = produsFactory.getBasicObject();
         Produs result = Produs.fromJSONObject((JSONObject) parser.parse(produs.toJSONObject().toJSONString()));
 
@@ -100,4 +100,9 @@ public class ProdusTest {
         assertEquals(produs.translate.getHungarianDescription(), result.translate.getHungarianDescription());
         assertEquals(produs.translate.getGermanDescription(), result.translate.getGermanDescription());
     }
+
+    //<editor-fold desc="idea dump" defaultstate="collapsed">
+    /*Field f = produs.getClass().getDeclaredFields()[0];
+        System.out.println(f.get(produs));*/
+    //</editor-fold>
 }

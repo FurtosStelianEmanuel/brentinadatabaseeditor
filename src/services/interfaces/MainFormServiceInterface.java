@@ -36,5 +36,8 @@ public interface MainFormServiceInterface {
 
     void editCategorii();
 
+    @Deprecated
     void updateProgramAndSite() throws IOException;
+
+    void updateBrentinaServerDatabase() throws IOException;
 }

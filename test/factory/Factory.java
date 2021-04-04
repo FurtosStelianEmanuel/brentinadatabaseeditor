@@ -20,7 +20,7 @@ public abstract class Factory<K> implements FactoryMethods {
         return basicObject;
     }
 
-    protected String getVariableName(String... decorators) {
+    public String getVariableName(String... decorators) {
         if (decorators.length == 0) {
             return this.getClass().getName();
         }

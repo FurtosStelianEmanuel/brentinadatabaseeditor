@@ -253,6 +253,19 @@ public class MainFormService implements MainFormServiceInterface {
         return model.continut.get(selectedIndex);
     }
 
+    private void removeSimilareReference(UUID id) {
+        for (Produs p : filteredModel.continut) {
+            if (p.similare.contains(id)) {
+                p.similare.remove(id);
+            }
+        }
+        for (Produs p : model.continut) {
+            if (p.similare.contains(id)) {
+                p.similare.remove(id);
+            }
+        }
+    }
+
     @Override
     public void deleteProdus(Produs produs) throws IndexOutOfBoundsException, UnsupportedOperationException {
         if (produs == null) {
@@ -264,6 +277,8 @@ public class MainFormService implements MainFormServiceInterface {
         if (!filteredModel.continut.contains(produs)) {
             throw new UnsupportedOperationException("Nu l am putut scoate nici din filteredModel");
         }
+
+        removeSimilareReference(produs.id);
 
         filteredModel.continut.remove(produs);
         model.continut.remove(produs);
@@ -408,6 +423,7 @@ public class MainFormService implements MainFormServiceInterface {
         });
     }
 
+    @Deprecated
     @Override
     public void updateProgramAndSite() throws IOException {
         int choice = JOptionPane.showConfirmDialog(null, "Daca ati modificat baza de date fara sa salvati undeva modificarile dumneavoastra\n va rog sa le salvati inainte de update, continuati ?");
@@ -453,18 +469,26 @@ public class MainFormService implements MainFormServiceInterface {
         }
 
         System.exit(0);
-        /*
-        System.out.println(Arrays.toString(args));
-        Process p = Runtime.getRuntime().exec("powershell -ExecutionPolicy Bypass C:\\users\\manel\\desktop\\test.ps1");
+    }
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
-
-        String line = null;
-        System.out.println("<OUTPUT>");
-
-        while ((line = br.readLine()) != null) {
-            System.out.println(line);
+    @Override
+    public void updateBrentinaServerDatabase() throws IOException {
+        File powerShellScript = Paths.get(Main.Path.toString(), Main.PathToUpdateDatabaseScript.toString()).toFile();
+        if (!powerShellScript.exists()) {
+            throw new IOException("Nu am gasit un script " + powerShellScript.getPath());
         }
-         */
+        String command = String.format(
+                "explorer /select,%s",
+                powerShellScript.getPath()
+        );
+        Process process = Runtime.getRuntime().exec(command);
+        BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        String line;
+
+        String output = "";
+        while ((line = br.readLine()) != null) {
+            output += line;
+        }
+        System.out.println(output);
     }
 }
