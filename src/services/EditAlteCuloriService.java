@@ -36,7 +36,6 @@ public class EditAlteCuloriService implements EditAlteCuloriInterface {
 
     @Override
     public void addAltaCuloare(String partialName) throws Exception {
-        //cauta daca exista pe undeva si daca da, bag o aci, nu baga direct orice ciorba aici ca n are rost :)
         List<String> numeMatches = productNames.stream().filter(p
                 -> {
             return alteCuloriCopy.stream().filter(ac -> ac.nume.equals(p)).findAny().orElse(null) == null
