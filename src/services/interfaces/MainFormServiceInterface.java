@@ -40,4 +40,6 @@ public interface MainFormServiceInterface {
     void updateProgramAndSite() throws IOException;
 
     void updateBrentinaServerDatabase() throws IOException;
+
+    void editAlteCuloriTranslations();
 }

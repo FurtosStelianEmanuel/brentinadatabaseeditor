@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -17,8 +18,10 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import main.Main;
+import models.database.AltaCuloare;
 import models.database.Category;
 import models.database.DatabaseModel;
+import models.produs.Culoare;
 import models.produs.Produs;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.json.simple.JSONObject;
@@ -28,6 +31,7 @@ import views.ProdusEdit;
 import services.interfaces.EventConfirmationListener;
 import services.interfaces.MainFormServiceInterface;
 import views.edit.EditAllCategoriesForm;
+import views.edit.EditAlteCuloriForm;
 import views.edit.EditNewProductsForm;
 
 /**
@@ -490,5 +494,46 @@ public class MainFormService implements MainFormServiceInterface {
             output += line;
         }
         System.out.println(output);
+    }
+
+    private List<String> getAllAlteCuloriDefinedInProducts() {
+        List<String> toReturn = new ArrayList<>();
+        model.continut.forEach(p -> {
+            p.culori.forEach((culoare) -> {
+                culoare.getAlteCulori().stream().filter((altaCuloare) -> (!toReturn.contains(altaCuloare))).forEachOrdered((altaCuloare) -> {
+                    toReturn.add(altaCuloare);
+                });
+            });
+        });
+        return toReturn;
+    }
+
+    @Override
+    public void editAlteCuloriTranslations() {
+        EditAlteCuloriService editAlteCuloriService = new EditAlteCuloriService(model.alteCulori, getAllAlteCuloriDefinedInProducts());
+        EditAlteCuloriForm editAlteCuloriForm = new EditAlteCuloriForm(editAlteCuloriService);
+        EditAlteCuloriApplicator editAlteCuloriApplicator = new EditAlteCuloriApplicator(editAlteCuloriForm);
+        editAlteCuloriService.setApplicator(editAlteCuloriApplicator);
+        editAlteCuloriApplicator.autoCompleteData(model.alteCulori);
+        editAlteCuloriForm.setVisible(true);
+
+        editAlteCuloriForm.setListener(new EventConfirmationListener() {
+            @Override
+            public void onConfirm(Object p) {
+                model.alteCulori = (List<AltaCuloare>) p;
+                filteredModel.alteCulori = (List<AltaCuloare>) p;
+            }
+
+            @Override
+            public void onCancel() {
+            }
+
+            @Override
+            public void onFinish(Object o) {
+                backToMainForm();
+                editAlteCuloriForm.dispose();
+                applicator.form.setEnabled(true);
+            }
+        });
     }
 }
