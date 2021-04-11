@@ -6,16 +6,19 @@
 package services;
 
 import factory.ProdusFactory;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
+import javax.swing.JFileChooser;
+import main.Main;
 import models.database.DatabaseModel;
 import models.produs.Produs;
-import org.junit.Assert;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import plugin.RequestSender;
 
@@ -112,5 +115,19 @@ public class MainFormServiceTest {
         assertEquals(service.filteredModel.continut.get(0).nume, withReferenceToDeletedProdus.nume);
         assertTrue(service.filteredModel.continut.get(0).similare.isEmpty());
         assertTrue(service.model.continut.get(0).similare.isEmpty());
+    }
+
+    @Test
+    public void When_Save_Then_DatabaseServiceMethodCalled() throws ClassNotFoundException, IOException {
+        service.model = DatabaseModel.emptyInstance();
+        Main.PathToDatabase = Paths.get("home", "manel", "db");
+
+        service.save();
+
+        Mockito.verify(service.databaseService, Mockito.times(1)).saveDatabase(service.model, Paths.get(Main.PathToDatabase.toString(), "produse.json").toFile());
+    }
+
+    public void When_Load_Then_ShowOpenDialog() throws ClassNotFoundException, IOException {
+        //daca mergeam pe factory pattern puteam sa fac mock la JFileChooser si puteam face testul asta, dar cum e acum, nu pot cu mockito simplu
     }
 }
